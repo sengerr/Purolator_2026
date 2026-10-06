@@ -1,0 +1,73 @@
+$kind: http-request
+name: REST-Get Full Estimate-Costa Rica
+description: Converted from SOAP GetFullEstimateRequest — redactable sample “international estimate/Costa Rico Estimate.txt”.
+url: "{{baseUrl}}/rate/v1/shipment"
+method: POST
+headers:
+  x-api-key: "{{REST_XApiKey}}"
+  RequestReference: "{{RequestReference}}"
+  Language: "{{language}}"
+  Content-Type: application/json
+body:
+  type: json
+  content: |-
+    {
+        "lineOfBusiness": "COURIER",
+        "shipmentDate": "{{Current_Date}}",
+        "outboundShipment": {
+            "senderInformation": {
+                "streetAddress": [
+                    "3700 Jericho Road"
+                ],
+                "city": "Richmond",
+                "provinceStateCode": "BC",
+                "country": "CA",
+                "postalZipCode": "V7B1M5"
+            },
+            "receiverInformation": {
+                "companyName": "Purolator",
+                "streetAddress": [
+                    "Central"
+                ],
+                "city": "Mata Redonda",
+                "provinceStateCode": "San Jose",
+                "country": "CR",
+                "postalZipCode": "10105"
+            },
+            "shipmentInformation": {
+                "serviceId": "PurolatorExpressInternational",
+                "unitOfMeasurement": "IMPERIAL",
+                "totalWeight": 20,
+                "totalPackages": 2,
+                "showAlternativeServicesIndicator": true,
+                "packageInformation": [
+                    {
+                        "packageWeight": 10,
+                        "packageLength": 4,
+                        "packageWidth": 6,
+                        "packageHeight": 3
+                    },
+                    {
+                        "packageWeight": 10,
+                        "packageLength": 5,
+                        "packageWidth": 5,
+                        "packageHeight": 5
+                    }
+                ]
+            },
+            "billingInformation": {
+                "billingAccountNumber": "{{AccountNumber}}",
+                "displayPublishedRates": false
+            }
+        },
+        "trackingReferenceInformation": {
+            "reference1": "Oversize",
+            "reference2": "Large Package",
+            "reference3": "Multipiece"
+        }
+    }
+auth:
+  type: bearer
+  credentials:
+    token: "{{REST_Token}}"
+order: 9000

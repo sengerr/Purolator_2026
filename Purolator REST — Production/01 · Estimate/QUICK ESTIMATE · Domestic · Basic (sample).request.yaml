@@ -1,0 +1,52 @@
+$kind: http-request
+description: |-
+  Converted from SOAP GetQuickEstimateRequest — redactable sample “Quick Estimate .txt”.
+
+  Quick Estimate has no dedicated REST endpoint — mapped to a minimal /rate/v1/shipment call.
+url: "{{baseUrl}}/rate/v1/shipment"
+method: POST
+headers:
+  x-api-key: "{{REST_XApiKey}}"
+  RequestReference: "{{RequestReference}}"
+  Language: "{{language}}"
+  Content-Type: application/json
+body:
+  type: json
+  content: |-
+    {
+        "lineOfBusiness": "COURIER",
+        "shipmentDate": "{{Current_Date}}",
+        "outboundShipment": {
+            "billingInformation": {
+                "billingAccountNumber": "{{AccountNumber}}",
+                "displayPublishedRates": false
+            },
+            "senderInformation": {
+                "streetAddress": [
+                    "17718 114 Ave"
+                ],
+                "city": "Edmonton",
+                "provinceStateCode": "AB",
+                "country": "CA",
+                "postalZipCode": "T5S2N4"
+            },
+            "receiverInformation": {
+                "city": "Richmond",
+                "provinceStateCode": "BC",
+                "country": "CA",
+                "postalZipCode": "V7B1M5"
+            },
+            "shipmentInformation": {
+                "unitOfMeasurement": "IMPERIAL",
+                "totalWeight": 3,
+                "totalPackages": 1,
+                "showAlternativeServicesIndicator": true,
+                "serviceId": "PurolatorExpress"
+            }
+        }
+    }
+auth:
+  type: bearer
+  credentials:
+    token: "{{REST_Token}}"
+order: 7000

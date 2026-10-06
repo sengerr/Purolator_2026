@@ -1,0 +1,77 @@
+$kind: collection
+description: |-
+  **Verified live 2026-10-06** -- every request in this collection succeeded (run in Development). Requests that failed or were not sent are not included.
+
+  Purolator EWS SOAP collection pointed at **https://webservices.purolator.com**.
+
+  EWS production host. Live shipments are created — use ValidateShipment first when in doubt.
+
+  Converted from the Purolator *Developer Test Aid 2.0.0* SoapUI project. Service paths and SOAPAction values come from the WSDLs cached inside that project.
+
+  **Before running:** set `SOAP_Key` (EWS key) and `SOAP_Password`.
+
+  Identical to the Development edition apart from the host.
+
+  *Note:* in the source project the Tracking and Locator interfaces were saved against the production host; here every service uses `{{soapBase}}` so the whole collection follows one tier.
+
+  ---
+  ### Environment required
+  Select the matching environment before running — every credential, account number and date resolves from it, not from collection or global variables:
+
+  `SOAP_Key` · `SOAP_Password` · `REST_ClientId` · `REST_Secret` · `REST_XApiKey` · `REST_Token` · `AccountNumber` · `Different_AccountNumber` · `Current_Date`
+
+  **Dates** — the collection pre-request script sets `Current_Date` to today. Create- and validate-shipment requests override it with **today + 5 days**.
+
+  **Labels** — create-shipment and document requests carry a post-response script that decodes any base64 label in the response and renders it in the **Visualize** tab (ZPL via Labelary, PNG and PDF inline). Set `USE_LABELARY = false` in that script to keep label data off the third-party renderer.
+variables:
+  soapBase: https://webservices.purolator.com
+  referenceData: ""
+  postalCode: M9A0A5
+  # Language is sent in every v2 RequestContext. The v1 tracking requests put
+  # "?" there and could not run; this gives the collection a real default.
+  language: en
+  # trackingId is resolved by each v2 tracking request's pre-request script: an
+  # explicit value here wins, otherwise it falls back to a PIN the suite has
+  # already captured. trackingId2 and trackingId3 feed the multi-search case
+  # and have no fallback, so that request needs them set to run in full.
+  trackingId: ""
+  trackingId2: ""
+  trackingId3: ""
+  # Set by the date-range request's pre-request script to 30 days back.
+  trackingDateFrom: ""
+scripts:
+  - type: http:beforeRequest
+    code: |-
+      // Collection pre-request — runs before every request in the collection.
+      // Refreshes Current_Date to TODAY and mints a unique RequestReference.
+      // Create-shipment requests override Current_Date with today + 5 days in
+      // their own pre-request script, which runs after this one.
+      const now = new Date();
+      // Two-digit padding for the RequestReference stamp below. Deleted by the
+      // timezone patch in 3be7aa3; every pre-request script in the collection
+      // threw `pad is not defined` until it was restored. Newman still SENDS a
+      // request whose pre-request script throws, so the run looks healthy while
+      // RequestReference silently keeps whatever stale value the environment
+      // held. Check the prerequest-scripts row of Newman's summary table, not
+      // just the assertions row. (The REST collections were fixed first; these
+      // three were missed and fixed a few days later.)
+      const pad = n => String(n).padStart(2, '0');
+      // Purolator validates the shipment date in ITS timezone. Using the
+      // runner's local date sends yesterday whenever the machine is west of
+      // Eastern late in the day, and the API rejects it (9001-11).
+      // en-CA already formats as yyyy-mm-dd.
+      const today = now.toLocaleDateString('en-CA', { timeZone: 'America/Toronto' });
+      pm.environment.set('Current_Date', today);
+
+      // REQ + YYYYMMDDHHMMSS, matching the convention used in the SOAP collections.
+      const stamp = `${now.getFullYear()}${pad(now.getMonth()+1)}${pad(now.getDate())}`
+                  + `${pad(now.getHours())}${pad(now.getMinutes())}${pad(now.getSeconds())}`;
+      pm.environment.set('RequestReference', 'REQ' + stamp);
+    language: text/javascript
+auth:
+  - id: d5ea388e-81cd-4fc2-ad54-aba4d56f0e5a
+    type: basic
+    name: basic auth
+    credentials:
+      username: "{{SOAP_Key}}"
+      password: "{{SOAP_Password}}"

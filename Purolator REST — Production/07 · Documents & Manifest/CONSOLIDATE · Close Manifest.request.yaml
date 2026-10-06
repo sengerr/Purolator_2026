@@ -1,0 +1,26 @@
+$kind: http-request
+description: |-
+  Converted from SOAP ShippingServiceEndpoint.Consolidate — test-aid case “19. Consolidate”.
+  
+  Maps to the REST close-manifest call. The SOAP ConsolidateRequest is empty (it acts on the authenticated account); REST names the account explicitly. The equivalence is a behavioural match confirmed against the UAT sample collection, not a published spec — verify it.
+url: "{{baseUrl}}/ship/v1/manifest"
+method: POST
+headers:
+  x-api-key: "{{REST_XApiKey}}"
+  RequestReference: "{{RequestReference}}"
+  Language: "{{language}}"
+  Content-Type: application/json
+body:
+  type: json
+  content: |-
+    {
+        "language": "{{language}}",
+        "requestReference": "{{RequestReference}}",
+        "lineOfBusiness": "COURIER",
+        "accountNumber": "{{AccountNumber}}"
+    }
+auth:
+  type: bearer
+  credentials:
+    token: "{{REST_Token}}"
+order: 1600

@@ -1,0 +1,26 @@
+$kind: http-request
+description: |-
+  REST twin of the SOAP request of the same name (converted with tooling/generators). ShipmentTrackingServiceEndpoint.TrackingByPinsOrReferences — v2. The same element carries a customer reference rather than a PIN -- v2 does not have a separate by-reference operation, which is what the “ByPinsOrReferences” in the name is telling you. v2 ShipmentTracking exposes this single operation; v1's TrackPackagesByPin, TrackPackagesByReference and GetDeliveryDetails are all folded into it. SOAP v2 tracking already uses the REST search field names — mapped through directly.
+url: "{{baseUrl}}/track/v1/shipment"
+method: POST
+headers:
+  x-api-key: "{{REST_XApiKey}}"
+  RequestReference: "{{RequestReference}}"
+  Language: "{{language}}"
+  Content-Type: application/json
+body:
+  type: json
+  content: |-
+    {
+        "language": "{{language}}",
+        "search": [
+            {
+                "trackingId": "{{referenceData}}"
+            }
+        ]
+    }
+auth:
+  type: bearer
+  credentials:
+    token: "{{REST_Token}}"
+order: 6000

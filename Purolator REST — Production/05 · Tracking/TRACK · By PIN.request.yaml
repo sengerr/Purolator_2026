@@ -1,0 +1,26 @@
+$kind: http-request
+description: Converted from SOAP TrackingServiceEndpoint.TrackPackagesByPin — test-aid case “02.Track you pin”.
+url: "{{baseUrl}}/track/v1/shipment"
+method: POST
+headers:
+  x-api-key: "{{REST_XApiKey}}"
+  RequestReference: "{{RequestReference}}"
+  Language: "{{language}}"
+  Content-Type: application/json
+body:
+  type: json
+  content: |-
+    {
+        "language": "{{language}}",
+        "search": [
+            {
+                "trackingId": "{{trackingId}}",
+                "pod": false
+            }
+        ]
+    }
+auth:
+  type: bearer
+  credentials:
+    token: "{{REST_Token}}"
+order: 5000

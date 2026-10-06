@@ -1,0 +1,30 @@
+$kind: http-request
+description: |-
+  REST twin of the SOAP request of the same name (added 2026-10-06). Void is PUT /ship/v1/shipment with {lineOfBusiness, shipmentPIN} -- a PUT, not a POST (Purolator REST STG collection and support cheat sheet). Voids the shipment in {{PIN_VOID_4}}.
+url: "{{baseUrl}}/ship/v1/shipment"
+method: PUT
+headers:
+  x-api-key: "{{REST_XApiKey}}"
+  RequestReference: "{{RequestReference}}"
+  Language: "{{language}}"
+  Content-Type: application/json
+body:
+  type: json
+  content: |-
+    {
+        "lineOfBusiness": "Courier",
+        "shipmentPIN": "{{PIN_VOID_4}}"
+    }
+auth:
+  type: bearer
+  credentials:
+    token: "{{REST_Token}}"
+scripts:
+  - type: afterResponse
+    code: |-
+      pm.test('Status code is 200', function () { pm.response.to.have.status(200); });
+      pm.test('shipmentVoided is true', function () {
+          pm.expect(String(pm.response.json().shipmentVoided).toLowerCase()).to.eql('true');
+      });
+    language: text/javascript
+order: 960100

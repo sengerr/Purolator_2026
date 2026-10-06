@@ -1,0 +1,57 @@
+$kind: http-request
+description: |-
+  Team sample “GetFullEstimate - Express Cheque  - With Return Label” — sources/reference-collections/Purolator_API_Project_PROD.postman_collection.json.
+  Naming: SAMPLE · Lane · Focus (tooling/add_team_samples.py). Addresses on the standard fixtures. Not verified live.
+  Converted from SOAP GetFullEstimateRequest.
+url: "{{baseUrl}}/rate/v1/shipment"
+method: POST
+headers:
+  x-api-key: "{{REST_XApiKey}}"
+  RequestReference: "{{RequestReference}}"
+  Language: "{{language}}"
+  Content-Type: application/json
+body:
+  type: json
+  content: |-
+    {
+        "lineOfBusiness": "COURIER",
+        "shipmentDate": "{{Current_Date}}",
+        "outboundShipment": {
+            "senderInformation": {
+                "companyName": "Purolator",
+                "streetAddress": [
+                    "17718 114 Ave"
+                ],
+                "city": "Edmonton",
+                "provinceStateCode": "AB",
+                "country": "CA",
+                "postalZipCode": "T5S2N4"
+            },
+            "receiverInformation": {
+                "companyName": "Purolator",
+                "streetAddress": [
+                    "3700 Jericho Road"
+                ],
+                "city": "Richmond",
+                "provinceStateCode": "BC",
+                "country": "CA",
+                "postalZipCode": "V7B1M5"
+            },
+            "shipmentInformation": {
+                "serviceId": "PurolatorExpressEnvelope",
+                "unitOfMeasurement": "IMPERIAL",
+                "totalWeight": 1,
+                "totalPackages": 1,
+                "showAlternativeServicesIndicator": true
+            },
+            "billingInformation": {
+                "billingAccountNumber": "{{AccountNumber}}",
+                "displayPublishedRates": false
+            }
+        }
+    }
+auth:
+  type: bearer
+  credentials:
+    token: "{{REST_Token}}"
+order: 901200

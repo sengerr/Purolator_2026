@@ -1,0 +1,71 @@
+$kind: http-request
+description: Additional international sample (France) -- clone of “ESTIMATE · International · Basic” with the receiver moved to France. Not verified live.
+url: "{{baseUrl}}/rate/v1/shipment"
+method: POST
+headers:
+  x-api-key: "{{REST_XApiKey}}"
+  RequestReference: "{{RequestReference}}"
+  Language: "{{language}}"
+  Content-Type: application/json
+body:
+  type: json
+  content: |-
+    {
+        "lineOfBusiness": "COURIER",
+        "shipmentDate": "{{Current_Date}}",
+        "outboundShipment": {
+            "senderInformation": {
+                "streetAddress": [
+                    "3700 Jericho Road"
+                ],
+                "city": "Richmond",
+                "provinceStateCode": "BC",
+                "country": "CA",
+                "postalZipCode": "V7B1M5"
+            },
+            "receiverInformation": {
+                "companyName": "Purolator",
+                "streetAddress": [
+                    "5 Avenue Anatole France"
+                ],
+                "city": "Paris",
+                "country": "FR",
+                "postalZipCode": "75007"
+            },
+            "shipmentInformation": {
+                "serviceId": "PurolatorExpressInternational",
+                "unitOfMeasurement": "IMPERIAL",
+                "totalWeight": 1,
+                "totalPackages": 1,
+                "showAlternativeServicesIndicator": true,
+                "shipmentOptionsInformation": [
+                    {
+                        "optionId": "ResidentialSignatureIntl",
+                        "optionIdValue": "true"
+                    }
+                ],
+                "packageInformation": [
+                    {
+                        "packageWeight": 1,
+                        "packageLength": 0,
+                        "packageWidth": 0,
+                        "packageHeight": 0
+                    }
+                ]
+            },
+            "billingInformation": {
+                "billingAccountNumber": "{{AccountNumber}}",
+                "displayPublishedRates": false
+            }
+        },
+        "trackingReferenceInformation": {
+            "reference1": "REF1",
+            "reference2": "REF2",
+            "reference3": "REF3"
+        }
+    }
+auth:
+  type: bearer
+  credentials:
+    token: "{{REST_Token}}"
+order: 28100

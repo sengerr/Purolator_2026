@@ -1,0 +1,42 @@
+$kind: http-request
+description: |-
+  trackingId accepts a PIN or a reference. account, shipmentDateFrom/To and destinationPostalZipCode narrow duplicates (OAS). L5B 2C9 = receiver postal code of the domestic Create bodies.
+
+  Source: Purolator-REST-API-STG collection, "Track - by reference with account, date window and destination postal code". REST only (no SOAP twin, 2026-10-06).
+url: "{{baseUrl}}/track/v1/shipment"
+method: POST
+headers:
+  x-api-key: "{{REST_XApiKey}}"
+  Content-Type: "application/json"
+body:
+  type: json
+  content: |-
+    {
+        "language": "en",
+        "search": [
+            {
+                "trackingId": "{{trackReference}}",
+                "account": "{{AccountNumber}}",
+                "shipmentDateFrom": "{{trackDateFrom}}",
+                "shipmentDateTo": "{{trackDateTo}}",
+                "destinationPostalZipCode": "L5B 2C9",
+                "eventSortOrder": "d"
+            }
+        ]
+    }
+auth:
+  type: bearer
+  credentials:
+    token: "{{REST_Token}}"
+scripts:
+  - type: afterResponse
+    code: |-
+      pm.test('Status code is 200', function () { pm.response.to.have.status(200); });
+      const json = pm.response.json();
+      pm.test('searchResult array present', function () { pm.expect(json.searchResult).to.be.an('array'); });
+      (json.searchResult || []).forEach(function (r, i) {
+          const p = r.pin || {};
+          console.log('search[' + i + ']', p.trackingId, 'status=', p.status, 'type=', p.type);
+      });
+    language: text/javascript
+order: 956400

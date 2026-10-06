@@ -1,0 +1,64 @@
+$kind: http-request
+description: |-
+  Team sample “GetFullEstimate - Domestic Shipment -SpecialHandling-Residential Area Heavyweight” — sources/reference-collections/Purolator_API_Project_PROD.postman_collection.json.
+  Naming: SAMPLE · Lane · Focus (tooling/add_team_samples.py). Addresses on the standard fixtures. Not verified live.
+  Converted from SOAP GetFullEstimateRequest.
+url: "{{baseUrl}}/rate/v1/shipment"
+method: POST
+headers:
+  x-api-key: "{{REST_XApiKey}}"
+  RequestReference: "{{RequestReference}}"
+  Language: "{{language}}"
+  Content-Type: application/json
+body:
+  type: json
+  content: |-
+    {
+        "lineOfBusiness": "COURIER",
+        "shipmentDate": "{{Current_Date}}",
+        "outboundShipment": {
+            "senderInformation": {
+                "companyName": "Purolator",
+                "streetAddress": [
+                    "17718 114 Ave"
+                ],
+                "city": "Edmonton",
+                "provinceStateCode": "AB",
+                "country": "CA",
+                "postalZipCode": "T5S2N4"
+            },
+            "receiverInformation": {
+                "streetAddress": [
+                    "24 Sussex Drive"
+                ],
+                "city": "Ottawa",
+                "provinceStateCode": "ON",
+                "country": "CA",
+                "postalZipCode": "K1M1P5"
+            },
+            "shipmentInformation": {
+                "serviceId": "PurolatorGround",
+                "unitOfMeasurement": "IMPERIAL",
+                "totalWeight": 10,
+                "totalPackages": 1,
+                "showAlternativeServicesIndicator": true,
+                "packageInformation": [
+                    {
+                        "packageWeight": 10,
+                        "packageLength": 19,
+                        "packageWidth": 13,
+                        "packageHeight": 2
+                    }
+                ]
+            },
+            "billingInformation": {
+                "billingAccountNumber": "{{AccountNumber}}",
+                "displayPublishedRates": false
+            }
+        }
+    }
+auth:
+  type: bearer
+  credentials:
+    token: "{{REST_Token}}"
+order: 900800

@@ -1,0 +1,27 @@
+$kind: http-request
+description: "OAuth 2.0 client-credentials grant (Okta). Basic auth = client_id : client_secret."
+url: "{{baseUrl}}/auth/v1/token"
+method: POST
+headers:
+  Content-Type: application/json
+body:
+  type: json
+  content: |-
+    {
+        "grant_type": "client_credentials",
+        "scope": "{{authScope}}"
+    }
+auth:
+  type: basic
+  credentials:
+    username: "{{REST_ClientId}}"
+    password: "{{REST_Secret}}"
+scripts:
+  - type: afterResponse
+    code: |-
+      // Store the bearer token for every subsequent request.
+      const tokenResponse = pm.response.json();
+      pm.environment.set('REST_Token', tokenResponse.access_token);
+      pm.test('token issued', () => pm.expect(tokenResponse.access_token).to.be.a('string'));
+    language: text/javascript
+order: 1000

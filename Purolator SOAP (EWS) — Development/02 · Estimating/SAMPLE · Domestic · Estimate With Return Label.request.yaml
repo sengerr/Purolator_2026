@@ -1,0 +1,284 @@
+$kind: http-request
+description: |-
+  Team sample “GetFullEstimate - Domestic Shipment - With Return label” — sources/reference-collections/Purolator_API_Project_PROD.postman_collection.json.
+  Naming: SAMPLE · Lane · Focus (tooling/add_team_samples.py). Addresses on the standard fixtures. Not verified live.
+url: "{{soapBase}}/EWS/V2/Estimating/EstimatingService.asmx"
+method: POST
+headers:
+  Content-Type: text/xml; charset=utf-8
+  SOAPAction: http://purolator.com/pws/service/v2/GetFullEstimate
+body:
+  type: xml
+  content: |-
+    <?xml version="1.0" encoding="UTF-8"?>
+    <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns="http://purolator.com/pws/datatypes/v2">
+        <soapenv:Header>
+            <RequestContext>
+                <Version>2.1</Version>
+                <Language>en</Language>
+                <GroupID>SOMETHING</GroupID>
+                <RequestReference>{{RequestReference}}</RequestReference>
+            </RequestContext>
+        </soapenv:Header>
+        <soapenv:Body>
+            <GetFullEstimateRequest>
+                <Shipment>
+                    <SenderInformation>
+                        <Address>
+                            <Name>Tech A</Name>
+                            <Company>Purolator</Company>
+                            <Department>External IT</Department>
+                            <StreetNumber>17718</StreetNumber>
+                            <StreetSuffix></StreetSuffix>
+                            <StreetName>114</StreetName>
+                            <StreetType>Ave</StreetType>
+                            <StreetDirection></StreetDirection>
+                            <Suite></Suite>
+                            <Floor></Floor>
+                            <StreetAddress2></StreetAddress2>
+                            <StreetAddress3></StreetAddress3>
+                            <City>Edmonton</City>
+                            <Province>AB</Province>
+                            <Country>CA</Country>
+                            <PostalCode>T5S2N4</PostalCode>
+                            <PhoneNumber>
+                                <CountryCode>1</CountryCode>
+                                <AreaCode>780</AreaCode>
+                                <Phone>4091270</Phone>
+                                <Extension></Extension>
+                            </PhoneNumber>
+                            <FaxNumber>
+                                <CountryCode>1</CountryCode>
+                                <AreaCode>800</AreaCode>
+                                <Phone>4595599</Phone>
+                                <Extension></Extension>
+                            </FaxNumber>
+                        </Address>
+                        <EmailAddress></EmailAddress>
+                    </SenderInformation>
+                    <ReceiverInformation>
+                        <Address>
+                            <Name>Home Receiver</Name>
+                            <Company></Company>
+                            <Department>External IT</Department>
+                            <StreetNumber>24</StreetNumber>
+                            <StreetSuffix></StreetSuffix>
+                            <StreetName>Sussex</StreetName>
+                            <StreetType>Drive</StreetType>
+                            <StreetDirection></StreetDirection>
+                            <Suite></Suite>
+                            <Floor></Floor>
+                            <StreetAddress2></StreetAddress2>
+                            <StreetAddress3></StreetAddress3>
+                            <City>Ottawa</City>
+                            <Province>ON</Province>
+                            <Country>CA</Country>
+                            <PostalCode>K1M1P5</PostalCode>
+                            <PhoneNumber>
+                                <CountryCode>1</CountryCode>
+                                <AreaCode>800</AreaCode>
+                                <Phone>4595599</Phone>
+                                <Extension></Extension>
+                            </PhoneNumber>
+                            <FaxNumber>
+                                <CountryCode></CountryCode>
+                                <AreaCode></AreaCode>
+                                <Phone></Phone>
+                                <Extension></Extension>
+                            </FaxNumber>
+                        </Address>
+                        <EmailAddress>webservices@purolator.com</EmailAddress>
+                    </ReceiverInformation>
+                    <ShipmentDate></ShipmentDate>
+                    <PackageInformation>
+                        <ServiceID>PurolatorGround</ServiceID>
+                        <TotalWeight>
+                            <Value>5</Value>
+                            <WeightUnit>lb</WeightUnit>
+                        </TotalWeight>
+                        <TotalPieces>1</TotalPieces>
+                        <PiecesInformation>
+                            <Piece>
+                                <Weight>
+                                    <Value>5</Value>
+                                    <WeightUnit>lb</WeightUnit>
+                                </Weight>
+                                <Length>
+                                    <Value>12.00</Value>
+                                    <DimensionUnit>in</DimensionUnit>
+                                </Length>
+                                <Width>
+                                    <Value>12.00</Value>
+                                    <DimensionUnit>in</DimensionUnit>
+                                </Width>
+                                <Height>
+                                    <Value>1.00</Value>
+                                    <DimensionUnit>in</DimensionUnit>
+                                </Height>
+                            </Piece>
+                        </PiecesInformation>
+                        <DangerousGoodsDeclarationDocumentIndicator>false</DangerousGoodsDeclarationDocumentIndicator>
+                        <OptionsInformation>
+                            <Options>
+                                <OptionIDValuePair>
+                                    <ID>ResidentialSignatureDomestic</ID>
+                                    <Value>true</Value>
+                                </OptionIDValuePair>
+                            </Options>
+                        </OptionsInformation>
+                    </PackageInformation>
+                    <ReturnShipmentInformation>
+                        <NumberOfReturnShipments>5</NumberOfReturnShipments>
+                        <!--Optional:-->
+                        <ReturnShipment>
+                            <!--Optional:-->
+                            <SenderInformation>
+                        <Address>
+                            <Name>Tech A</Name>
+                            <Company>Purolator</Company>
+                            <Department>External IT</Department>
+                            <StreetNumber>17718</StreetNumber>
+                            <StreetSuffix></StreetSuffix>
+                            <StreetName>114</StreetName>
+                            <StreetType>Ave</StreetType>
+                            <StreetDirection></StreetDirection>
+                            <Suite></Suite>
+                            <Floor></Floor>
+                            <StreetAddress2></StreetAddress2>
+                            <StreetAddress3></StreetAddress3>
+                            <City>Edmonton</City>
+                            <Province>AB</Province>
+                            <Country>CA</Country>
+                            <PostalCode>T5S2N4</PostalCode>
+                            <PhoneNumber>
+                                <CountryCode>1</CountryCode>
+                                <AreaCode>780</AreaCode>
+                                <Phone>4091270</Phone>
+                                <Extension></Extension>
+                            </PhoneNumber>
+                            <FaxNumber>
+                                <CountryCode>1</CountryCode>
+                                <AreaCode>800</AreaCode>
+                                <Phone>4595599</Phone>
+                                <Extension></Extension>
+                            </FaxNumber>
+                        </Address>
+                        <EmailAddress></EmailAddress>
+                    </SenderInformation>
+                            <!--Optional:-->
+                            <ReceiverInformation>
+                        <Address>
+                            <Name>Tech B</Name>
+                            <Company>Purolator</Company>
+                            <Department>External IT</Department>
+                            <StreetNumber>62</StreetNumber>
+                            <StreetSuffix></StreetSuffix>
+                            <StreetName>Vulcan</StreetName>
+                            <StreetType>Street</StreetType>
+                            <StreetDirection></StreetDirection>
+                            <Suite></Suite>
+                            <Floor></Floor>
+                            <StreetAddress2></StreetAddress2>
+                            <StreetAddress3></StreetAddress3>
+                            <City>Etobicoke</City>
+                            <Province>ON</Province>
+                            <Country>CA</Country>
+                            <PostalCode>M9W1L2</PostalCode>
+                            <PhoneNumber>
+                                <CountryCode>1</CountryCode>
+                                <AreaCode>800</AreaCode>
+                                <Phone>4595599</Phone>
+                                <Extension></Extension>
+                            </PhoneNumber>
+                            <FaxNumber>
+                                <CountryCode></CountryCode>
+                                <AreaCode></AreaCode>
+                                <Phone></Phone>
+                                <Extension></Extension>
+                            </FaxNumber>
+                        </Address>
+                        <EmailAddress>webservices@purolator.com</EmailAddress>
+                    </ReceiverInformation>
+                            <!--Optional:-->
+                            <PackageInformation>
+                                <!--Optional:-->
+                                <ServiceID>PurolatorExpress</ServiceID>
+                                <!--Optional:-->
+                                <Description>My Description</Description>
+                                <!--Optional:-->
+                                <TotalWeight>
+                                    <Value>1</Value>
+                                    <WeightUnit>lb</WeightUnit>
+                                </TotalWeight>
+                                <TotalPieces>1</TotalPieces>
+                                <DangerousGoodsDeclarationDocumentIndicator>false</DangerousGoodsDeclarationDocumentIndicator>
+                                <OptionsInformation>
+                                    <Options>
+                                        <OptionIDValuePair>
+                                            <ID>ResidentialSignatureDomestic</ID>
+                                            <Value>true</Value>
+                                        </OptionIDValuePair>
+                                    </Options>
+                                </OptionsInformation>
+                            </PackageInformation>
+                            <!--Optional:-->
+                            <PaymentInformation>
+                                <PaymentType>Sender</PaymentType>
+                                <RegisteredAccountNumber>{{AccountNumber}}</RegisteredAccountNumber>
+                                <BillingAccountNumber>{{AccountNumber}}</BillingAccountNumber>
+                            </PaymentInformation>
+                            <PickupInformation>
+                                <PickupType>DropOff</PickupType>
+                            </PickupInformation>
+                            <!--Optional:-->
+                            <NotificationInformation>
+                                <!--Optional:-->
+                                <ConfirmationEmailAddress/>
+                                <!--Optional:-->
+                                <AdvancedShippingNotificationEmailAddress1/>
+                            </NotificationInformation>
+                            <!--Optional:-->
+                            <TrackingReferenceInformation>
+                                <!--Optional:-->
+                                <Reference1>RETURN REF1</Reference1>
+                                <!--Optional:-->
+                                <Reference2>RETURN REF2</Reference2>
+                                <!--Optional:-->
+                                <Reference3>RETURN REF3</Reference3>
+                                <!--Optional:-->
+                                <Reference4>RETURN REF4</Reference4>
+                            </TrackingReferenceInformation>
+                            <!--Optional:-->
+                            <OtherInformation>
+                                <!--Optional:-->
+                                <CostCentre>Cost Center</CostCentre>
+                                <!--Optional:-->
+                                <SpecialInstructions>Special Instructions</SpecialInstructions>
+                            </OtherInformation>
+                        </ReturnShipment>
+                    </ReturnShipmentInformation>
+                    <PaymentInformation>
+                        <PaymentType>Sender</PaymentType>
+                        <RegisteredAccountNumber>{{AccountNumber}}</RegisteredAccountNumber>
+                        <BillingAccountNumber>{{AccountNumber}}</BillingAccountNumber>
+                    </PaymentInformation>
+                    <PickupInformation>
+                        <PickupType>DropOff</PickupType>
+                    </PickupInformation>
+                    <TrackingReferenceInformation>
+                        <Reference1></Reference1>
+                    </TrackingReferenceInformation>
+                    <OtherInformation>
+                        <SpecialInstructions> East</SpecialInstructions>
+                    </OtherInformation>
+                </Shipment>
+                <ShowAlternativeServicesIndicator>true</ShowAlternativeServicesIndicator>
+            </GetFullEstimateRequest>
+        </soapenv:Body>
+    </soapenv:Envelope>
+auth:
+  type: basic
+  credentials:
+    username: "{{SOAP_Key}}"
+    password: "{{SOAP_Password}}"
+order: 900300

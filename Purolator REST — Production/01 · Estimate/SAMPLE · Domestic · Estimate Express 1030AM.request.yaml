@@ -1,0 +1,57 @@
+$kind: http-request
+description: |-
+  Team sample “Estimate” — sources/reference-collections/Purolator-Estimate.postman_collection.json (REST, PurolatorExpress10:30AM, billingInformation + Chain of Signature option). Naming: SAMPLE · Lane · Focus. Not verified live.
+url: "{{baseUrl}}/rate/v1/shipment"
+method: POST
+headers:
+  x-api-key: "{{REST_XApiKey}}"
+  RequestReference: "{{RequestReference}}"
+  Language: "{{language}}"
+  Content-Type: application/json
+body:
+  type: json
+  content: |-
+    {
+        "shipmentDate": "{{Current_Date}}",
+        "lineOfBusiness": "COURIER",
+        "outboundShipment": {
+            "billingInformation": {
+                "billingAccountNumber": "{{AccountNumber}}",
+                "displayPublishedRates": false
+            },
+            "senderInformation": {
+                "companyName": "Purolator",
+                "streetAddress": ["17718 114 Ave"],
+                "city": "Edmonton",
+                "provinceStateCode": "AB",
+                "country": "CA",
+                "postalZipCode": "T5S2N4"
+            },
+            "receiverInformation": {
+                "companyName": "Purolator",
+                "streetAddress": ["30 Aero Drive NE"],
+                "city": "Calgary",
+                "provinceStateCode": "AB",
+                "country": "CA",
+                "postalZipCode": "T2E8Z9"
+            },
+            "shipmentInformation": {
+                "serviceId": "PurolatorExpress10:30AM",
+                "unitOfMeasurement": null,
+                "showAlternativeServicesIndicator": false,
+                "totalWeight": 1,
+                "totalPackages": 0,
+                "shipmentOptionsInformation": [
+                    {
+                        "optionId": "ChainOfSignature",
+                        "optionIdValue": "false"
+                    }
+                ]
+            }
+        }
+    }
+auth:
+  type: bearer
+  credentials:
+    token: "{{REST_Token}}"
+order: 911800

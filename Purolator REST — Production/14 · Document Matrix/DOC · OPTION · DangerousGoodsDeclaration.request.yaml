@@ -1,0 +1,32 @@
+$kind: http-request
+description: |-
+  Document matrix: DangerousGoodsDeclaration, which depends on a shipment OPTION rather than
+  the label format. Reads {{PIN_DangerousGoodsDeclaration}}, captured by the Dangerous Goods seed in 02 · Shipping, so
+  there is one request rather than one per format combination.
+url: "{{baseUrl}}/ship/v1/documents"
+method: POST
+headers:
+  x-api-key: "{{REST_XApiKey}}"
+  RequestReference: "{{RequestReference}}"
+  Language: "{{language}}"
+  Content-Type: application/json
+body:
+  type: json
+  content: |-
+    {
+        "lineOfBusiness": "COURIER",
+        "requestReference": "{{RequestReference}}",
+        "documentCriteria": [
+            {
+                "shipmentPIN": "{{PIN_DangerousGoodsDeclaration}}",
+                "documentType": [
+                    "DangerousGoodsDeclaration"
+                ]
+            }
+        ]
+    }
+auth:
+  type: bearer
+  credentials:
+    token: "{{REST_Token}}"
+order: 1540

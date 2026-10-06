@@ -1,0 +1,67 @@
+$kind: http-request
+description: Converted from SOAP GetFullEstimateRequest — redactable sample “Full Estimate - ASR.txt”.
+url: "{{baseUrl}}/rate/v1/shipment"
+method: POST
+headers:
+  x-api-key: "{{REST_XApiKey}}"
+  RequestReference: "{{RequestReference}}"
+  Language: "{{language}}"
+  Content-Type: application/json
+body:
+  type: json
+  content: |-
+    {
+        "lineOfBusiness": "COURIER",
+        "shipmentDate": "{{Current_Date}}",
+        "outboundShipment": {
+            "senderInformation": {
+                "streetAddress": [
+                    "17718 114 Ave"
+                ],
+                "city": "Edmonton",
+                "provinceStateCode": "AB",
+                "country": "CA",
+                "postalZipCode": "T5S2N4"
+            },
+            "receiverInformation": {
+                "companyName": "Purolator",
+                "streetAddress": [
+                    "3700 Jericho Road"
+                ],
+                "city": "Richmond",
+                "provinceStateCode": "BC",
+                "country": "CA",
+                "postalZipCode": "V7B1M5"
+            },
+            "shipmentInformation": {
+                "serviceId": "PurolatorExpressEnvelope",
+                "unitOfMeasurement": "IMPERIAL",
+                "totalWeight": 1,
+                "totalPackages": 1,
+                "showAlternativeServicesIndicator": false,
+                "shipmentOptionsInformation": [
+                    {
+                        "optionId": "AdultSignatureRequired",
+                        "optionIdValue": "true"
+                    }
+                ],
+                "packageInformation": [
+                    {
+                        "packageWeight": 1,
+                        "packageLength": 1,
+                        "packageWidth": 1,
+                        "packageHeight": 1
+                    }
+                ]
+            },
+            "billingInformation": {
+                "billingAccountNumber": "{{AccountNumber}}",
+                "displayPublishedRates": false
+            }
+        }
+    }
+auth:
+  type: bearer
+  credentials:
+    token: "{{REST_Token}}"
+order: 2000

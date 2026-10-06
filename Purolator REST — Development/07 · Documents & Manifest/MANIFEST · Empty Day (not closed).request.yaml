@@ -1,0 +1,32 @@
+$kind: http-request
+description: |-
+  Support coaching: empty/missing batch for a valid in-window date usually means Close Manifest was never run - not necessarily an HTTP error. Observe body; do not invent status.
+
+  Source: Purolator-REST-API-STG collection, "POST Summary Manifest - empty results day (not closed)". REST only (no SOAP twin, 2026-10-06).
+url: "{{baseUrl}}/ship/v1/documents/summary-manifest"
+method: POST
+headers:
+  x-api-key: "{{REST_XApiKey}}"
+  Language: "{{language}}"
+  RequestReference: "{{RequestReference}}"
+  Content-Type: "application/json"
+body:
+  type: json
+  content: |-
+    {
+        "lineOfBusiness": "Courier",
+        "manifestDate": [
+            "{{manifestDate}}"
+        ]
+    }
+auth:
+  type: bearer
+  credentials:
+    token: "{{REST_Token}}"
+scripts:
+  - type: afterResponse
+    code: |-
+      pm.test('Responds (record body for training)', function(){ pm.expect(pm.response.code).to.be.oneOf([200,400,401,500]); });
+      console.log(pm.response.text());
+    language: text/javascript
+order: 953700

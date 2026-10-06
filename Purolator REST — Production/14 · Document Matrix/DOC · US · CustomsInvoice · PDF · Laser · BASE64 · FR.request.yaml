@@ -1,0 +1,38 @@
+$kind: http-request
+description: |-
+  French twin of “DOC · US · CustomsInvoice · PDF · Laser · BASE64” — same call, pointed at the FRENCH
+  seed's PIN. The document call does not choose a language: the same PIN
+  returns the same bytes in en or fr. The seed decides. Language: fr is
+  sent so any ERROR comes back in French, which is the one thing the
+  retrieval header does change.
+  Document matrix: CustomsInvoice from the U.S. seed created as PDF / Laser / BASE64.
+  Reads {{PIN_US_PDF_BASE64_FR}}. documentCriteria carries only shipmentPIN and
+  documentType -- every format field is rejected as unknown here;
+  the format came from how the seed was created.
+url: "{{baseUrl}}/ship/v1/documents"
+method: POST
+headers:
+  x-api-key: "{{REST_XApiKey}}"
+  RequestReference: "{{RequestReference}}"
+  Language: "fr"
+  Content-Type: application/json
+body:
+  type: json
+  content: |-
+    {
+        "lineOfBusiness": "COURIER",
+        "requestReference": "{{RequestReference}}",
+        "documentCriteria": [
+            {
+                "shipmentPIN": "{{PIN_US_PDF_BASE64_FR}}",
+                "documentType": [
+                    "CustomsInvoice"
+                ]
+            }
+        ]
+    }
+auth:
+  type: bearer
+  credentials:
+    token: "{{REST_Token}}"
+order: 1222

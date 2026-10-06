@@ -1,0 +1,81 @@
+$kind: http-request
+description: |-
+  ShipmentTrackingServiceEndpoint.TrackingByPinsOrReferences — v2.
+  
+  Bounds the search by shipment date.
+  trackingDateFrom is set by this request's pre-request script to 30 days back, so the window moves with the run rather than going stale like a literal date would.
+  
+  v2 ShipmentTracking exposes this single operation; v1's
+  TrackPackagesByPin, TrackPackagesByReference and GetDeliveryDetails are
+  all folded into it.
+url: "{{soapBase}}/EWS/v2/ShipmentTracking/ShipmentTrackingService.asmx"
+method: POST
+headers:
+  Content-Type: text/xml; charset=utf-8
+  SOAPAction: http://purolator.com/pws/service/v2/TrackingByPinsOrReferences
+body:
+  type: xml
+  content: |-
+    <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:v2="http://purolator.com/pws/datatypes/v2">
+       <soapenv:Header>
+          <v2:RequestContext>
+             <v2:Version>2.0</v2:Version>
+             <v2:Language>{{language}}</v2:Language>
+             <v2:GroupID></v2:GroupID>
+             <v2:RequestReference>{{RequestReference}}</v2:RequestReference>
+          </v2:RequestContext>
+       </soapenv:Header>
+       <soapenv:Body>
+          <v2:TrackingByPinsOrReferencesRequest>
+             <v2:TrackingSearchCriteria>
+                <v2:searches>
+                   <v2:search>
+                      <v2:trackingId>{{trackingId}}</v2:trackingId>
+                      <v2:shipmentDateFrom>{{trackingDateFrom}}</v2:shipmentDateFrom>
+                      <v2:shipmentDateTo>{{Current_Date}}</v2:shipmentDateTo>
+                   </v2:search>
+                </v2:searches>
+             </v2:TrackingSearchCriteria>
+          </v2:TrackingByPinsOrReferencesRequest>
+       </soapenv:Body>
+    </soapenv:Envelope>
+scripts:
+  - type: http:beforeRequest
+    code: |-
+      // Resolve trackingId: an explicit value wins, otherwise fall back to a
+      // PIN this suite already captured. Without this the request would send an
+      // empty trackingId and fail for a reason that has nothing to do with the
+      // service under test.
+      const explicit = (pm.environment.get('trackingId') || '').trim();
+      if (!explicit) {
+          const fallback = ['PIN',
+                            'PIN_DomesticBillOfLading',
+                            'PIN_DomesticBillOfLadingThermal']
+              .map(k => (pm.environment.get(k) || '').trim())
+              .find(v => v);
+          if (fallback) {
+              pm.environment.set('trackingId', fallback);
+              console.log('trackingId not set; using captured PIN ' + fallback);
+          } else {
+              console.warn('No trackingId and no captured PIN - run a shipping '
+                           + 'request first, or set trackingId in the environment.');
+          }
+      }
+      // trackingDateFrom = 30 days back, in Purolator's timezone.
+      //
+      // A literal date would go stale and start returning nothing without
+      // failing, which is the worst kind of broken test. The collection
+      // pre-request script has already set Current_Date to today; this only
+      // adds the lower bound.
+      const from = new Date();
+      from.setDate(from.getDate() - 30);
+      pm.environment.set(
+          'trackingDateFrom',
+          from.toLocaleDateString('en-CA', { timeZone: 'America/Toronto' }));
+    language: text/javascript
+auth:
+  type: basic
+  credentials:
+    username: "{{SOAP_Key}}"
+    password: "{{SOAP_Password}}"
+order: 9000

@@ -1,0 +1,177 @@
+$kind: http-request
+description: |-
+  Seed shipment: International lane, label PDF / Laser / URL.
+  Creates the shipment whose format decides which document types are
+  retrievable later, and captures its PIN into PIN_INTL_PDF_URL.
+url: "{{baseUrl}}{{createShipmentPath}}"
+method: POST
+headers:
+  x-api-key: "{{REST_XApiKey}}"
+  RequestReference: "{{RequestReference}}"
+  Language: "{{language}}"
+  Content-Type: application/json
+body:
+  type: json
+  content: |-
+    {
+        "lineOfBusiness": "COURIER",
+        "shipmentDate": "{{Current_Date}}",
+        "validateOnly": false,
+        "returnsManagement": false,
+        "returnRates": false,
+        "outboundShipment": {
+            "pickupType": "DROPOFF",
+            "senderInformation": {
+                "attentionTo": "Tech A",
+                "streetAddress": ["3700 Jericho Road"],
+                "city": "Richmond",
+                "provinceStateCode": "BC",
+                "country": "CA",
+                "postalZipCode": "V7B1M5",
+                "phoneNumber": "16042734333"
+            },
+            "receiverInformation": {
+                "attentionTo": "Tech B",
+                "companyName": "Purolator",
+                "streetAddress": ["Lang Strasse 59"],
+                "city": "Ottobrunn",
+                "country": "DE",
+                "postalZipCode": "85501",
+                "phoneNumber": "18004595599"
+            },
+            "shipmentInformation": {
+                "serviceId": "PurolatorExpressInternational",
+                "unitOfMeasurement": "IMPERIAL",
+                "descriptionOfGoods": "Test Description",
+                "totalWeight": 1,
+                "totalPackages": 1,
+                "dangerousGoodsDeclarationDocumentIndicator": false,
+                "shipmentOptionsInformation": [
+                    {
+                        "optionId": "ResidentialSignatureIntl",
+                        "optionIdValue": "true"
+                    }
+                ],
+                "packageInformation": [
+                    {
+                        "packageWeight": 1,
+                        "packageLength": 0,
+                        "packageWidth": 0,
+                        "packageHeight": 0
+                    }
+                ]
+            },
+            "paymentInformation": {
+                "paymentType": "Sender",
+                "registeredAccountNumber": "{{AccountNumber}}"
+            },
+            "customerReferenceInformation": {
+                "costCenter": "Cost Center",
+                "notes": "Special Instructions",
+                "shipmentReference1": "REF1",
+                "shipmentReference2": "REF2",
+                "shipmentReference3": "REF3"
+            },
+            "crossBorderInformation": {
+                "documentsOnlyIndicator": false,
+                "nonDocumentsInformation": {
+                    "currencyForDutiableGoods": "CAD",
+                    "importExportType": "Permanent",
+                    "billDutiesToParty": "Sender",
+                    "businessRelationship": "NotRelated",
+                    "customsInvoiceDocumentIndicator": true,
+                    "taxesPaid": "DDP"
+                },
+                "contentDetails": [
+                    {
+                        "description": "Description",
+                        "harmonizedCode": "123",
+                        "countryOfManufacture": "CA",
+                        "unitValue": 12,
+                        "productCode": "123456",
+                        "quantity": 34,
+                        "usmcaDocumentIndicator": false,
+                        "fdaDocumentIndicator": false,
+                        "senderIsProducerIndicator": true,
+                        "textileIndicator": false,
+                        "unitOfMeasure": "Each"
+                    }
+                ]
+            }
+        },
+        "shipmentDocuments": {
+            "label": {
+                "outputType": "PDF",
+                "printerFormat": "Laser",
+                "responseType": "URL"
+            }
+        }
+    }
+auth:
+  type: bearer
+  credentials:
+    token: "{{REST_Token}}"
+scripts:
+  - type: beforeRequest
+    code: |-
+      // Seed shipments are dated TODAY + 5 DAYS so they sit inside the carrier's
+      // future-dating window. Carrier timezone, not the runner's -- see 9001-11.
+      const DAYS_AHEAD = 5;
+      const d = new Date();
+      d.setDate(d.getDate() + DAYS_AHEAD);
+      const shipDate = d.toLocaleDateString('en-CA', { timeZone: 'America/Toronto' });
+      pm.environment.set('Current_Date', shipDate);
+    language: text/javascript
+  - type: afterResponse
+    code: |-
+      // PIN capture -- this seed is the source for PIN_INTL_PDF_URL.
+      // The document matrix reads that variable back, so the matrix file is identical
+      // in Certification, Development and Production; only the captured value differs.
+      const SEED_PIN_VAR = 'PIN_INTL_PDF_URL';
+
+      // The PIN's field path differs between REST responses, so search rather than
+      // hard-code. Accepts "123", 123, and { "value": 123 }.
+      function seedPin(node, wanted) {
+          if (node === null || typeof node !== 'object') return '';
+          if (Array.isArray(node)) {
+              for (let i = 0; i < node.length; i++) {
+                  const hit = seedPin(node[i], wanted);
+                  if (hit) return hit;
+              }
+              return '';
+          }
+          for (const key of Object.keys(node)) {
+              const val = node[key];
+              if (key.toLowerCase() === wanted) {
+                  if (typeof val === 'string' && val.trim()) return val.trim();
+                  if (typeof val === 'number') return String(val);
+                  if (val && typeof val === 'object' && val.value) {
+                      return String(val.value).trim();
+                  }
+              }
+              const hit = seedPin(val, wanted);
+              if (hit) return hit;
+          }
+          return '';
+      }
+
+      let seedBody = null;
+      try { seedBody = pm.response.json(); } catch (e) { seedBody = null; }
+
+      // shipmentPIN first, so piecePINs can never win over it.
+      let seedCaptured = '';
+      if (seedBody) {
+          seedCaptured = seedPin(seedBody, 'shipmentpin') || seedPin(seedBody, 'pin');
+      }
+
+      if (seedCaptured) {
+          pm.environment.set(SEED_PIN_VAR, seedCaptured);
+          console.log('[seed pin] ' + seedCaptured + ' -> ' + SEED_PIN_VAR);
+      } else {
+          // Leaving the old value in place means a failed seed reuses the last good
+          // PIN rather than silently blanking the matrix -- and says so.
+          console.log('[seed pin] no PIN in this response -- ' + SEED_PIN_VAR +
+                      ' left at its previous value');
+      }
+    language: text/javascript
+order: 1250

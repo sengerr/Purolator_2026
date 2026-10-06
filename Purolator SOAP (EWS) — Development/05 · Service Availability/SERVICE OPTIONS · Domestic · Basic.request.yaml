@@ -1,0 +1,43 @@
+$kind: http-request
+description: ServiceAvailabilityServiceEndpoint.GetServicesOptions — Developer Test Aid case “05. Domestic destination”.
+url: "{{soapBase}}/EWS/V2/ServiceAvailability/ServiceAvailabilityService.asmx"
+method: POST
+headers:
+  Content-Type: text/xml; charset=utf-8
+  SOAPAction: http://purolator.com/pws/service/v2/GetServicesOptions
+body:
+  type: xml
+  content: |-
+    <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:v2="http://purolator.com/pws/datatypes/v2">
+       <soapenv:Header>
+          <v2:RequestContext>
+             <v2:Version>2.0</v2:Version>
+             <v2:Language>en</v2:Language>
+             <v2:GroupID>11</v2:GroupID>
+             <v2:RequestReference>UserRef</v2:RequestReference>
+          </v2:RequestContext>
+       </soapenv:Header>
+       <soapenv:Body>
+          <v2:GetServicesOptionsRequest>
+             <v2:BillingAccountNumber>{{AccountNumber}}</v2:BillingAccountNumber>
+             <v2:SenderAddress>
+                <v2:City>Edmonton</v2:City>
+                <v2:Province>AB</v2:Province>
+                <v2:Country>CA</v2:Country>
+                <v2:PostalCode>T5S2N4</v2:PostalCode>
+             </v2:SenderAddress>
+             <v2:ReceiverAddress>
+                <v2:City>Richmond</v2:City>
+                <v2:Province>BC</v2:Province>
+                <v2:Country>CA</v2:Country>
+                <v2:PostalCode>V7B1M5</v2:PostalCode>
+             </v2:ReceiverAddress>
+          </v2:GetServicesOptionsRequest>
+       </soapenv:Body>
+    </soapenv:Envelope>
+auth:
+  type: basic
+  credentials:
+    username: "{{SOAP_Key}}"
+    password: "{{SOAP_Password}}"
+order: 5000

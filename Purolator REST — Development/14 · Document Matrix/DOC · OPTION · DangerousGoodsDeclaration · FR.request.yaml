@@ -1,0 +1,37 @@
+$kind: http-request
+description: |-
+  French twin of “DOC · OPTION · DangerousGoodsDeclaration” — same call, pointed at the FRENCH
+  seed's PIN. The document call does not choose a language: the same PIN
+  returns the same bytes in en or fr. The seed decides. Language: fr is
+  sent so any ERROR comes back in French, which is the one thing the
+  retrieval header does change.
+  Document matrix: DangerousGoodsDeclaration, which depends on a shipment OPTION rather than
+  the label format. Reads {{PIN_DangerousGoodsDeclaration_FR}}, captured by the Dangerous Goods seed in 02 · Shipping, so
+  there is one request rather than one per format combination.
+url: "{{baseUrl}}/ship/v1/documents"
+method: POST
+headers:
+  x-api-key: "{{REST_XApiKey}}"
+  RequestReference: "{{RequestReference}}"
+  Language: "fr"
+  Content-Type: application/json
+body:
+  type: json
+  content: |-
+    {
+        "lineOfBusiness": "COURIER",
+        "requestReference": "{{RequestReference}}",
+        "documentCriteria": [
+            {
+                "shipmentPIN": "{{PIN_DangerousGoodsDeclaration_FR}}",
+                "documentType": [
+                    "DangerousGoodsDeclaration"
+                ]
+            }
+        ]
+    }
+auth:
+  type: bearer
+  credentials:
+    token: "{{REST_Token}}"
+order: 1542

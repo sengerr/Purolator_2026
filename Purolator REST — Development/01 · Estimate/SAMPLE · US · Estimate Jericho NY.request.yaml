@@ -1,0 +1,73 @@
+$kind: http-request
+description: |-
+  US sample with the receiver on the Jericho NY fixture (2 Jericho Plaza Suite 204, Jericho NY 11753) -- clone of “ESTIMATE · US · Basic”. Naming: SAMPLE · Lane · Focus. Not verified live.
+url: "{{baseUrl}}/rate/v1/shipment"
+method: POST
+headers:
+  x-api-key: "{{REST_XApiKey}}"
+  RequestReference: "{{RequestReference}}"
+  Language: "{{language}}"
+  Content-Type: application/json
+body:
+  type: json
+  content: |-
+    {
+        "lineOfBusiness": "COURIER",
+        "shipmentDate": "{{Current_Date}}",
+        "outboundShipment": {
+            "senderInformation": {
+                "streetAddress": [
+                    "17718 114 Ave"
+                ],
+                "city": "Edmonton",
+                "provinceStateCode": "AB",
+                "country": "CA",
+                "postalZipCode": "T5S2N4"
+            },
+            "receiverInformation": {
+                "companyName": "Purolator",
+                "streetAddress": [
+                    "2 Jericho Plaza Suite 204"
+                ],
+                "city": "Jericho",
+                "provinceStateCode": "NY",
+                "country": "US",
+                "postalZipCode": "11753"
+            },
+            "shipmentInformation": {
+                "serviceId": "PurolatorExpressU.S.",
+                "unitOfMeasurement": "IMPERIAL",
+                "totalWeight": 1,
+                "totalPackages": 1,
+                "showAlternativeServicesIndicator": true,
+                "shipmentOptionsInformation": [
+                    {
+                        "optionId": "ResidentialSignatureIntl",
+                        "optionIdValue": "true"
+                    }
+                ],
+                "packageInformation": [
+                    {
+                        "packageWeight": 1,
+                        "packageLength": 0,
+                        "packageWidth": 0,
+                        "packageHeight": 0
+                    }
+                ]
+            },
+            "billingInformation": {
+                "billingAccountNumber": "{{AccountNumber}}",
+                "displayPublishedRates": false
+            }
+        },
+        "trackingReferenceInformation": {
+            "reference1": "REF1",
+            "reference2": "REF2",
+            "reference3": "REF3"
+        }
+    }
+auth:
+  type: bearer
+  credentials:
+    token: "{{REST_Token}}"
+order: 911700

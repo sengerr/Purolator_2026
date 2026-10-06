@@ -1,0 +1,66 @@
+$kind: http-request
+description: Converted from SOAP GetFullEstimateRequest — redactable sample “DG Estimate Request and response.txt”.
+url: "{{baseUrl}}/rate/v1/shipment"
+method: POST
+headers:
+  x-api-key: "{{REST_XApiKey}}"
+  RequestReference: "{{RequestReference}}"
+  Language: "{{language}}"
+  Content-Type: application/json
+body:
+  type: json
+  content: |-
+    {
+        "lineOfBusiness": "COURIER",
+        "shipmentDate": "{{Current_Date}}",
+        "outboundShipment": {
+            "senderInformation": {
+                "streetAddress": [
+                    "17718 114 Ave"
+                ],
+                "city": "Edmonton",
+                "provinceStateCode": "AB",
+                "country": "CA",
+                "postalZipCode": "T5S2N4"
+            },
+            "receiverInformation": {
+                "companyName": "Purolator",
+                "streetAddress": [
+                    "3700 Jericho Road"
+                ],
+                "city": "Richmond",
+                "provinceStateCode": "BC",
+                "country": "CA",
+                "postalZipCode": "V7B1M5"
+            },
+            "shipmentInformation": {
+                "serviceId": "PurolatorExpress",
+                "unitOfMeasurement": "IMPERIAL",
+                "totalWeight": 1,
+                "totalPackages": 1,
+                "showAlternativeServicesIndicator": true,
+                "packageInformation": [
+                    {
+                        "packageWeight": 3,
+                        "packageLength": 6,
+                        "packageWidth": 5,
+                        "packageHeight": 5
+                    }
+                ]
+            },
+            "billingInformation": {
+                "billingAccountNumber": "{{AccountNumber}}",
+                "displayPublishedRates": false
+            }
+        },
+        "trackingReferenceInformation": {
+            "reference1": "Blood from the project",
+            "reference2": "ABC123456",
+            "reference3": "PO654987"
+        }
+    }
+auth:
+  type: bearer
+  credentials:
+    token: "{{REST_Token}}"
+order: 1000
