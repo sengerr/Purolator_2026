@@ -1,0 +1,31 @@
+$kind: http-request
+description: |-
+  Team sample “Consolidate Request” — sources/reference-collections/Purolator_API_Project_PROD.postman_collection.json.
+  Naming: SAMPLE · Lane · Focus (tooling/add_team_samples.py). Addresses on the standard fixtures. Not verified live.
+url: "{{soapBase}}/EWS/V2/Shipping/ShippingService.asmx"
+method: POST
+headers:
+  Content-Type: text/xml; charset=utf-8
+  SOAPAction: http://purolator.com/pws/service/v2/Consolidate
+body:
+  type: xml
+  content: |-
+    <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:v2="http://purolator.com/pws/datatypes/v2">
+       <soapenv:Header>
+          <v2:RequestContext>
+             <v2:Version>2.0</v2:Version>
+             <v2:Language>en</v2:Language>
+             <v2:GroupID></v2:GroupID>
+             <v2:RequestReference>{{RequestReference}}</v2:RequestReference>
+          </v2:RequestContext>
+       </soapenv:Header>
+       <soapenv:Body>
+          <v2:ConsolidateRequest/>
+       </soapenv:Body>
+    </soapenv:Envelope>
+auth:
+  type: basic
+  credentials:
+    username: "{{SOAP_Key}}"
+    password: "{{SOAP_Password}}"
+order: 909700

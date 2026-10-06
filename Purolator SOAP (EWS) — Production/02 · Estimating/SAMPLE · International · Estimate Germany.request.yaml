@@ -1,0 +1,181 @@
+$kind: http-request
+description: |-
+  Team sample — sources/redactable-samples/international estimate/To Germany.txt.
+  Naming: SAMPLE · Lane · Focus (tooling/add_team_samples.py). Addresses on the standard fixtures. Not verified live.
+url: "{{soapBase}}/EWS/V2/Estimating/EstimatingService.asmx"
+method: POST
+headers:
+  Content-Type: text/xml; charset=utf-8
+  SOAPAction: http://purolator.com/pws/service/v2/GetFullEstimate
+body:
+  type: xml
+  content: |-
+    <soapenv:Envelope
+    	xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/"
+    	xmlns:v2="http://purolator.com/pws/datatypes/v2">
+    	<soapenv:Header>
+    		<v2:RequestContext>
+    			<v2:Version>2.2</v2:Version>
+    			<v2:Language>en</v2:Language>
+    			<v2:GroupID></v2:GroupID>
+    			<v2:RequestReference>Bigger Boxes</v2:RequestReference>
+
+    			<v2:UserToken></v2:UserToken>
+    		</v2:RequestContext>
+    	</soapenv:Header>
+    	<soapenv:Body>
+    		<v2:GetFullEstimateRequest>
+    			<v2:Shipment>
+    				<v2:SenderInformation>
+    					<v2:Address>
+    						<v2:Name>Tech A</v2:Name>
+
+    						<v2:Company>Purolator</v2:Company>
+    						<v2:Department></v2:Department>
+    						<v2:StreetNumber>3700</v2:StreetNumber>
+    						<v2:StreetSuffix></v2:StreetSuffix>
+    						<v2:StreetName>Jericho</v2:StreetName>
+    						<v2:StreetType>Road</v2:StreetType>
+    						<v2:StreetDirection></v2:StreetDirection>
+    						<v2:suite>110</v2:suite>
+    						<v2:City>Richmond</v2:City>
+    						<v2:Province>BC</v2:Province>
+    						<v2:Country>CA</v2:Country>
+    						<v2:PostalCode>V7B1M5</v2:PostalCode>
+    						<v2:PhoneNumber>
+    							<v2:CountryCode>1</v2:CountryCode>
+    							<v2:AreaCode>604</v2:AreaCode>
+    							<v2:Phone>2734333</v2:Phone>
+    						</v2:PhoneNumber>
+    					</v2:Address>
+
+    					<v2:TaxNumber>123456789</v2:TaxNumber>
+    				</v2:SenderInformation>
+    				<v2:ReceiverInformation>
+    					<v2:Address>
+    						<v2:Name>Tech B</v2:Name>
+
+    						<v2:Company>Purolator</v2:Company>
+
+    						<v2:Department>Testing</v2:Department>
+    						<v2:StreetNumber>59</v2:StreetNumber>
+
+    						<v2:StreetSuffix></v2:StreetSuffix>
+    						<v2:StreetName>Lang Strasse</v2:StreetName>
+
+    						<v2:StreetType/>
+
+    						<v2:StreetDirection></v2:StreetDirection>
+    						<v2:City>Ottobrunn</v2:City>
+    						<v2:Province></v2:Province>
+    						<v2:Country>DE</v2:Country>
+    						<v2:PostalCode>85501</v2:PostalCode>
+    						<v2:PhoneNumber>
+    							<v2:CountryCode>1</v2:CountryCode>
+    							<v2:AreaCode>800</v2:AreaCode>
+    							<v2:Phone>4595599</v2:Phone>
+    						</v2:PhoneNumber>
+    					</v2:Address>
+
+    					<v2:TaxNumber>012345678</v2:TaxNumber>
+    				</v2:ReceiverInformation>
+
+    				<v2:ShipmentDate>{{Current_Date}}</v2:ShipmentDate>
+    				<v2:PackageInformation>
+    					<v2:ServiceID>PurolatorExpressInternational</v2:ServiceID>
+
+    					<v2:Description></v2:Description>
+    					<v2:TotalWeight>
+    						<v2:Value>20</v2:Value>
+    						<v2:WeightUnit>lb</v2:WeightUnit>
+    					</v2:TotalWeight>
+    					<v2:TotalPieces>2</v2:TotalPieces>
+
+    					<v2:PiecesInformation>
+
+    						<v2:Piece>
+    							<v2:Weight>
+    								<v2:Value>10</v2:Value>
+    								<v2:WeightUnit>LB</v2:WeightUnit>
+    							</v2:Weight>
+
+    							<v2:Length>
+    								<v2:Value>4</v2:Value>
+    								<v2:DimensionUnit>in</v2:DimensionUnit>
+    							</v2:Length>
+
+    							<v2:Width>
+    								<v2:Value>6</v2:Value>
+    								<v2:DimensionUnit>in</v2:DimensionUnit>
+    							</v2:Width>
+
+    							<v2:Height>
+    								<v2:Value>3</v2:Value>
+    								<v2:DimensionUnit>in</v2:DimensionUnit>
+    							</v2:Height>
+
+    						</v2:Piece>
+    						<v2:Piece>
+    							<v2:Weight>
+    								<v2:Value>10</v2:Value>
+    								<v2:WeightUnit>LB</v2:WeightUnit>
+    							</v2:Weight>
+
+    							<v2:Length>
+    								<v2:Value>5</v2:Value>
+    								<v2:DimensionUnit>in</v2:DimensionUnit>
+    							</v2:Length>
+
+    							<v2:Width>
+    								<v2:Value>5</v2:Value>
+    								<v2:DimensionUnit>in</v2:DimensionUnit>
+    							</v2:Width>
+
+    							<v2:Height>
+    								<v2:Value>5</v2:Value>
+    								<v2:DimensionUnit>in</v2:DimensionUnit>
+    							</v2:Height>
+
+    						</v2:Piece>
+
+    						<v2:DangerousGoodsDeclarationDocumentIndicator>True</v2:DangerousGoodsDeclarationDocumentIndicator>
+
+    						<v2:OptionsInformation>
+    						</v2:OptionsInformation>
+    					</v2:PiecesInformation>
+    				</v2:PackageInformation>
+    				<v2:PaymentInformation>
+    					<v2:PaymentType>Sender</v2:PaymentType>
+    					<v2:RegisteredAccountNumber>{{AccountNumber}}</v2:RegisteredAccountNumber>
+    					<v2:BillingAccountNumber>{{AccountNumber}}</v2:BillingAccountNumber>
+    				</v2:PaymentInformation>
+    				<v2:PickupInformation>
+    					<v2:PickupType>DropOff</v2:PickupType>
+    				</v2:PickupInformation>
+
+    				<v2:TrackingReferenceInformation>
+
+    					<v2:Reference1>Oversize</v2:Reference1>
+
+    					<v2:Reference2>Large Package</v2:Reference2>
+
+    					<v2:Reference3>Multipiece</v2:Reference3>
+    				</v2:TrackingReferenceInformation>
+
+    				<v2:OtherInformation>
+
+    					<v2:CostCentre>?</v2:CostCentre>
+
+    					<v2:SpecialInstructions>Buzzer number 12</v2:SpecialInstructions>
+    				</v2:OtherInformation>
+    			</v2:Shipment>
+    			<v2:ShowAlternativeServicesIndicator>true</v2:ShowAlternativeServicesIndicator>
+    		</v2:GetFullEstimateRequest>
+    	</soapenv:Body>
+    </soapenv:Envelope>
+auth:
+  type: basic
+  credentials:
+    username: "{{SOAP_Key}}"
+    password: "{{SOAP_Password}}"
+order: 911000

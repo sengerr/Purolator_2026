@@ -1,0 +1,33 @@
+$kind: http-request
+description: |-
+  Document matrix: InternationalBillOfLadingThermal from the U.S. seed created as ZPL / Thermal / URL.
+  Reads {{PIN_US_ZPL_URL}}. documentCriteria carries only shipmentPIN and
+  documentType -- every format field is rejected as unknown here;
+  the format came from how the seed was created.
+url: "{{baseUrl}}/ship/v1/documents"
+method: POST
+headers:
+  x-api-key: "{{REST_XApiKey}}"
+  RequestReference: "{{RequestReference}}"
+  Language: "{{language}}"
+  Content-Type: application/json
+body:
+  type: json
+  content: |-
+    {
+        "lineOfBusiness": "COURIER",
+        "requestReference": "{{RequestReference}}",
+        "documentCriteria": [
+            {
+                "shipmentPIN": "{{PIN_US_ZPL_URL}}",
+                "documentType": [
+                    "InternationalBillOfLadingThermal"
+                ]
+            }
+        ]
+    }
+auth:
+  type: bearer
+  credentials:
+    token: "{{REST_Token}}"
+order: 1110

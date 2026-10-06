@@ -1,0 +1,73 @@
+$kind: http-request
+description: |-
+  REST twin of the SOAP request of the same name (converted with tooling/generators). EstimatingServiceEndpoint.GetFullEstimate — Developer Test Aid case “10. Domestic shipment with Return label”.
+url: "{{baseUrl}}/rate/v1/shipment"
+method: POST
+headers:
+  x-api-key: "{{REST_XApiKey}}"
+  RequestReference: "{{RequestReference}}"
+  Language: "{{language}}"
+  Content-Type: application/json
+body:
+  type: json
+  content: |-
+    {
+        "lineOfBusiness": "COURIER",
+        "shipmentDate": "{{Current_Date}}",
+        "outboundShipment": {
+            "senderInformation": {
+                "companyName": "Purolator",
+                "streetAddress": [
+                    "17718 114 Ave"
+                ],
+                "city": "Edmonton",
+                "provinceStateCode": "AB",
+                "country": "CA",
+                "postalZipCode": "T5S2N4"
+            },
+            "receiverInformation": {
+                "streetAddress": [
+                    "24 Sussex Drive"
+                ],
+                "city": "Ottawa",
+                "provinceStateCode": "ON",
+                "country": "CA",
+                "postalZipCode": "K1M1P5"
+            },
+            "shipmentInformation": {
+                "serviceId": "PurolatorExpressEnvelope",
+                "unitOfMeasurement": "IMPERIAL",
+                "totalWeight": 1,
+                "totalPackages": 1,
+                "showAlternativeServicesIndicator": true,
+                "shipmentOptionsInformation": [
+                    {
+                        "optionId": "ResidentialSignatureDomestic",
+                        "optionIdValue": "true"
+                    }
+                ],
+                "packageInformation": [
+                    {
+                        "packageWeight": 1,
+                        "packageLength": 0,
+                        "packageWidth": 0,
+                        "packageHeight": 0
+                    }
+                ]
+            },
+            "billingInformation": {
+                "billingAccountNumber": "{{AccountNumber}}",
+                "displayPublishedRates": false
+            }
+        },
+        "trackingReferenceInformation": {
+            "reference1": "REF1",
+            "reference2": "REF2",
+            "reference3": "REF3"
+        }
+    }
+auth:
+  type: bearer
+  credentials:
+    token: "{{REST_Token}}"
+order: 10000

@@ -1,0 +1,49 @@
+$kind: http-request
+description: |-
+  Team sample “GetQuickEstimate - International Shipment” — sources/reference-collections/Purolator_API_Project_PROD.postman_collection.json.
+  Naming: SAMPLE · Lane · Focus (tooling/add_team_samples.py). Addresses on the standard fixtures. Not verified live.
+  Converted from SOAP GetQuickEstimateRequest. Quick Estimate has no dedicated REST endpoint — mapped to a minimal /rate/v1/shipment call.
+url: "{{baseUrl}}/rate/v1/shipment"
+method: POST
+headers:
+  x-api-key: "{{REST_XApiKey}}"
+  RequestReference: "{{RequestReference}}"
+  Language: "{{language}}"
+  Content-Type: application/json
+body:
+  type: json
+  content: |-
+    {
+        "lineOfBusiness": "COURIER",
+        "shipmentDate": "{{Current_Date}}",
+        "outboundShipment": {
+            "billingInformation": {
+                "billingAccountNumber": "{{AccountNumber}}",
+                "displayPublishedRates": false
+            },
+            "senderInformation": {
+                "streetAddress": ["3700 Jericho Road"],
+                "city": "Richmond",
+                "provinceStateCode": "BC",
+                "country": "CA",
+                "postalZipCode": "V7B1M5"
+            },
+            "receiverInformation": {
+                "city": "Ottobrunn",
+                "country": "DE",
+                "postalZipCode": "85501"
+            },
+            "shipmentInformation": {
+                "unitOfMeasurement": "IMPERIAL",
+                "totalWeight": 10,
+                "totalPackages": 1,
+                "showAlternativeServicesIndicator": true,
+                "serviceId": "PurolatorExpressInternational"
+            }
+        }
+    }
+auth:
+  type: bearer
+  credentials:
+    token: "{{REST_Token}}"
+order: 902500

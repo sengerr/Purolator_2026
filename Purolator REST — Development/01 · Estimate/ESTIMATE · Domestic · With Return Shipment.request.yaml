@@ -1,0 +1,131 @@
+$kind: http-request
+description: |-
+  Outbound Express plus returnShipment (Ground). Response may include returnShipmentEstimates.
+
+  Source: Purolator-REST-API-STG collection, "Estimate - Courier with return shipment". REST only (no SOAP twin, 2026-10-06).
+url: "{{rateBaseUrl}}/rate/v1/shipment"
+method: POST
+headers:
+  x-api-key: "{{REST_XApiKey}}"
+  Language: "{{language}}"
+  RequestReference: "{{RequestReference}}"
+  Content-Type: "application/json"
+body:
+  type: json
+  content: |-
+    {
+        "lineOfBusiness": "Courier",
+        "shipmentDate": "{{Current_Date}}",
+        "outboundShipment": {
+            "billingInformation": {
+                "billingAccountNumber": "{{AccountNumber}}",
+                "displayPublishedRates": false
+            },
+            "senderInformation": {
+                "companyName": "Purolator",
+                "streetAddress": [
+                    "17718 114 Ave"
+                ],
+                "city": "Edmonton",
+                "provinceStateCode": "AB",
+                "country": "CA",
+                "postalZipCode": "T5S2N4"
+            },
+            "receiverInformation": {
+                "companyName": "Purolator",
+                "streetAddress": [
+                    "3700 Jericho Road"
+                ],
+                "city": "Richmond",
+                "provinceStateCode": "BC",
+                "country": "CA",
+                "postalZipCode": "V7B1M5"
+            },
+            "shipmentInformation": {
+                "serviceId": "PurolatorExpress",
+                "unitOfMeasurement": "Metric",
+                "showAlternativeServicesIndicator": false,
+                "totalWeight": 2.5,
+                "totalPackages": 1,
+                "packageInformation": [
+                    {
+                        "packageWeight": 2.5
+                    }
+                ]
+            }
+        },
+        "returnShipment": {
+            "numberOfReturnShipments": 1,
+            "billingInformation": {
+                "billingAccountNumber": "{{AccountNumber}}",
+                "displayPublishedRates": false
+            },
+            "senderInformation": {
+                "companyName": "Purolator",
+                "streetAddress": [
+                    "17718 114 Ave"
+                ],
+                "city": "Edmonton",
+                "provinceStateCode": "AB",
+                "country": "CA",
+                "postalZipCode": "T5S2N4"
+            },
+            "receiverInformation": {
+                "companyName": "Purolator",
+                "streetAddress": [
+                    "3700 Jericho Road"
+                ],
+                "city": "Richmond",
+                "provinceStateCode": "BC",
+                "country": "CA",
+                "postalZipCode": "V7B1M5"
+            },
+            "shipmentInformation": {
+                "serviceId": "PurolatorGroundReturn",
+                "unitOfMeasurement": "Metric",
+                "totalWeight": 2.5,
+                "totalPackages": 1
+            }
+        }
+    }
+auth:
+  type: bearer
+  credentials:
+    token: "{{REST_Token}}"
+scripts:
+  - type: beforeRequest
+    code: |-
+      // Create-shipment pre-request — shipment date is TODAY + 5 DAYS.
+      // Runs after the collection pre-request, so it overwrites the Current_Date
+      // that script just set to today. Five days ahead keeps the date inside the
+      // carrier's future-dating window and off weekends-only edge cases.
+      const DAYS_AHEAD = 5;
+
+      const d = new Date();
+      d.setDate(d.getDate() + DAYS_AHEAD);
+
+      // Carrier timezone, not the runner's -- see 9001-11.
+      const shipDate = d.toLocaleDateString('en-CA', { timeZone: 'America/Toronto' });
+
+      pm.environment.set('Current_Date', shipDate);
+      console.log('[ship date] ' + shipDate + ' (today + ' + DAYS_AHEAD + ' days)');
+    language: text/javascript
+  - type: afterResponse
+    code: |-
+      pm.test('Status code is 200', function () {
+          pm.response.to.have.status(200);
+      });
+      pm.test('Response is JSON', function () {
+          pm.response.to.be.json;
+      });
+      const json = pm.response.json();
+      pm.test('outboundShipmentEstimates is present', function () {
+          pm.expect(json).to.have.property('outboundShipmentEstimates');
+      });
+      pm.test('returnShipmentEstimates present when return requested', function () {
+          if (json.hasOwnProperty('returnShipmentEstimates')) {
+              pm.expect(json.returnShipmentEstimates).to.exist;
+          }
+      });
+    language: text/javascript
+order: 955200

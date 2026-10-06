@@ -1,0 +1,22 @@
+$kind: http-request
+description: |-
+  Team sample “GetLocationsByPostalCode” — sources/reference-collections/Purolator_API_Project_PROD.postman_collection.json.
+  Naming: SAMPLE · Lane · Focus (tooling/add_team_samples.py). Addresses on the standard fixtures. Not verified live.
+  Converted from SOAP GetLocationsByPostalCodeRequest.
+  Corrected 2026-10-06 from the Purolator REST STG collection and the support cheat sheet: the locator is a GET with language and requestReference as query parameters (it was sent as POST, which the gateway answers 403).
+url: "{{baseUrl}}/locator/v1/address?language={{language}}&requestReference={{RequestReference}}&postalCode={{postalCode}}&radialDistanceInKm=25"
+method: GET
+headers:
+  x-api-key: "{{REST_XApiKey}}"
+  RequestReference: "{{RequestReference}}"
+  Language: "{{language}}"
+queryParams:
+  language: "{{language}}"
+  requestReference: "{{RequestReference}}"
+  postalCode: "{{postalCode}}"
+  radialDistanceInKm: "25"
+auth:
+  type: bearer
+  credentials:
+    token: "{{REST_Token}}"
+order: 902900

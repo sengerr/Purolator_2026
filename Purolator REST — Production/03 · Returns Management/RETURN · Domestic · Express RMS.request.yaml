@@ -1,0 +1,138 @@
+$kind: http-request
+description: |-
+  returnsManagement=true treats outbound as RMS; returnShipment omitted/ignored.
+
+  Source: Purolator-REST-API-STG collection, "RMS returnsManagement Express (no returnShipment)". REST only (no SOAP twin, 2026-10-06).
+url: "{{baseUrl}}/ship/v1/shipment"
+method: POST
+headers:
+  x-api-key: "{{REST_XApiKey}}"
+  Language: "{{language}}"
+  RequestReference: "{{RequestReference}}"
+  Content-Type: "application/json"
+body:
+  type: json
+  content: |-
+    {
+        "lineOfBusiness": "Courier",
+        "shipmentDate": "{{Current_Date}}",
+        "validateOnly": false,
+        "returnsManagement": true,
+        "returnRates": true,
+        "shipmentDocuments": {
+            "label": {
+                "outputType": "PDF",
+                "printerFormat": "Regular",
+                "responseType": "URL"
+            }
+        },
+        "outboundShipment": {
+            "pickupType": "DROPOFF",
+            "paymentInformation": {
+                "paymentType": "SENDER",
+                "registeredAccountNumber": "{{AccountNumber}}",
+                "billingAccountNumber": "{{AccountNumber}}"
+            },
+            "senderInformation": {
+                "attentionTo": "Tech A",
+                "companyName": "Purolator",
+                "streetAddress": [
+                    "17718 114 Ave"
+                ],
+                "city": "Edmonton",
+                "provinceStateCode": "AB",
+                "country": "CA",
+                "postalZipCode": "T5S2N4",
+                "phoneNumber": "17804091270"
+            },
+            "receiverInformation": {
+                "attentionTo": "Tech B",
+                "companyName": "Purolator",
+                "streetAddress": [
+                    "62 Vulcan Street"
+                ],
+                "city": "Etobicoke",
+                "provinceStateCode": "ON",
+                "country": "CA",
+                "postalZipCode": "M9W1L2",
+                "phoneNumber": "18004595599"
+            },
+            "shipmentInformation": {
+                "serviceId": "PurolatorExpressReturn",
+                "unitOfMeasurement": "IMPERIAL",
+                "descriptionOfGoods": "RMS outbound",
+                "totalWeight": 3.0,
+                "totalPackages": 1,
+                "dangerousGoodsDeclarationDocumentIndicator": false,
+                "shipmentOptionsInformation": [],
+                "packageInformation": [
+                    {
+                        "packageWeight": 3.0,
+                        "packageLength": 10,
+                        "packageWidth": 8,
+                        "packageHeight": 6,
+                        "packageReference1": "PKG-REF-1",
+                        "packageOptionsInformation": [
+                            {
+                                "optionId": "SpecialHandling",
+                                "optionIdValue": "false"
+                            }
+                        ]
+                    }
+                ]
+            },
+            "customerReferenceInformation": {
+                "costCenter": "QA-ADDTL",
+                "notes": "Additional Postman tests",
+                "shipmentReference1": "ADDTL-REF-1"
+            }
+        }
+    }
+auth:
+  type: bearer
+  credentials:
+    token: "{{REST_Token}}"
+scripts:
+  - type: beforeRequest
+    code: |-
+      // Create-shipment pre-request — shipment date is TODAY + 5 DAYS.
+      // Runs after the collection pre-request, so it overwrites the Current_Date
+      // that script just set to today. Five days ahead keeps the date inside the
+      // carrier's future-dating window and off weekends-only edge cases.
+      const DAYS_AHEAD = 5;
+
+      const d = new Date();
+      d.setDate(d.getDate() + DAYS_AHEAD);
+
+      // Carrier timezone, not the runner's -- see 9001-11.
+      const shipDate = d.toLocaleDateString('en-CA', { timeZone: 'America/Toronto' });
+
+      pm.environment.set('Current_Date', shipDate);
+      console.log('[ship date] ' + shipDate + ' (today + ' + DAYS_AHEAD + ' days)');
+    language: text/javascript
+  - type: afterResponse
+    code: |-
+      pm.test('Status code is 200', function () {
+          pm.response.to.have.status(200);
+      });
+      pm.test('Response is JSON', function () {
+          pm.response.to.be.json;
+      });
+      const json = pm.response.json();
+      pm.test('validShipment is true or omitted without hard errors', function () {
+          if (json.hasOwnProperty('validShipment')) {
+              pm.expect(json.validShipment).to.eql(true);
+          }
+      });
+      pm.test('shipmentDetails.shipmentPIN is present', function () {
+          pm.expect(json.shipmentDetails).to.be.an('object');
+          pm.expect(json.shipmentDetails.shipmentPIN).to.be.a('string').and.not.empty;
+          pm.environment.set('PIN', json.shipmentDetails.shipmentPIN);
+      });
+      pm.test('packagePINs array present when created', function () {
+          if (json.shipmentDetails && json.shipmentDetails.packagePINs) {
+              pm.expect(json.shipmentDetails.packagePINs).to.be.an('array').that.is.not.empty;
+          }
+      });
+    language: text/javascript
+order: 951500

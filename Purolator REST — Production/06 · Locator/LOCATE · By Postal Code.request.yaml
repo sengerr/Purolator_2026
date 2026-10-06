@@ -1,0 +1,28 @@
+$kind: http-request
+description: |-
+  Happy path: required language + requestReference, postalCode M9A0A5, max 2 locations. All other OAS query parameters are listed disabled so trainees can toggle them.
+
+  Source: Purolator-REST-API-STG collection, "Locator - happy by postal code". REST only (no SOAP twin, 2026-10-06).
+  Optional query parameters in the source (add as needed): streetAddress, city, provinceCode, radialDistanceInKm, holdForPickup, dangerousGoods, kiosk, streetAccess, wheelChairAccess, locationType, openTime, closeTime, currentlyOpen, gmtOffSet, daysOfOperation.
+  Header corrected 2026-10-06 after a live Certification check: the client x-api-key works on the locator; the locatorXApiKey / x-origin-verify values from the Locator OAS example are denied (403).
+url: "{{baseUrl}}/locator/v1/address?language=en&requestReference={{RequestReference}}&postalCode=M9A0A5&maxNumberOfLocations=2"
+method: GET
+headers:
+  x-api-key: "{{REST_XApiKey}}"
+queryParams:
+  language: "en"
+  requestReference: "{{RequestReference}}"
+  postalCode: "M9A0A5"
+  maxNumberOfLocations: "2"
+auth:
+  type: bearer
+  credentials:
+    token: "{{REST_Token}}"
+scripts:
+  - type: afterResponse
+    code: |-
+      pm.test('Status code is 200', function () { pm.response.to.have.status(200); });
+      pm.test('Response is JSON', function () { pm.response.to.be.json; });
+      console.log(pm.response.text().substring(0, 2000));
+    language: text/javascript
+order: 958600

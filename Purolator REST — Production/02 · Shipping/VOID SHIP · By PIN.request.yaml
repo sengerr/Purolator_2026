@@ -1,0 +1,35 @@
+$kind: http-request
+description: |-
+  PUT void using shipmentPIN from a prior successful create (collection var).
+
+  Source: Purolator-REST-API-STG collection, "Void Shipment by PIN". REST only (no SOAP twin, 2026-10-06).
+url: "{{baseUrl}}/ship/v1/shipment"
+method: PUT
+headers:
+  x-api-key: "{{REST_XApiKey}}"
+  Language: "{{language}}"
+  RequestReference: "{{RequestReference}}"
+  Content-Type: "application/json"
+body:
+  type: json
+  content: |-
+    {
+        "lineOfBusiness": "Courier",
+        "shipmentPIN": "{{PIN_VOID_1}}"
+    }
+auth:
+  type: bearer
+  credentials:
+    token: "{{REST_Token}}"
+scripts:
+  - type: afterResponse
+    code: |-
+      pm.test('Status code is 200', function () {
+          pm.response.to.have.status(200);
+      });
+      pm.test('shipmentVoided is true', function () {
+          const json = pm.response.json();
+          pm.expect(String(json.shipmentVoided).toLowerCase()).to.eql('true');
+      });
+    language: text/javascript
+order: 952000

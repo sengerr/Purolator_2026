@@ -1,0 +1,99 @@
+$kind: http-request
+description: |-
+  AdultSignatureRequired option. Alternatives on. Useful to compare option price lines in the estimate.
+
+  Source: Purolator-REST-API-STG collection, "Estimate - Courier with signature options and alternatives". REST only (no SOAP twin, 2026-10-06).
+url: "{{rateBaseUrl}}/rate/v1/shipment"
+method: POST
+headers:
+  x-api-key: "{{REST_XApiKey}}"
+  Language: "{{language}}"
+  RequestReference: "{{RequestReference}}"
+  Content-Type: "application/json"
+body:
+  type: json
+  content: |-
+    {
+        "lineOfBusiness": "Courier",
+        "shipmentDate": "{{Current_Date}}",
+        "outboundShipment": {
+            "billingInformation": {
+                "billingAccountNumber": "{{AccountNumber}}",
+                "displayPublishedRates": false
+            },
+            "senderInformation": {
+                "companyName": "Purolator",
+                "streetAddress": ["17718 114 Ave"],
+                "city": "Edmonton",
+                "provinceStateCode": "AB",
+                "country": "CA",
+                "postalZipCode": "T5S2N4"
+            },
+            "receiverInformation": {
+                "companyName": "Purolator",
+                "streetAddress": ["30 Aero Drive NE"],
+                "city": "Calgary",
+                "provinceStateCode": "AB",
+                "country": "CA",
+                "postalZipCode": "T2E8Z9"
+            },
+            "shipmentInformation": {
+                "serviceId": "PurolatorExpress12PM",
+                "unitOfMeasurement": "Metric",
+                "showAlternativeServicesIndicator": true,
+                "totalWeight": 1.5,
+                "totalPackages": 1,
+                "shipmentOptionsInformation": [
+                    {
+                        "optionId": "AdultSignatureRequired",
+                        "optionIdValue": "true"
+                    },
+                    {
+                        "optionId": "OriginSignatureNotRequired",
+                        "optionIdValue": "false"
+                    }
+                ],
+                "packageInformation": [
+                    {
+                        "packageWeight": 1.5
+                    }
+                ]
+            }
+        }
+    }
+auth:
+  type: bearer
+  credentials:
+    token: "{{REST_Token}}"
+scripts:
+  - type: beforeRequest
+    code: |-
+      // Create-shipment pre-request — shipment date is TODAY + 5 DAYS.
+      // Runs after the collection pre-request, so it overwrites the Current_Date
+      // that script just set to today. Five days ahead keeps the date inside the
+      // carrier's future-dating window and off weekends-only edge cases.
+      const DAYS_AHEAD = 5;
+
+      const d = new Date();
+      d.setDate(d.getDate() + DAYS_AHEAD);
+
+      // Carrier timezone, not the runner's -- see 9001-11.
+      const shipDate = d.toLocaleDateString('en-CA', { timeZone: 'America/Toronto' });
+
+      pm.environment.set('Current_Date', shipDate);
+      console.log('[ship date] ' + shipDate + ' (today + ' + DAYS_AHEAD + ' days)');
+    language: text/javascript
+  - type: afterResponse
+    code: |-
+      pm.test('Status code is 200', function () {
+          pm.response.to.have.status(200);
+      });
+      pm.test('Response is JSON', function () {
+          pm.response.to.be.json;
+      });
+      const json = pm.response.json();
+      pm.test('outboundShipmentEstimates is present', function () {
+          pm.expect(json).to.have.property('outboundShipmentEstimates');
+      });
+    language: text/javascript
+order: 955300

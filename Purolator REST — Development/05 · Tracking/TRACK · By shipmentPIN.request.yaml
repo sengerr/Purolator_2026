@@ -1,0 +1,39 @@
+$kind: http-request
+description: |-
+  Happy path. Run a Create first (02/03/07) so {{shipmentPIN}} is filled. Body fields from TrackingSearchCriteria / OnlineTrackingSearchRequest (OAS).
+
+  Source: Purolator-REST-API-STG collection, "Track - happy by shipmentPIN". REST only (no SOAP twin, 2026-10-06).
+url: "{{baseUrl}}/track/v1/shipment"
+method: POST
+headers:
+  x-api-key: "{{REST_XApiKey}}"
+  Content-Type: "application/json"
+body:
+  type: json
+  content: |-
+    {
+        "language": "en",
+        "search": [
+            {
+                "trackingId": "{{PIN}}",
+                "pod": false,
+                "eventSortOrder": "d"
+            }
+        ]
+    }
+auth:
+  type: bearer
+  credentials:
+    token: "{{REST_Token}}"
+scripts:
+  - type: afterResponse
+    code: |-
+      pm.test('Status code is 200', function () { pm.response.to.have.status(200); });
+      const json = pm.response.json();
+      pm.test('searchResult array present', function () { pm.expect(json.searchResult).to.be.an('array'); });
+      (json.searchResult || []).forEach(function (r, i) {
+          const p = r.pin || {};
+          console.log('search[' + i + ']', p.trackingId, 'status=', p.status, 'type=', p.type);
+      });
+    language: text/javascript
+order: 956200

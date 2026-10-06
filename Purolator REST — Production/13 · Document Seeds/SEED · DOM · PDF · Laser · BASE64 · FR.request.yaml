@@ -1,0 +1,159 @@
+$kind: http-request
+description: |-
+  French twin of “SEED · DOM · PDF · Laser · BASE64” — identical except the Language header, which is
+  hard-coded to fr. A document's language is fixed when the SHIPMENT is
+  created: the same PIN returns the same bytes whether /ship/v1/documents
+  is called with en or fr, so French coverage needs its own create call.
+  Captures into <var>_FR so the English seed's PIN is left intact.
+  Seed shipment: Domestic lane, label PDF / Laser / BASE64.
+  Creates the shipment whose format decides which document types are
+  retrievable later, and captures its PIN into PIN_DOM_PDF_BASE64.
+url: "{{baseUrl}}{{createShipmentPath}}"
+method: POST
+headers:
+  x-api-key: "{{REST_XApiKey}}"
+  RequestReference: "{{RequestReference}}"
+  Language: "fr"
+  Content-Type: application/json
+body:
+  type: json
+  content: |-
+    {
+        "lineOfBusiness": "COURIER",
+        "shipmentDate": "{{Current_Date}}",
+        "validateOnly": false,
+        "returnsManagement": false,
+        "returnRates": false,
+        "outboundShipment": {
+            "pickupType": "DROPOFF",
+            "senderInformation": {
+                "attentionTo": "Tech A",
+                "streetAddress": [
+                    "17718 114 Ave"
+                ],
+                "city": "Edmonton",
+                "provinceStateCode": "AB",
+                "country": "CA",
+                "postalZipCode": "T5S2N4",
+                "phoneNumber": "17804091270"
+            },
+            "receiverInformation": {
+                "attentionTo": "Home Receiver",
+                "streetAddress": ["24 Sussex Drive"],
+                "city": "Ottawa",
+                "provinceStateCode": "ON",
+                "country": "CA",
+                "postalZipCode": "K1M1P5",
+                "phoneNumber": "18004595599"
+            },
+            "shipmentInformation": {
+                "serviceId": "PurolatorExpressEnvelope",
+                "unitOfMeasurement": "IMPERIAL",
+                "descriptionOfGoods": "Test Description",
+                "totalWeight": 1,
+                "totalPackages": 1,
+                "dangerousGoodsDeclarationDocumentIndicator": false,
+                "shipmentOptionsInformation": [
+                    {
+                        "optionId": "ResidentialSignatureDomestic",
+                        "optionIdValue": "true"
+                    }
+                ],
+                "packageInformation": [
+                    {
+                        "packageWeight": 1,
+                        "packageLength": 0,
+                        "packageWidth": 0,
+                        "packageHeight": 0
+                    }
+                ]
+            },
+            "paymentInformation": {
+                "paymentType": "Sender",
+                "registeredAccountNumber": "{{AccountNumber}}",
+                "billingAccountNumber": "{{AccountNumber}}"
+            },
+            "customerReferenceInformation": {
+                "costCenter": "Cost Center",
+                "notes": "Special Instructions",
+                "shipmentReference1": "REF1",
+                "shipmentReference2": "REF2",
+                "shipmentReference3": "REF3"
+            }
+        },
+        "shipmentDocuments": {
+            "label": {
+                "outputType": "PDF",
+                "printerFormat": "Laser",
+                "responseType": "BASE64"
+            }
+        }
+    }
+auth:
+  type: bearer
+  credentials:
+    token: "{{REST_Token}}"
+scripts:
+  - type: beforeRequest
+    code: |-
+      // Seed shipments are dated TODAY + 5 DAYS so they sit inside the carrier's
+      // future-dating window. Carrier timezone, not the runner's -- see 9001-11.
+      const DAYS_AHEAD = 5;
+      const d = new Date();
+      d.setDate(d.getDate() + DAYS_AHEAD);
+      const shipDate = d.toLocaleDateString('en-CA', { timeZone: 'America/Toronto' });
+      pm.environment.set('Current_Date', shipDate);
+    language: text/javascript
+  - type: afterResponse
+    code: |-
+      // PIN capture -- this seed is the source for PIN_DOM_PDF_BASE64.
+      // The document matrix reads that variable back, so the matrix file is identical
+      // in Certification, Development and Production; only the captured value differs.
+      const SEED_PIN_VAR = 'PIN_DOM_PDF_BASE64_FR';
+
+      // The PIN's field path differs between REST responses, so search rather than
+      // hard-code. Accepts "123", 123, and { "value": 123 }.
+      function seedPin(node, wanted) {
+          if (node === null || typeof node !== 'object') return '';
+          if (Array.isArray(node)) {
+              for (let i = 0; i < node.length; i++) {
+                  const hit = seedPin(node[i], wanted);
+                  if (hit) return hit;
+              }
+              return '';
+          }
+          for (const key of Object.keys(node)) {
+              const val = node[key];
+              if (key.toLowerCase() === wanted) {
+                  if (typeof val === 'string' && val.trim()) return val.trim();
+                  if (typeof val === 'number') return String(val);
+                  if (val && typeof val === 'object' && val.value) {
+                      return String(val.value).trim();
+                  }
+              }
+              const hit = seedPin(val, wanted);
+              if (hit) return hit;
+          }
+          return '';
+      }
+
+      let seedBody = null;
+      try { seedBody = pm.response.json(); } catch (e) { seedBody = null; }
+
+      // shipmentPIN first, so piecePINs can never win over it.
+      let seedCaptured = '';
+      if (seedBody) {
+          seedCaptured = seedPin(seedBody, 'shipmentpin') || seedPin(seedBody, 'pin');
+      }
+
+      if (seedCaptured) {
+          pm.environment.set(SEED_PIN_VAR, seedCaptured);
+          console.log('[seed pin] ' + seedCaptured + ' -> ' + SEED_PIN_VAR);
+      } else {
+          // Leaving the old value in place means a failed seed reuses the last good
+          // PIN rather than silently blanking the matrix -- and says so.
+          console.log('[seed pin] no PIN in this response -- ' + SEED_PIN_VAR +
+                      ' left at its previous value');
+      }
+    language: text/javascript
+order: 1062

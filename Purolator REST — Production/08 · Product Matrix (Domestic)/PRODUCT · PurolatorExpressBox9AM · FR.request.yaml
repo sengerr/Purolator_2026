@@ -1,0 +1,232 @@
+$kind: http-request
+description: |-
+  French twin of “PRODUCT · PurolatorExpressBox9AM” — identical except the Language header, which is
+  hard-coded to fr. A document's language is fixed when the SHIPMENT is
+  created: the same PIN returns the same bytes whether /ship/v1/documents
+  is called with en or fr, so French coverage needs its own create call.
+  
+  Product matrix (API-validated catalogue) - one piece, 2 lb,
+  destination CA. Identical to every other
+  request in this folder except serviceId, which is "PurolatorExpressBox9AM".
+url: "{{baseUrl}}{{createShipmentPath}}"
+method: POST
+headers:
+  x-api-key: "{{REST_XApiKey}}"
+  RequestReference: "{{RequestReference}}"
+  Language: "fr"
+  Content-Type: application/json
+body:
+  type: json
+  content: |-
+    {
+        "lineOfBusiness": "COURIER",
+        "shipmentDate": "{{Current_Date}}",
+        "validateOnly": false,
+        "returnsManagement": false,
+        "returnRates": false,
+        "outboundShipment": {
+            "pickupType": "DROPOFF",
+            "senderInformation": {
+                "attentionTo": "Tech A",
+                "streetAddress": [
+                    "17718 114 Ave"
+                ],
+                "city": "Edmonton",
+                "provinceStateCode": "AB",
+                "country": "CA",
+                "postalZipCode": "T5S2N4",
+                "phoneNumber": "17804091270"
+            },
+            "receiverInformation": {
+                "attentionTo": "Tech B",
+                "companyName": "Purolator",
+                "streetAddress": ["30 Aero Drive NE"],
+                "city": "Calgary",
+                "provinceStateCode": "AB",
+                "country": "CA",
+                "postalZipCode": "T2E8Z9",
+                "phoneNumber": "18004595599"
+            },
+            "shipmentInformation": {
+                "serviceId": "PurolatorExpressBox9AM",
+                "unitOfMeasurement": "IMPERIAL",
+                "descriptionOfGoods": "Product matrix test",
+                "totalWeight": 2,
+                "totalPackages": 1,
+                "dangerousGoodsDeclarationDocumentIndicator": false,
+                "packageInformation": [
+                    {
+                        "packageWeight": 2,
+                        "packageLength": 0,
+                        "packageWidth": 0,
+                        "packageHeight": 0
+                    }
+                ]
+            },
+            "paymentInformation": {
+                "paymentType": "Sender",
+                "registeredAccountNumber": "{{AccountNumber}}",
+                "billingAccountNumber": "{{AccountNumber}}"
+            },
+            "customerReferenceInformation": {
+                "costCenter": "Product Matrix",
+                "shipmentReference1": "PurolatorExpressBox9AM"
+            }
+        },
+        "shipmentDocuments": {
+            "label": {
+                "outputType": "ZPL",
+                "printerFormat": "thermal",
+                "responseType": "BASE64"
+            }
+        }
+    }
+auth:
+  type: bearer
+  credentials:
+    token: "{{REST_Token}}"
+scripts:
+  - type: beforeRequest
+    code: |-
+      // Create-shipment pre-request — shipment date is TODAY + 5 DAYS.
+      // Runs after the collection pre-request, so it overwrites the Current_Date
+      // that script just set to today. Five days ahead keeps the date inside the
+      // carrier's future-dating window and off weekends-only edge cases.
+      const DAYS_AHEAD = 5;
+
+      const d = new Date();
+      d.setDate(d.getDate() + DAYS_AHEAD);
+
+      // Carrier timezone, not the runner's -- see 9001-11.
+      const shipDate = d.toLocaleDateString('en-CA', { timeZone: 'America/Toronto' });
+
+      pm.environment.set('Current_Date', shipDate);
+      console.log('[ship date] ' + shipDate + ' (today + ' + DAYS_AHEAD + ' days)');
+    language: text/javascript
+  - type: afterResponse
+    code: |-
+      // =====================================================================
+      // Post-response — render returned labels in Postman's Visualize tab.
+      //
+      // Purolator returns labels as base64. Depending on the requested output
+      // type the decoded bytes are ZPL (thermal), PNG, or PDF, so this script
+      // sniffs each candidate rather than assuming one shape, and it searches
+      // the whole response instead of hard-coding a field path (the field name
+      // differs between the SOAP and REST contracts).
+      //
+      // ZPL is rasterised through the public Labelary API. If you would rather
+      // not send label data to a third party, set USE_LABELARY = false below —
+      // the raw ZPL is still printed to the console.
+      // =====================================================================
+      // Rasterisation renders into Postman's Visualize tab, which Newman does
+      // not have -- and a pm.sendRequest() here REPLACES this request's entry in
+      // Newman's report, losing the response and its PIN. So it is on for
+      // interactive use and off whenever the runner sets DISABLE_LABELARY.
+      const USE_LABELARY =
+          String(pm.environment.get('DISABLE_LABELARY') || '').toLowerCase() !== 'true';
+      const DPMM = '8dpmm';        // 203 dpi. Use 12dpmm for 300 dpi printers.
+      const SIZE = '4x6';          // label size in inches
+
+      // --- collect candidate base64 strings from the response ---------------
+      function collectBase64(text) {
+          // Long, unbroken base64 runs — short matches are almost always ids.
+          const found = (text.match(/[A-Za-z0-9+/]{200,}={0,2}/g) || []);
+          return [...new Set(found)];
+      }
+
+      let raw = '';
+      try { raw = pm.response.text(); } catch (e) { raw = ''; }
+      const candidates = collectBase64(raw);
+
+      // --- classify and decode ----------------------------------------------
+      // Postman's sandbox already defines CryptoJS as a global; redeclaring it
+      // with const is a SyntaxError there. Prefer the global, fall back to
+      // require() so the script also runs outside the sandbox.
+      const CJS = (typeof CryptoJS !== 'undefined') ? CryptoJS : require('crypto-js');
+
+      function decodeUtf8(b64) {
+          try { return CJS.enc.Base64.parse(b64).toString(CJS.enc.Utf8); }
+          catch (e) { return ''; }
+      }
+
+      const images = [];   // ready-to-render data URIs
+      const zpls   = [];   // ZPL strings needing rasterisation
+
+      candidates.forEach(b64 => {
+          if (b64.startsWith('iVBORw0KGgo')) {            // PNG magic bytes
+              images.push('data:image/png;base64,' + b64);
+              return;
+          }
+          if (b64.startsWith('JVBERi0')) {                // PDF magic bytes
+              images.push('PDF:data:application/pdf;base64,' + b64);
+              return;
+          }
+          const text = decodeUtf8(b64);
+          if (text && text.trim().startsWith('^XA')) {    // ZPL always opens ^XA
+              zpls.push(text);
+          }
+      });
+
+      // --- visualiser template ----------------------------------------------
+      const template = `
+      <style>
+        body { font-family: -apple-system, Segoe UI, sans-serif; margin: 0; padding: 12px;
+               background: #fafafa; color: #222; }
+        h3 { font-size: 13px; font-weight: 600; margin: 0 0 10px; }
+        .label { background: #fff; border: 1px solid #ddd; border-radius: 6px;
+                 padding: 10px; margin-bottom: 12px; display: inline-block; }
+        .label img, .label object { max-width: 420px; display: block; }
+        .cap { font-size: 11px; color: #666; margin-top: 6px; }
+        .none { font-size: 12px; color: #888; }
+      </style>
+      <h3>Labels in this response: {{count}}</h3>
+      {{#unless count}}<div class='none'>No ZPL, PNG or PDF label found in the response body.</div>{{/unless}}
+      {{#each labels}}
+        <div class='label'>
+          {{#if isPdf}}<object data='{{src}}' type='application/pdf' width='420' height='560'></object>
+          {{else}}<img src='{{src}}'>{{/if}}
+          <div class='cap'>{{caption}}</div>
+        </div>
+      {{/each}}`;
+
+      function render(labels) {
+          pm.visualizer.set(template, { labels: labels, count: labels.length });
+      }
+
+      // --- rasterise ZPL via Labelary, then render ---------------------------
+      const direct = images.map((src, i) => ({
+          src: src.startsWith('PDF:') ? src.slice(4) : src,
+          isPdf: src.startsWith('PDF:'),
+          caption: (src.startsWith('PDF:') ? 'PDF document ' : 'PNG label ') + (i + 1),
+      }));
+
+      if (!zpls.length || !USE_LABELARY) {
+          zpls.forEach(z => console.log('[ZPL]\n' + z));
+          render(direct);
+      } else {
+          let pending = zpls.length;
+          const rendered = [];
+          zpls.forEach((zpl, i) => {
+              console.log('[ZPL ' + (i + 1) + ']\n' + zpl);
+              pm.sendRequest({
+                  url: `https://api.labelary.com/v1/printers/${DPMM}/labels/${SIZE}/0/`,
+                  method: 'POST',
+                  header: { 'Accept': 'image/png', 'Content-Type': 'application/x-www-form-urlencoded' },
+                  body: { mode: 'raw', raw: zpl },
+              }, (err, res) => {
+                  if (!err && res && res.code === 200) {
+                      rendered.push({
+                          src: 'data:image/png;base64,' + res.stream.toString('base64'),
+                          isPdf: false,
+                          caption: 'ZPL label ' + (i + 1) + ' (rendered via Labelary)',
+                      });
+                  } else {
+                      console.log('[Labelary] render failed for label ' + (i + 1) +
+                                  ' — ' + (err ? err.message : 'HTTP ' + (res && res.code)));
+                  }
+                  if (--pending === 0) render(direct.concat(rendered));
+              });
+          });
+      }
+    language: text/javascript
+order: 17002

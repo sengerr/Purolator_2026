@@ -1,0 +1,35 @@
+$kind: http-request
+description: |-
+  Variant: city search (OAS example Vancouver) with openTime / closeTime / daysOfOperation / currentlyOpen, language fr.
+
+  Source: Purolator-REST-API-STG collection, "Locator - by city with opening hours filters (French)". REST only (no SOAP twin, 2026-10-06).
+  Header corrected 2026-10-06 after a live Certification check: the client x-api-key works on the locator; the locatorXApiKey / x-origin-verify values from the Locator OAS example are denied (403).
+  provinceCode=BC added 2026-10-06: Certification answers 9001-31 (city needs a province code) without it.
+url: "{{baseUrl}}/locator/v1/address?language=fr&requestReference={{RequestReference}}&city=Vancouver&provinceCode=BC&openTime=08:00:00&closeTime=20:00:00&daysOfOperation=Monday,Tuesday&currentlyOpen=false&wheelChairAccess=false&streetAccess=false&maxNumberOfLocations=2"
+method: GET
+headers:
+  x-api-key: "{{REST_XApiKey}}"
+queryParams:
+  language: "fr"
+  requestReference: "{{RequestReference}}"
+  city: "Vancouver"
+  provinceCode: "BC"
+  openTime: "08:00:00"
+  closeTime: "20:00:00"
+  daysOfOperation: "Monday,Tuesday"
+  currentlyOpen: "false"
+  wheelChairAccess: "false"
+  streetAccess: "false"
+  maxNumberOfLocations: "2"
+auth:
+  type: bearer
+  credentials:
+    token: "{{REST_Token}}"
+scripts:
+  - type: afterResponse
+    code: |-
+      pm.test('Status code is 200', function () { pm.response.to.have.status(200); });
+      pm.test('Response is JSON', function () { pm.response.to.be.json; });
+      console.log(pm.response.text().substring(0, 2000));
+    language: text/javascript
+order: 958800

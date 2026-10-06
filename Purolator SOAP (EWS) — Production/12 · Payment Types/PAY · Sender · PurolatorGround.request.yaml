@@ -1,0 +1,331 @@
+$kind: http-request
+description: |-
+  SOAP twin of the REST request of the same name, rebuilt from its JSON onto the SOAP lane template. REST description: Payment type Sender on PurolatorGround, domestic, one piece 2 lb. Identical to the other requests in this folder except paymentType and serviceId. SOAP template: “SHIP · Domestic · Basic”.
+url: "{{soapBase}}/EWS/V2/Shipping/ShippingService.asmx"
+method: POST
+headers:
+  Content-Type: text/xml; charset=utf-8
+  SOAPAction: http://purolator.com/pws/service/v2/CreateShipment
+body:
+  type: xml
+  content: |-
+    <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:v2="http://purolator.com/pws/datatypes/v2">
+       <soapenv:Header>
+         <v2:RequestContext>
+           <v2:Version>2.0</v2:Version>
+             <v2:Language>en</v2:Language>
+             <v2:GroupID>111</v2:GroupID>
+             <v2:RequestReference>UserRef</v2:RequestReference>
+          </v2:RequestContext>
+       </soapenv:Header>
+       <soapenv:Body>
+          <v2:CreateShipmentRequest>
+            <!--Optional:-->
+             <v2:Shipment>
+                <v2:SenderInformation>
+                   <v2:Address>
+                      <v2:Name>Tech A</v2:Name>
+                      <!--Optional:-->
+                      <v2:Company>Purolator</v2:Company>
+                      <!--Optional:-->
+                      <v2:Department>Test Department</v2:Department>
+                      <v2:StreetNumber>17718</v2:StreetNumber>
+                      <!--Optional:-->
+                      <v2:StreetSuffix/>
+                      <v2:StreetName>114</v2:StreetName>
+                      <!--Optional:-->
+                      <v2:StreetType>Ave</v2:StreetType>
+                      <!--Optional:-->
+                      <v2:StreetDirection/>
+                      <!--Optional:-->
+                      <v2:Suite></v2:Suite>
+                      <!--Optional:-->
+                      <v2:Floor></v2:Floor>
+                      <!--Optional:-->
+                      <v2:StreetAddress2/>
+                      <!--Optional:-->
+                      <v2:StreetAddress3/>
+                      <v2:City>Edmonton</v2:City>
+    <v2:Province>AB</v2:Province>
+    <v2:Country>CA</v2:Country>
+    <v2:PostalCode>T5S2N4</v2:PostalCode>
+                      <v2:PhoneNumber>
+                      <v2:CountryCode>1</v2:CountryCode>
+                         <v2:AreaCode>780</v2:AreaCode>
+                         <v2:Phone>4091270</v2:Phone>
+                         <!--Optional:-->
+                         <v2:Extension></v2:Extension>
+                      </v2:PhoneNumber>
+                      <!--Optional:-->
+                      <v2:FaxNumber>
+                         <v2:CountryCode/>
+                         <v2:AreaCode/>
+                         <v2:Phone/>
+                         <!--Optional:-->
+                         <v2:Extension/>
+                      </v2:FaxNumber>
+                   </v2:Address>
+                   <!--Optional:-->
+                   <v2:TaxNumber>123456</v2:TaxNumber>
+                </v2:SenderInformation>
+                <v2:ReceiverInformation>
+                   <v2:Address>
+                      <v2:Name>Tech B</v2:Name>
+                      <!--Optional:-->
+                      <v2:Company>Purolator</v2:Company>
+                      <!--Optional:-->
+                      <v2:Department>Receiver Department</v2:Department>
+                      <v2:StreetNumber>30</v2:StreetNumber>
+                      <!--Optional:-->
+                      <v2:StreetSuffix/>
+                      <v2:StreetName>Aero</v2:StreetName>
+                      <!--Optional:-->
+                      <v2:StreetType>Drive</v2:StreetType>
+                      <!--Optional:-->
+                      <v2:StreetDirection>NE</v2:StreetDirection>
+                      <!--Optional:-->
+                      <v2:Suite></v2:Suite>
+                      <!--Optional:-->
+                      <v2:Floor></v2:Floor>
+                      <!--Optional:-->
+                      <v2:StreetAddress2/>
+                      <!--Optional:-->
+                      <v2:StreetAddress3/>
+                      <v2:City>Calgary</v2:City>
+                      <v2:Province>AB</v2:Province>
+                      <v2:Country>CA</v2:Country>
+                      <v2:PostalCode>T2E8Z9</v2:PostalCode>
+                      <v2:PhoneNumber>
+                         <v2:CountryCode>1</v2:CountryCode>
+                         <v2:AreaCode>800</v2:AreaCode>
+                         <v2:Phone>4595599</v2:Phone>
+                         <!--Optional:-->
+                         <v2:Extension>123</v2:Extension>
+                      </v2:PhoneNumber>
+                      <!--Optional:-->
+                      <v2:FaxNumber>
+                         <v2:CountryCode/>
+                         <v2:AreaCode/>
+                         <v2:Phone/>
+                         <!--Optional:-->
+                         <v2:Extension/>
+                      </v2:FaxNumber>
+                   </v2:Address>
+                   <!--Optional:-->
+                   <v2:TaxNumber>123456</v2:TaxNumber>
+                </v2:ReceiverInformation>
+                <v2:PackageInformation>
+                   <v2:ServiceID>PurolatorGround</v2:ServiceID>
+                   <!--Optional:-->
+                   <v2:Description>Weekly cert test</v2:Description>
+                   <v2:TotalWeight>
+                      <v2:Value>2</v2:Value>
+                      <v2:WeightUnit>lb</v2:WeightUnit>
+                   </v2:TotalWeight>
+                   <v2:TotalPieces>1</v2:TotalPieces>
+                   <!--Optional:-->
+                   <v2:PiecesInformation>
+                          <v2:Piece><v2:Weight><v2:Value>2</v2:Value><v2:WeightUnit>lb</v2:WeightUnit></v2:Weight><v2:Length><v2:Value>0</v2:Value><v2:DimensionUnit>in</v2:DimensionUnit></v2:Length><v2:Width><v2:Value>0</v2:Value><v2:DimensionUnit>in</v2:DimensionUnit></v2:Width><v2:Height><v2:Value>0</v2:Value><v2:DimensionUnit>in</v2:DimensionUnit></v2:Height></v2:Piece>
+                       </v2:PiecesInformation>
+                   <!--Optional:-->
+                   <v2:DangerousGoodsDeclarationDocumentIndicator>false</v2:DangerousGoodsDeclarationDocumentIndicator>
+                    </v2:PackageInformation>
+                <v2:PaymentInformation>
+                   <v2:PaymentType>Sender</v2:PaymentType>
+                   <v2:RegisteredAccountNumber>{{AccountNumber}}</v2:RegisteredAccountNumber>
+                   <!--Optional:-->
+                   <v2:BillingAccountNumber>{{AccountNumber}}</v2:BillingAccountNumber>
+                </v2:PaymentInformation>
+                <v2:PickupInformation>
+                   <v2:PickupType>DropOff</v2:PickupType>
+                </v2:PickupInformation>
+                <!--Optional:-->
+                <v2:NotificationInformation>
+                   <!--Optional:-->
+                   <v2:ConfirmationEmailAddress></v2:ConfirmationEmailAddress>
+                </v2:NotificationInformation>
+                <!--Optional:-->
+                <v2:TrackingReferenceInformation>
+                   <!--Optional:-->
+                   <v2:Reference1>Sender-PurolatorGround</v2:Reference1>
+                   <!--Optional:-->
+                   <v2:Reference2>REF2</v2:Reference2>
+                   <!--Optional:-->
+                   <v2:Reference3>REF3</v2:Reference3>
+                </v2:TrackingReferenceInformation>
+                <!--Optional:-->
+                <v2:OtherInformation>
+                   <!--Optional:-->
+                   <v2:CostCentre>Weekly</v2:CostCentre>
+                   <!--Optional:-->
+                   <v2:SpecialInstructions>Special Instructions</v2:SpecialInstructions>
+                </v2:OtherInformation>
+                 <!--Optional:-->
+                 <v2:ProactiveNotification>
+                   <!--Optional:-->
+                   <v2:RequestorName>RequestorName</v2:RequestorName>
+                   <v2:RequestorEmail>Requestor@Email.com</v2:RequestorEmail>
+                      <v2:Subscriptions>
+                          <v2:Subscription>
+                              <v2:Name>Name</v2:Name>
+                              <v2:Email>Test@Email.com</v2:Email>
+                              <v2:NotifyWhenExceptionOccurs>true</v2:NotifyWhenExceptionOccurs>
+                              <v2:NotifyWhenDeliveryOccurs>true</v2:NotifyWhenDeliveryOccurs>   
+    				 </v2:Subscription>
+                     </v2:Subscriptions>                  
+                 </v2:ProactiveNotification>
+             </v2:Shipment>
+             <v2:PrinterType>Thermal</v2:PrinterType>
+          </v2:CreateShipmentRequest>
+       </soapenv:Body>
+    </soapenv:Envelope>
+auth:
+  type: basic
+  credentials:
+    username: "{{SOAP_Key}}"
+    password: "{{SOAP_Password}}"
+scripts:
+  - type: beforeRequest
+    code: |-
+      // Create-shipment pre-request — shipment date is TODAY + 5 DAYS.
+      // Runs after the collection pre-request, so it overwrites the Current_Date
+      // that script just set to today. Five days ahead keeps the date inside the
+      // carrier's future-dating window and off weekends-only edge cases.
+      const DAYS_AHEAD = 5;
+
+      const d = new Date();
+      d.setDate(d.getDate() + DAYS_AHEAD);
+
+      // Carrier timezone, not the runner's -- see 9001-11.
+      const shipDate = d.toLocaleDateString('en-CA', { timeZone: 'America/Toronto' });
+
+      pm.environment.set('Current_Date', shipDate);
+      console.log('[ship date] ' + shipDate + ' (today + ' + DAYS_AHEAD + ' days)');
+    language: text/javascript
+  - type: afterResponse
+    code: |-
+      // =====================================================================
+      // Post-response — render returned labels in Postman's Visualize tab.
+      //
+      // Purolator returns labels as base64. Depending on the requested output
+      // type the decoded bytes are ZPL (thermal), PNG, or PDF, so this script
+      // sniffs each candidate rather than assuming one shape, and it searches
+      // the whole response instead of hard-coding a field path (the field name
+      // differs between the SOAP and REST contracts).
+      //
+      // ZPL is rasterised through the public Labelary API. If you would rather
+      // not send label data to a third party, set USE_LABELARY = false below —
+      // the raw ZPL is still printed to the console.
+      // =====================================================================
+      // Rasterisation renders into Postman's Visualize tab, which Newman does
+      // not have -- and a pm.sendRequest() here REPLACES this request's entry in
+      // Newman's report, losing the response and its PIN. So it is on for
+      // interactive use and off whenever the runner sets DISABLE_LABELARY.
+      const USE_LABELARY =
+          String(pm.environment.get('DISABLE_LABELARY') || '').toLowerCase() !== 'true';
+      const DPMM = '8dpmm';        // 203 dpi. Use 12dpmm for 300 dpi printers.
+      const SIZE = '4x6';          // label size in inches
+
+      // --- collect candidate base64 strings from the response ---------------
+      function collectBase64(text) {
+          // Long, unbroken base64 runs — short matches are almost always ids.
+          const found = (text.match(/[A-Za-z0-9+/]{200,}={0,2}/g) || []);
+          return [...new Set(found)];
+      }
+
+      let raw = '';
+      try { raw = pm.response.text(); } catch (e) { raw = ''; }
+      const candidates = collectBase64(raw);
+
+      // --- classify and decode ----------------------------------------------
+      // Postman's sandbox already defines CryptoJS as a global; redeclaring it
+      // with const is a SyntaxError there. Prefer the global, fall back to
+      // require() so the script also runs outside the sandbox.
+      const CJS = (typeof CryptoJS !== 'undefined') ? CryptoJS : require('crypto-js');
+
+      function decodeUtf8(b64) {
+          try { return CJS.enc.Base64.parse(b64).toString(CJS.enc.Utf8); }
+          catch (e) { return ''; }
+      }
+
+      const images = [];   // ready-to-render data URIs
+      const zpls   = [];   // ZPL strings needing rasterisation
+
+      candidates.forEach(b64 => {
+          if (b64.startsWith('iVBORw0KGgo')) {            // PNG magic bytes
+              images.push('data:image/png;base64,' + b64);
+              return;
+          }
+          if (b64.startsWith('JVBERi0')) {                // PDF magic bytes
+              images.push('PDF:data:application/pdf;base64,' + b64);
+              return;
+          }
+          const text = decodeUtf8(b64);
+          if (text && text.trim().startsWith('^XA')) {    // ZPL always opens ^XA
+              zpls.push(text);
+          }
+      });
+
+      // --- visualiser template ----------------------------------------------
+      const template = `
+      <style>
+        body { font-family: -apple-system, Segoe UI, sans-serif; margin: 0; padding: 12px;
+               background: #fafafa; color: #222; }
+        h3 { font-size: 13px; font-weight: 600; margin: 0 0 10px; }
+        .label { background: #fff; border: 1px solid #ddd; border-radius: 6px;
+                 padding: 10px; margin-bottom: 12px; display: inline-block; }
+        .label img, .label object { max-width: 420px; display: block; }
+        .cap { font-size: 11px; color: #666; margin-top: 6px; }
+        .none { font-size: 12px; color: #888; }
+      </style>
+      <h3>Labels in this response: {{count}}</h3>
+      {{#unless count}}<div class='none'>No ZPL, PNG or PDF label found in the response body.</div>{{/unless}}
+      {{#each labels}}
+        <div class='label'>
+          {{#if isPdf}}<object data='{{src}}' type='application/pdf' width='420' height='560'></object>
+          {{else}}<img src='{{src}}'>{{/if}}
+          <div class='cap'>{{caption}}</div>
+        </div>
+      {{/each}}`;
+
+      function render(labels) {
+          pm.visualizer.set(template, { labels: labels, count: labels.length });
+      }
+
+      // --- rasterise ZPL via Labelary, then render ---------------------------
+      const direct = images.map((src, i) => ({
+          src: src.startsWith('PDF:') ? src.slice(4) : src,
+          isPdf: src.startsWith('PDF:'),
+          caption: (src.startsWith('PDF:') ? 'PDF document ' : 'PNG label ') + (i + 1),
+      }));
+
+      if (!zpls.length || !USE_LABELARY) {
+          zpls.forEach(z => console.log('[ZPL]\n' + z));
+          render(direct);
+      } else {
+          let pending = zpls.length;
+          const rendered = [];
+          zpls.forEach((zpl, i) => {
+              console.log('[ZPL ' + (i + 1) + ']\n' + zpl);
+              pm.sendRequest({
+                  url: `https://api.labelary.com/v1/printers/${DPMM}/labels/${SIZE}/0/`,
+                  method: 'POST',
+                  header: { 'Accept': 'image/png', 'Content-Type': 'application/x-www-form-urlencoded' },
+                  body: { mode: 'raw', raw: zpl },
+              }, (err, res) => {
+                  if (!err && res && res.code === 200) {
+                      rendered.push({
+                          src: 'data:image/png;base64,' + res.stream.toString('base64'),
+                          isPdf: false,
+                          caption: 'ZPL label ' + (i + 1) + ' (rendered via Labelary)',
+                      });
+                  } else {
+                      console.log('[Labelary] render failed for label ' + (i + 1) +
+                                  ' — ' + (err ? err.message : 'HTTP ' + (res && res.code)));
+                  }
+                  if (--pending === 0) render(direct.concat(rendered));
+              });
+          });
+      }
+    language: text/javascript
+order: 4000

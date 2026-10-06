@@ -1,0 +1,3 @@
+$kind: collection
+description: Run this first. The access token is written to {{REST_Token}} and used by every other request in the collection.
+order: 1000

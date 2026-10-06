@@ -1,0 +1,29 @@
+$kind: http-request
+description: |-
+  Converted from SOAP TrackingServiceEndpoint.GetDeliveryDetails — test-aid case “01.Delivery details”.
+
+  Delivery details map to a tracking search with pod=true.
+url: "{{baseUrl}}/track/v1/shipment"
+method: POST
+headers:
+  x-api-key: "{{REST_XApiKey}}"
+  RequestReference: "{{RequestReference}}"
+  Language: "{{language}}"
+  Content-Type: application/json
+body:
+  type: json
+  content: |-
+    {
+        "language": "{{language}}",
+        "search": [
+            {
+                "trackingId": "{{trackingId}}",
+                "pod": true
+            }
+        ]
+    }
+auth:
+  type: bearer
+  credentials:
+    token: "{{REST_Token}}"
+order: 4000

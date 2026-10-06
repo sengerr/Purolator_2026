@@ -1,0 +1,43 @@
+$kind: http-request
+description: |-
+  search is an array: several PINs/references in one call. language drives customer facing fields. Fill {{shipmentPIN2}} manually.
+
+  Source: Purolator-REST-API-STG collection, "Track - batch 2 PINs, French language". REST only (no SOAP twin, 2026-10-06).
+url: "{{baseUrl}}/track/v1/shipment"
+method: POST
+headers:
+  x-api-key: "{{REST_XApiKey}}"
+  Content-Type: "application/json"
+body:
+  type: json
+  content: |-
+    {
+        "language": "fr",
+        "search": [
+            {
+                "trackingId": "{{PIN}}"
+            },
+            {
+                "trackingId": "{{PIN2}}"
+            }
+        ]
+    }
+auth:
+  type: bearer
+  credentials:
+    token: "{{REST_Token}}"
+scripts:
+  - type: afterResponse
+    code: |-
+      pm.test('Status code is 200', function () { pm.response.to.have.status(200); });
+      const json = pm.response.json();
+      pm.test('searchResult array present', function () { pm.expect(json.searchResult).to.be.an('array'); });
+      (json.searchResult || []).forEach(function (r, i) {
+          const p = r.pin || {};
+          console.log('search[' + i + ']', p.trackingId, 'status=', p.status, 'type=', p.type);
+      });
+      pm.test('One searchResult per search entry (informational)', function () {
+          pm.expect((json.searchResult || []).length).to.be.at.least(1);
+      });
+    language: text/javascript
+order: 956500

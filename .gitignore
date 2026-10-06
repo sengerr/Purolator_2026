@@ -1,0 +1,6 @@
+# Never commit credentials or filled-in environments.
+.env
+.env.*
+*.environment.yaml
+*.environment.json
+*.postman_environment.json

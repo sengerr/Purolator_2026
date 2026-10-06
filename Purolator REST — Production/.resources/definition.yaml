@@ -1,0 +1,90 @@
+$kind: collection
+description: |-
+  **Verified live 2026-10-06** -- every request in this collection succeeded (REST content run in Certification). Requests that failed or were not sent are not included.
+
+  REST conversion of the Purolator SOAP surface, pointed at **https://shipapi.purolator.com**.
+
+  Production host. Live shipments are created — set validateOnly=true first when in doubt.
+
+  **Sources:** Purolator EWS *Developer Test Aid 2.0.0* (Corporate edition) plus the redactable call-and-answer samples.
+
+  **Before running:** set `REST_ClientId`, `REST_Secret` and `REST_XApiKey`, then run *00 · Auth → OKTA Token* to populate `REST_Token`.
+
+  **Create-shipment path:** `createShipmentPath` defaults to `/ship/v1/shipment`. Three variants appear in the existing STG collections (`/ship/v1/shipment`, `/shipping/v1/createshipment`, `/shipping/v1/shipment`) and they share one schema — switch by editing this one variable.
+
+
+  Identical to the Development edition apart from the host and `authScope`.
+
+  ---
+  ### Environment required
+  Select the matching environment before running — every credential, account number and date resolves from it, not from collection or global variables:
+
+  `SOAP_Key` · `SOAP_Password` · `REST_ClientId` · `REST_Secret` · `REST_XApiKey` · `REST_Token` · `AccountNumber` · `Different_AccountNumber` · `Current_Date`
+
+  **Dates** — the collection pre-request script sets `Current_Date` to today. Create- and validate-shipment requests override it with **today + 5 days**.
+
+  **Labels** — create-shipment and document requests carry a post-response script that decodes any base64 label in the response and renders it in the **Visualize** tab (ZPL via Labelary, PNG and PDF inline). Set `USE_LABELARY = false` in that script to keep label data off the third-party renderer.
+
+variables:
+  baseUrl: https://shipapi.purolator.com
+  authScope: portal_api
+  createShipmentPath: /ship/v1/shipment
+  language: en
+  rma: "123456789012345"
+  pickupConfirmationNumber: ""
+  trackingId: ""
+  shipmentReference: ""
+  city: Toronto
+  provinceCode: "ON"
+  postalCode: M9A0A5
+scripts:
+  - type: http:beforeRequest
+    code: |-
+      // Collection pre-request — runs before every request in the collection.
+      // Refreshes Current_Date to TODAY and mints a unique RequestReference.
+      // Create-shipment requests override Current_Date with today + 5 days in
+      // their own pre-request script, which runs after this one.
+      const now = new Date();
+      // Two-digit padding for the RequestReference stamp below. This line was
+      // deleted by the timezone patch in 3be7aa3, and every pre-request script
+      // in the collection threw `pad is not defined` from then until it was
+      // put back. Newman still SENDS the request when its pre-request script
+      // throws, so the run looked fine -- 11 requests executed, assertions
+      // passing -- while 11 of 11 pre-request scripts failed and
+      // RequestReference silently kept whatever stale value the environment
+      // already held. Check the prerequest-scripts row of Newman's summary
+      // table, not just the assertions row.
+      const pad = n => String(n).padStart(2, '0');
+      // Purolator validates the shipment date in ITS timezone. Using the
+      // runner's local date sends yesterday whenever the machine is west of
+      // Eastern late in the day, and the API rejects it (9001-11).
+      // en-CA already formats as yyyy-mm-dd.
+      const today = now.toLocaleDateString('en-CA', { timeZone: 'America/Toronto' });
+      pm.environment.set('Current_Date', today);
+      // Dates the merged support / STG requests use (2026-10-06), in the carrier's timezone.
+      const day = (offset) => new Date(now.getTime() + offset * 86400000)
+                                 .toLocaleDateString('en-CA', { timeZone: 'America/Toronto' });
+      // Next business day for pickups: skip Saturday (6) and Sunday (0).
+      let pickupOffset = 1;
+      while ([0, 6].includes(new Date(now.getTime() + pickupOffset * 86400000).getDay())) pickupOffset++;
+      pm.environment.set('manifestDate', today);          // summary manifest window: today-10 .. today
+      pm.environment.set('manifestDateOld', day(-11));    // just outside the window (expect 400)
+      pm.environment.set('manifestDateFuture', day(1));   // future date (expect 400)
+      pm.environment.set('shipmentDateFar', day(15));     // beyond the +10 day ship window (expect 400)
+      pm.environment.set('trackDateFrom', day(-30));
+      pm.environment.set('trackDateTo', today);
+      pm.environment.set('pickupDate', day(pickupOffset));
+      pm.environment.set('pickupHistoryFromDate', day(-30));
+      pm.environment.set('pickupHistoryToDate', today);
+
+      // REQ + YYYYMMDDHHMMSS, matching the convention used in the SOAP collections.
+      const stamp = `${now.getFullYear()}${pad(now.getMonth()+1)}${pad(now.getDate())}`
+                  + `${pad(now.getHours())}${pad(now.getMinutes())}${pad(now.getSeconds())}`;
+      pm.environment.set('RequestReference', 'REQ' + stamp);
+    language: text/javascript
+auth:
+  - id: 9052b24f-2cf4-49c1-bdbd-ff8a3685708b
+    type: bearer
+    name: bearer auth
+    credentials:
+      token: "{{REST_Token}}"

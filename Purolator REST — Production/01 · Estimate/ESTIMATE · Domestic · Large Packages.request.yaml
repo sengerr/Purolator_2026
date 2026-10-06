@@ -1,0 +1,72 @@
+$kind: http-request
+description: Converted from SOAP GetFullEstimateRequest — redactable sample “Full estimate  - large packages.txt”.
+url: "{{baseUrl}}/rate/v1/shipment"
+method: POST
+headers:
+  x-api-key: "{{REST_XApiKey}}"
+  RequestReference: "{{RequestReference}}"
+  Language: "{{language}}"
+  Content-Type: application/json
+body:
+  type: json
+  content: |-
+    {
+        "lineOfBusiness": "COURIER",
+        "shipmentDate": "{{Current_Date}}",
+        "outboundShipment": {
+            "senderInformation": {
+                "streetAddress": [
+                    "17718 114 Ave"
+                ],
+                "city": "Edmonton",
+                "provinceStateCode": "AB",
+                "country": "CA",
+                "postalZipCode": "T5S2N4"
+            },
+            "receiverInformation": {
+                "companyName": "Purolator",
+                "streetAddress": [
+                    "3700 Jericho Road"
+                ],
+                "city": "Richmond",
+                "provinceStateCode": "BC",
+                "country": "CA",
+                "postalZipCode": "V7B1M5"
+            },
+            "shipmentInformation": {
+                "serviceId": "PurolatorExpress",
+                "unitOfMeasurement": "IMPERIAL",
+                "totalWeight": 176,
+                "totalPackages": 2,
+                "showAlternativeServicesIndicator": true,
+                "packageInformation": [
+                    {
+                        "packageWeight": 100,
+                        "packageLength": 24,
+                        "packageWidth": 24,
+                        "packageHeight": 24
+                    },
+                    {
+                        "packageWeight": 76,
+                        "packageLength": 24,
+                        "packageWidth": 24,
+                        "packageHeight": 25
+                    }
+                ]
+            },
+            "billingInformation": {
+                "billingAccountNumber": "{{AccountNumber}}",
+                "displayPublishedRates": false
+            }
+        },
+        "trackingReferenceInformation": {
+            "reference1": "Oversize",
+            "reference2": "Large Package",
+            "reference3": "Multipiece"
+        }
+    }
+auth:
+  type: bearer
+  credentials:
+    token: "{{REST_Token}}"
+order: 5000

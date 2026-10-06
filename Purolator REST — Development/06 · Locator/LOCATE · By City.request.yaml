@@ -1,0 +1,21 @@
+$kind: http-request
+description: |-
+  Converted from SOAP LocatorServiceEndpoint.GetLocationsByCity.
+  Corrected 2026-10-06 from the Purolator REST STG collection and the support cheat sheet: the locator is a GET with language and requestReference as query parameters (it was sent as POST, which the gateway answers 403).
+url: "{{baseUrl}}/locator/v1/address?language={{language}}&requestReference={{RequestReference}}&city={{city}}&provinceCode={{provinceCode}}&radialDistanceInKm=25"
+method: GET
+headers:
+  x-api-key: "{{REST_XApiKey}}"
+  RequestReference: "{{RequestReference}}"
+  Language: "{{language}}"
+queryParams:
+  language: "{{language}}"
+  requestReference: "{{RequestReference}}"
+  city: "{{city}}"
+  provinceCode: "{{provinceCode}}"
+  radialDistanceInKm: "25"
+auth:
+  type: bearer
+  credentials:
+    token: "{{REST_Token}}"
+order: 8000

@@ -1,0 +1,72 @@
+$kind: http-request
+description: Converted from SOAP EstimatingServiceEndpoint.GetFullEstimate — test-aid case “14. Domestic Shipment - Special Handling”.
+url: "{{baseUrl}}/rate/v1/shipment"
+method: POST
+headers:
+  x-api-key: "{{REST_XApiKey}}"
+  RequestReference: "{{RequestReference}}"
+  Language: "{{language}}"
+  Content-Type: application/json
+body:
+  type: json
+  content: |-
+    {
+        "lineOfBusiness": "COURIER",
+        "shipmentDate": "{{Current_Date}}",
+        "outboundShipment": {
+            "senderInformation": {
+                "streetAddress": [
+                    "17718 114 Ave"
+                ],
+                "city": "Edmonton",
+                "provinceStateCode": "AB",
+                "country": "CA",
+                "postalZipCode": "T5S2N4"
+            },
+            "receiverInformation": {
+                "streetAddress": [
+                    "24 Sussex Drive"
+                ],
+                "city": "Ottawa",
+                "provinceStateCode": "ON",
+                "country": "CA",
+                "postalZipCode": "K1M1P5"
+            },
+            "shipmentInformation": {
+                "serviceId": "PurolatorExpress",
+                "unitOfMeasurement": "IMPERIAL",
+                "totalWeight": 1,
+                "totalPackages": 1,
+                "showAlternativeServicesIndicator": false,
+                "shipmentOptionsInformation": [
+                    {
+                        "optionId": "ResidentialSignatureDomestic",
+                        "optionIdValue": "true"
+                    }
+                ],
+                "packageInformation": [
+                    {
+                        "packageWeight": 1,
+                        "packageLength": 19,
+                        "packageWidth": 1,
+                        "packageHeight": 1
+                    },
+                    {
+                        "packageWeight": 1,
+                        "packageLength": 19,
+                        "packageWidth": 1,
+                        "packageHeight": 1
+                    }
+                ]
+            },
+            "billingInformation": {
+                "billingAccountNumber": "{{AccountNumber}}",
+                "displayPublishedRates": false
+            }
+        }
+    }
+auth:
+  type: bearer
+  credentials:
+    token: "{{REST_Token}}"
+order: 32000
