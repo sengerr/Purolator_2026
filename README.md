@@ -51,7 +51,7 @@ The following variables are filled by the collections' own scripts: `Current_Dat
 
 ## Successful calls
 
-The `successful-calls/` folder holds one CSV per protocol. Each row is one request exactly as it was sent and answered, with these columns:
+The `successful-calls/` folder holds one CSV per protocol. Each collection folder also has its own copy, `successful-calls.csv`. The Development and Production copies list the same calls, because hosts are shown as variables. Each row is one request exactly as it was sent and answered, with these columns:
 
 - `Folder`
 - `Endpoint`
@@ -67,6 +67,28 @@ In the CSVs:
 - **Credentials** in the headers (Authorization, keys, tokens) are shown as `<masked>`.
 
 Bodies longer than Excel's cell limit are cut and marked `[truncated: N characters]`.
+
+---
+
+## Live-run results
+
+The `results/` folder holds the full verification runs of 2026-10-06, including the calls that failed:
+
+| File | What |
+|---|---|
+| `certification-rest-20261006-093933.csv` | Every REST call: request, HTTP status, pass or fail, error |
+| `development-soap-20261006-094704.csv` | Every SOAP call, same columns |
+| `Certification-REST-results-2026-10-06.xlsx` | REST workbook with four sheets: Summary, Results, Samples, and Issues grouped by cause |
+| `Development-SOAP-results-2026-10-06.xlsx` | SOAP workbook, same sheets |
+
+Account numbers in these files are shown as variables. No keys or tokens are logged.
+
+These files list every call, including the ones left out of the collections. They also include some internal checks that are not in the collections:
+
+- REST Certification support cases (folder 15)
+- Product, document and payment matrix calls
+
+The Issues sheet explains why each failed call failed. The causes include services not offered on the test lane, features switched off in the test environment, and REST limitations.
 
 ---
 
