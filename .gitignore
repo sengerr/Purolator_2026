@@ -1,6 +1,26 @@
 # Never commit credentials or filled-in environments.
+
+# dotenv files at any depth (a blank template named .env.example is allowed)
 .env
 .env.*
+!.env.example
+*.env
+.envrc
+
+# Postman / Bruno environments and globals
+environments/
 *.environment.yaml
+*.environment.yml
 *.environment.json
 *.postman_environment.json
+*.postman_globals.json
+
+# Keys and certificates
+*.pem
+*.key
+*.pfx
+*.p12
+*.jks
+
+# Raw API responses saved by the samples
+response-*.json
