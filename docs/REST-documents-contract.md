@@ -134,7 +134,9 @@ shipment carries goods, a non-USMCA destination is refused with `9001-196`.
 
 The DG seed produced a Thermal label, so every request returned `9001-312`.
 Recreated as PDF / Laser it returns an 18 KB PDF. `DangerousGoodsMode` must also
-be `Ground`, not `Air`, on `PurolatorExpress` (`9001-171`).
+be `Air`, not `Ground`, on `PurolatorExpress` (`9001-171 Dangerous Goods Mode must
+be Air for this shipment` — confirmed by the 2026-10-06 run, where Express + Air
+passed; see `dangerous-goods-contract.md`).
 
 ### Chain of Signature is an account entitlement
 

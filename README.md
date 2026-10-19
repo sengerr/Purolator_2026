@@ -126,6 +126,17 @@ Standard test addresses:
 ## Reference
 
 - `docs/REST-*.md`: the REST contract rules learned during verification. These cover address fields, documents, cross-border, manifests, services and error codes.
+- `docs/dangerous-goods-contract.md`: dangerous goods on both protocols. The three options, class and mode values, which combinations shipped, the declaration document, and the SOAP one-value-per-option rule.
 - `docs/SOAP-v2-tracking.md`: SOAP tracking v2 notes.
+
+## Code samples
+
+`samples/` holds runnable Node.js 18+ scripts with no npm packages. Each reads its credentials from environment variables and switches between Development and Production with `PUROLATOR_ENV=dev|prod`.
+
+| File | What it does |
+|---|---|
+| `rest-ship-with-return.js` | REST: outbound shipment, return shipment and label in one call |
+| `rest-ship-dangerous-goods.js` | REST: dangerous-goods shipment (pick a verified class/mode scenario), label, then the Dangerous Goods Declaration from `/ship/v1/documents` |
+| `soap-ship-dangerous-goods.js` | SOAP: the same flow with Shipping v2 `CreateShipment` / `ValidateShipment` and Shipping Documents v1 `GetDocuments` |
 
 Production calls create real shipments. Use Development until your integration is certified.
