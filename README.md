@@ -2,6 +2,8 @@
 
 These are Postman collections for the Purolator **REST** API and the Purolator **EWS SOAP** API. There is one set for **Development** and one for **Production**. They are stored in Postman's on-disk YAML format, so the Postman Git integration can open them directly.
 
+**Just want to import them?** `postman/` holds the same four collections as ready-to-import Postman v2.1 JSON files, with a step-by-step guide: [`postman/HOW-TO-LOAD.md`](postman/HOW-TO-LOAD.md).
+
 **Every request in this repository has been sent live and succeeded.** Requests that failed, or that were never sent, are left out.
 
 | Collection | Requests | Verified in |
@@ -122,6 +124,10 @@ Standard test addresses:
 - **Internal support and negative test cases.**
 
 ---
+
+## Importable JSON
+
+`postman/` — the four collections exported as Postman v2.1 `.postman_collection.json` files (File → Import in Postman), plus `HOW-TO-LOAD.md` covering import, environment setup and the first run. Same content as the YAML trees; regenerated whenever the collections change.
 
 ## Reference
 
