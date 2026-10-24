@@ -1,9 +1,28 @@
 $kind: http-request
 description: |-
   Converted from SOAP ShippingDocumentsServiceEndpoint.GetShipmentManifestDocument — test-aid case “08. Shipment Manifest Document”.
-  
+
   Path and body confirmed from the UAT sample collection. REST takes manifestDate as an array.
   Corrected 2026-10-06: summary manifest is POST /ship/v1/documents/summary-manifest with manifestDate as an array of dates within today-10 .. today (Purolator REST STG collection, OAS).
+
+  <!-- developer-notes:begin (tooling/align_rest_to_spec.py; regenerated, do not edit) -->
+  ### Developer notes
+  `POST /ship/v1/documents/summary-manifest` -- Get Summary Manifest spec (GetSummaryManifestRequest). Get summary manifest
+
+  Retrieve summary manifest artifacts for one or more manifest dates (inclusive window of today minus 10 days through today). Freight is not supported.
+
+  **Headers:** Authorization Bearer `{{REST_Token}}` · `x-api-key` (required) · `Language` (optional) `EN` | `FR` · `RequestReference` (optional) max 36
+
+  **Required fields** (top level, and inside every object this body sends): `lineOfBusiness`, `manifestDate`
+
+  **Fields in this body** (type, limits, accepted values; * = required):
+  - `lineOfBusiness`* -- string; accepted: `Courier` | `Freight`. Line of business. Case-insensitive. Only Courier is supported.
+  - `manifestDate`* -- array, 1-n items. Manifest dates in YYYY-MM-DD. Each date must fall in the inclusive window from today minus 10 days through today.
+  - `manifestDate[]` -- string (date)
+  - `requestReference` -- string, max 36 chars. A unique identifier for the request. Can be used to match request with the response. If not provided, a random UUID is generated.
+
+  Full value lists: `docs/REST-enumerations-and-accepted-values.md`.
+  <!-- developer-notes:end -->
 url: "{{baseUrl}}/ship/v1/documents/summary-manifest"
 method: POST
 headers:

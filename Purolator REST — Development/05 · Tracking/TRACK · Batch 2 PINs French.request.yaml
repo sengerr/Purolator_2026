@@ -3,6 +3,22 @@ description: |-
   search is an array: several PINs/references in one call. language drives customer facing fields. Fill {{shipmentPIN2}} manually.
 
   Source: Purolator-REST-API-STG collection, "Track - batch 2 PINs, French language". REST only (no SOAP twin, 2026-10-06).
+
+  <!-- developer-notes:begin (tooling/align_rest_to_spec.py; regenerated, do not edit) -->
+  ### Developer notes
+  `POST /track/v1/shipment` -- Tracking spec (TrackingSearchCriteria). search by tracking id or reference
+
+  **Headers:** Authorization Bearer `{{REST_Token}}` · `x-api-key` (required)
+
+  **Required fields** (top level, and inside every object this body sends): `search[].trackingId`
+
+  **Fields in this body** (type, limits, accepted values; * = required):
+  - `language` -- string
+  - `search` -- array
+  - `search[].trackingId`* -- string
+
+  Full value lists: `docs/REST-enumerations-and-accepted-values.md`.
+  <!-- developer-notes:end -->
 url: "{{baseUrl}}/track/v1/shipment"
 method: POST
 headers:

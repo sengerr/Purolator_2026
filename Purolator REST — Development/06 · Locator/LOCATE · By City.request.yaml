@@ -2,6 +2,35 @@ $kind: http-request
 description: |-
   Converted from SOAP LocatorServiceEndpoint.GetLocationsByCity.
   Corrected 2026-10-06 from the Purolator REST STG collection and the support cheat sheet: the locator is a GET with language and requestReference as query parameters (it was sent as POST, which the gateway answers 403).
+
+  <!-- developer-notes:begin (tooling/align_rest_to_spec.py; regenerated, do not edit) -->
+  ### Developer notes
+  `GET /locator/v1/address` -- Locator spec. Retrieve locator address information
+
+  **Headers:** Authorization Bearer `{{REST_Token}}` · `x-api-key` (required) · `x-origin-verify` (required) · `access-control-allow-origin` (required)
+  The spec marks `x-origin-verify` and `access-control-allow-origin` as required; Certification answered 200 without them (2026-10-06). Send `{{xOriginVerify}}` only if Purolator issued you one.
+
+  **Query parameters:**
+  - `language` -- required (used here), string
+  - `requestReference` -- required (used here), string
+  - `streetAddress` -- optional, string
+  - `city` -- optional (used here), string
+  - `postalCode` -- optional, string
+  - `provinceCode` -- optional (used here), string
+  - `radialDistanceInKm` -- optional (used here), number
+  - `holdForPickup` -- optional, boolean
+  - `dangerousGoods` -- optional, boolean
+  - `kiosk` -- optional, boolean
+  - `streetAccess` -- optional, boolean
+  - `wheelChairAccess` -- optional, boolean
+  - `maxNumberOfLocations` -- optional, integer
+  - `locationType` -- optional, string
+  - `openTime` -- optional, string
+  - `closeTime` -- optional, string
+  - `currentlyOpen` -- optional, boolean
+  - `gmtOffSet` -- optional, string
+  - `daysOfOperation` -- optional, string
+  <!-- developer-notes:end -->
 url: "{{baseUrl}}/locator/v1/address?language={{language}}&requestReference={{RequestReference}}&city={{city}}&provinceCode={{provinceCode}}&radialDistanceInKm=25"
 method: GET
 headers:

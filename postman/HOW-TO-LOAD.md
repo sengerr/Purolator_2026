@@ -4,8 +4,8 @@ Four files in this folder, Postman collection format v2.1.0, exported from the Y
 
 | File | Requests | Host |
 |---|---|---|
-| `Purolator_REST_Development.postman_collection.json` | 430 | `https://shipapi-sandbox.purolator.com` |
-| `Purolator_REST_Production.postman_collection.json` | 430 | `https://shipapi.purolator.com` |
+| `Purolator_REST_Development.postman_collection.json` | 420 | `https://shipapi-sandbox.purolator.com` |
+| `Purolator_REST_Production.postman_collection.json` | 420 | `https://shipapi.purolator.com` |
 | `Purolator_SOAP_EWS_Development.postman_collection.json` | 406 | `https://devwebservices.purolator.com` |
 | `Purolator_SOAP_EWS_Production.postman_collection.json` | 406 | `https://webservices.purolator.com` |
 

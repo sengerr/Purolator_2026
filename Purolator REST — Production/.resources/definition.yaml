@@ -1,6 +1,6 @@
 $kind: collection
 description: |-
-  **Verified live 2026-10-06** -- every request in this collection succeeded (REST content run in Certification). Requests that failed or were not sent are not included.
+  **Verified live 2026-10-06** -- every request in this collection succeeded (REST content run in Certification). Requests that failed or were not sent are not included. On 2026-10-24 the REST requests were aligned with Purolator's published OpenAPI specs (exact enum spellings, developer notes in every description) without a new run. 13 request(s) marked *Spec-aligned 2026-10-24, not yet verified live* are included on that basis.
 
   REST conversion of the Purolator SOAP surface, pointed at **https://shipapi.purolator.com**.
 

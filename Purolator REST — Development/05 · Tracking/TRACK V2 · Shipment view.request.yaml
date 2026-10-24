@@ -1,0 +1,44 @@
+$kind: http-request
+description: |-
+  **Spec-aligned 2026-10-24, not yet verified live** -- changed to match the published OpenAPI spec after it failed (or was not sent) in the 2026-10-06 run.
+
+  REST twin of the SOAP request of the same name (converted with tooling/generators). ShipmentTrackingServiceEndpoint.TrackingByPinsOrReferences — v2. shipmentView=true returns the shipment-level view rather than the piece-level event list. v2 ShipmentTracking exposes this single operation; v1's TrackPackagesByPin, TrackPackagesByReference and GetDeliveryDetails are all folded into it. SOAP v2 tracking already uses the REST search field names — mapped through directly.
+
+  <!-- developer-notes:begin (tooling/align_rest_to_spec.py; regenerated, do not edit) -->
+  ### Developer notes
+  `POST /track/v1/shipment` -- Tracking spec (TrackingSearchCriteria). search by tracking id or reference
+
+  **Headers:** Authorization Bearer `{{REST_Token}}` · `x-api-key` (required)
+
+  **Required fields** (top level, and inside every object this body sends): `search[].trackingId`
+
+  **Fields in this body** (type, limits, accepted values; * = required):
+  - `language` -- string
+  - `search` -- array
+  - `search[].trackingId`* -- string
+
+  Full value lists: `docs/REST-enumerations-and-accepted-values.md`.
+  <!-- developer-notes:end -->
+url: "{{baseUrl}}/track/v1/shipment"
+method: POST
+headers:
+  x-api-key: "{{REST_XApiKey}}"
+  RequestReference: "{{RequestReference}}"
+  Language: "{{language}}"
+  Content-Type: application/json
+body:
+  type: json
+  content: |-
+    {
+        "language": "{{language}}",
+        "search": [
+            {
+                "trackingId": "{{trackingId}}"
+            }
+        ]
+    }
+auth:
+  type: bearer
+  credentials:
+    token: "{{REST_Token}}"
+order: 8000

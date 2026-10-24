@@ -1,6 +1,23 @@
 $kind: http-request
 description: |-
   REST twin of the SOAP request of the same name (converted with tooling/generators). ShipmentTrackingServiceEndpoint.TrackingByPinsOrReferences — v2. eventSortOrder is a free string in the WSDL with no enumeration, so the accepted values are not published. “Descending” is the plausible reading and this request is how we find out -- if it is rejected, the error names the domain. v2 ShipmentTracking exposes this single operation; v1's TrackPackagesByPin, TrackPackagesByReference and GetDeliveryDetails are all folded into it. SOAP v2 tracking already uses the REST search field names — mapped through directly.
+
+  <!-- developer-notes:begin (tooling/align_rest_to_spec.py; regenerated, do not edit) -->
+  ### Developer notes
+  `POST /track/v1/shipment` -- Tracking spec (TrackingSearchCriteria). search by tracking id or reference
+
+  **Headers:** Authorization Bearer `{{REST_Token}}` · `x-api-key` (required)
+
+  **Required fields** (top level, and inside every object this body sends): `search[].trackingId`
+
+  **Fields in this body** (type, limits, accepted values; * = required):
+  - `language` -- string
+  - `search` -- array
+  - `search[].trackingId`* -- string
+  - `search[].eventSortOrder` -- string
+
+  Full value lists: `docs/REST-enumerations-and-accepted-values.md`.
+  <!-- developer-notes:end -->
 url: "{{baseUrl}}/track/v1/shipment"
 method: POST
 headers:

@@ -6,7 +6,6 @@ statement below is something the API returned, not something read from the
 published specification. Where the two disagree it is noted.
 
 Related: `REST-documents-contract.md` (declaration retrieval), `REST-error-catalogue.md`.
-The source repository carries additional, not-yet-verified DG variants; they are left out here.
 Runnable examples: `samples/rest-ship-dangerous-goods.js`, `samples/soap-ship-dangerous-goods.js`.
 
 ## The short version

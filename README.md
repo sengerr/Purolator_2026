@@ -4,12 +4,12 @@ These are Postman collections for the Purolator **REST** API and the Purolator *
 
 **Just want to import them?** `postman/` holds the same four collections as ready-to-import Postman v2.1 JSON files, with a step-by-step guide: [`postman/HOW-TO-LOAD.md`](postman/HOW-TO-LOAD.md).
 
-**Every request in this repository has been sent live and succeeded.** Requests that failed, or that were never sent, are left out.
+**Every request in this repository has been sent live and succeeded**, with one stated exception: 13 REST requests marked *Spec-aligned 2026-10-24, not yet verified live* (see [What changed on 2026-10-24](#what-changed-on-2026-10-24)). Requests that failed, or that were never sent, are otherwise left out.
 
 | Collection | Requests | Verified in |
 |---|---|---|
-| Purolator REST — Development | 430 | Certification, full REST run on 2026-10-06 |
-| Purolator REST — Production | 430 | Same requests as Development; only the host differs |
+| Purolator REST — Development | 420 | Certification, full REST run on 2026-10-06 (13 spec-aligned requests not yet verified) |
+| Purolator REST — Production | 420 | Same requests as Development; only the host differs |
 | Purolator SOAP (EWS) — Development | 406 | Development, full SOAP run on 2026-10-06 |
 | Purolator SOAP (EWS) — Production | 406 | Same requests as Development; only the host differs |
 
@@ -50,6 +50,18 @@ The following variables are filled by the collections' own scripts: `Current_Dat
 **REST:** run *00 · Auth → AUTH · OKTA Token* first. Every other REST request uses the bearer token it stores.
 
 ---
+
+## What changed on 2026-10-24
+
+Purolator published OpenAPI specs for every REST API (<https://ship.purolator.com/developer/assets/openapi/prod/>). The REST requests were aligned with them **without a new live run**:
+
+- **Developer notes in every REST request.** The end of each request's description lists the endpoint, headers, required fields, and for every field the body sends its type, length limit and accepted values, plus the conditional rules the spec states. It is the REST counterpart of the `<!--type / enumeration / Optional-->` annotations in the SOAP bodies.
+- **[`docs/REST-enumerations-and-accepted-values.md`](docs/REST-enumerations-and-accepted-values.md)** lists every enumerated field of every REST API with its accepted values, and the few places where the API answered differently from the spec.
+- **Exact enum spellings.** Enums are case-insensitive, but the requests now send the spec's spelling: `lineOfBusiness` `Courier`, `paymentType` `SENDER`, `printerFormat` `Thermal`, `responseType` `String`, estimate `unitOfMeasurement` `Imperial`.
+- **Void a shipment:** `PUT /ship/v1/shipment` with `{lineOfBusiness, shipmentPIN}` (the same path as create, but PUT). See *02 · Shipping → VOID SHIP · Cancel Shipment*, `VOID SHIP · By PIN`, `VOID SHIP · Alternate shipmentPin Key` and `SAMPLE · Domestic · Void Ship Basic`.
+- **Summary manifest:** `POST /ship/v1/documents/summary-manifest` with `manifestDate` as an array of dates within today-10 .. today. It replaces the old `/ship/v1/artifacts` path. See *07 · Documents & Manifest → MANIFEST ·*.
+- **Added, not yet verified live (13):** blind shipping now sends `fromOnLabelInformation` (the spec's name; the old `formOnLabelInformation` was rejected), and tracking by reference sends the reference in `trackingId`. Tracking requests no longer send `shipmentView` / `deliveryDetails`, which are not in the spec. Each of these 13 says so at the top of its description.
+- **23 duplicate `SAMPLE ·` requests removed.** Each sent exactly the same call as a request that is still here.
 
 ## Successful calls
 
@@ -131,6 +143,7 @@ Standard test addresses:
 
 ## Reference
 
+- `docs/REST-enumerations-and-accepted-values.md`: every REST enum and its accepted values, generated from Purolator's OpenAPI specs.
 - `docs/REST-*.md`: the REST contract rules learned during verification. These cover address fields, documents, cross-border, manifests, services and error codes.
 - `docs/dangerous-goods-contract.md`: dangerous goods on both protocols. The three options, class and mode values, which combinations shipped, the declaration document, and the SOAP one-value-per-option rule.
 - `docs/SOAP-v2-tracking.md`: SOAP tracking v2 notes.
