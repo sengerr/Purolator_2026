@@ -194,7 +194,10 @@ scripts:
       // Runs after the collection pre-request, so it overwrites the Current_Date
       // that script just set to today. Five days ahead keeps the date inside the
       // carrier's future-dating window and off weekends-only edge cases.
-      const DAYS_AHEAD = 5;
+      // A run can override the offset with the variable shipDaysAhead (e.g. 0 = ship today);
+      // unset, it stays 5 days ahead (added 2026-10-06 for the production 2-key test).
+      const _ahead = pm.variables.get('shipDaysAhead');
+      const DAYS_AHEAD = (_ahead === undefined || _ahead === null || _ahead === '') ? 5 : Number(_ahead);
 
       const d = new Date();
       d.setDate(d.getDate() + DAYS_AHEAD);

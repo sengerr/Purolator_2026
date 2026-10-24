@@ -1,5 +1,52 @@
 $kind: http-request
-description: Converted from SOAP GetFullEstimateRequest — redactable sample “Full estimate  - large packages.txt”.
+description: |-
+  Converted from SOAP GetFullEstimateRequest — redactable sample “Full estimate  - large packages.txt”.
+
+  <!-- developer-notes:begin (tooling/align_rest_to_spec.py; regenerated, do not edit) -->
+  ### Developer notes
+  `POST /rate/v1/shipment` -- Estimate spec (CourierEstimateRequest). Estimate a shipment
+
+  Obtain a quick or full estimate for a shipment
+
+  **Headers:** Authorization Bearer `{{REST_Token}}` · `x-api-key` (required) · `Language` (optional) `EN` | `FR` · `RequestReference` (optional) max 40
+
+  **Required fields** (top level, and inside every object this body sends): `lineOfBusiness`, `outboundShipment`, `outboundShipment.billingInformation`, `outboundShipment.billingInformation.billingAccountNumber`, `outboundShipment.senderInformation`, `outboundShipment.senderInformation.streetAddress[].Address`, `outboundShipment.senderInformation.city`, `outboundShipment.senderInformation.provinceStateCode`, `outboundShipment.senderInformation.country`, `outboundShipment.senderInformation.postalZipCode`, `outboundShipment.receiverInformation`, `outboundShipment.receiverInformation.streetAddress[].Address`, `outboundShipment.receiverInformation.city`, `outboundShipment.receiverInformation.country`, `outboundShipment.receiverInformation.postalZipCode`, `outboundShipment.shipmentInformation`, `outboundShipment.shipmentInformation.serviceId`, `outboundShipment.shipmentInformation.totalWeight`, `outboundShipment.shipmentInformation.totalPackages`, `outboundShipment.shipmentInformation.packageInformation[].packageWeight`
+
+  **Fields in this body** (type, limits, accepted values; * = required):
+  - `lineOfBusiness`* -- string; accepted: `Freight` | `Courier`
+  - `shipmentDate` -- string (date), default Today's Date. Date of shipment. Up to 10 days in advance. Date format: YYYY-MM-DD. If not present, default to today's date.
+  - `outboundShipment.senderInformation.streetAddress` -- array. Maximum 3 addresses allowed. Each address has a max length of 40 characters
+  - `outboundShipment.senderInformation.city`* -- string, max 40 chars (spec writes the length as `maximum`)
+  - `outboundShipment.senderInformation.provinceStateCode`* -- string, max 40 chars; accepted: `AB` | `BC` | `MB` | `NB` | `NL` | `NS` | `NT` | `NU` | `ON` | `PE` | `QC` | `SK` | `YT` (spec writes the length as `maximum`). 2 character code for the Province/State, required for Canadian and US addresses. Note that currently only Canadian addresses are accepted for the sender. Valid Province Codes for Canada: AB, BC, MB, NB, NL, NS, NT, NU, ON, PE, QC, SK, YT.
+  - `outboundShipment.senderInformation.country`* -- string, max 2 chars; accepted: `CA` (spec writes the length as `maximum`). 2-character CountryCode. Note that currently only Canadian addresses are accepted for the sender.
+  - `outboundShipment.senderInformation.postalZipCode`* -- string, max 10 chars (spec writes the length as `maximum`). Canadian Postal Code or USA Zip Code or Intl Postal Code. Note that currently only Canadian addresses are accepted for the sender.
+  - `outboundShipment.receiverInformation.companyName` -- string, max 30 chars (spec writes the length as `maximum`)
+  - `outboundShipment.receiverInformation.streetAddress` -- array. Maximum 3 addresses allowed. Each address has a max length of 40 characters
+  - `outboundShipment.receiverInformation.city`* -- string, max 40 chars (spec writes the length as `maximum`)
+  - `outboundShipment.receiverInformation.provinceStateCode` -- string, max 40 chars (spec writes the length as `maximum`). 2 character code for the Province/State, required for Canadian and US addresses. Note that currently only Canadian addresses are accepted for the sender. Valid Province Codes for Canada: AB, BC, MB, NB, NL, NS, NT, NU, ON, PE, QC, SK, YT. Valid State Codes for US: AK, AL, AR, AZ, CA, CO, CT, DC, DE, FL, GA, HI, IA, ID, IL, IN, KS, KY, LA, MA, MD, ME, MI, MN, MO, MS, MT, NC, ND, NE, NH, NJ, NM, NV, NY, OH, OK, OR, PA, RI, SC, SD, TN, TX, UT, VA, VT, WA, WI, WV, WY.
+  - `outboundShipment.receiverInformation.country`* -- string, max 2 chars; accepted: one of 259 codes -- see `docs/REST-enumerations-and-accepted-values.md` (spec writes the length as `maximum`)
+  - `outboundShipment.receiverInformation.postalZipCode`* -- string, max 10 chars (spec writes the length as `maximum`). Canadian Postal Code or USA Zip Code or Intl Postal Code. Only Canadian and US postal codes are required.
+  - `outboundShipment.shipmentInformation.serviceId`* -- string, max 128 chars; accepted: `PurolatorExpress` | `PurolatorExpress10:30AM` | `PurolatorExpress12PM` | `PurolatorExpress9AM` | `PurolatorExpressEvening` | `PurolatorExpressInternational` | `PurolatorExpressInternational10:30AM` | `PurolatorExpressInternational12:00` | `PurolatorExpressInternational9AM` | `PurolatorExpressU.S.` | `PurolatorExpressU.S.10:30AM` | `PurolatorExpressU.S.12:00` | `PurolatorExpressU.S.9AM` | `PurolatorExpressBox` | `PurolatorExpressBox10:30AM` | `PurolatorExpressBox12PM` | `PurolatorExpressBox9AM` | `PurolatorExpressBoxEvening` | `PurolatorExpressBoxInternational` | `PurolatorExpressBoxU.S.` | `PurolatorExpressInternationalBox10:30AM` | `PurolatorExpressInternationalBox12:00` | `PurolatorExpressInternationalBox9AM` | `PurolatorExpressU.S.Box10:30AM` | `PurolatorExpressU.S.Box12:00` | `PurolatorExpressU.S.Box9AM` | `PurolatorExpressEnvelope` | `PurolatorExpressEnvelope10:30AM` | `PurolatorExpressEnvelope12PM` | `PurolatorExpressEnvelope9AM` | `PurolatorExpressEnvelopeEvening` | `PurolatorExpressEnvelopeInternational` | `PurolatorExpressEnvelopeU.S.` | `PurolatorExpressInternationalEnvelope10:30AM` | `PurolatorExpressInternationalEnvelope12:00` | `PurolatorExpressInternationalEnvelope9AM` | `PurolatorExpressU.S.Envelope10:30AM` | `PurolatorExpressU.S.Envelope12:00` | `PurolatorExpressU.S.Envelope9AM` | `PurolatorExpressInternationalPack10:30AM` | `PurolatorExpressInternationalPack12:00` | `PurolatorExpressInternationalPack9AM` | `PurolatorExpressPack` | `PurolatorExpressPack10:30AM` | `PurolatorExpressPack12PM` | `PurolatorExpressPack9AM` | `PurolatorExpressPackEvening` | `PurolatorExpressPackInternational` | `PurolatorExpressPackU.S.` | `PurolatorExpressU.S.Pack10:30AM` | `PurolatorExpressU.S.Pack12:00` | `PurolatorExpressU.S.Pack9AM` | `PurolatorGround` | `PurolatorGround10:30AM` | `PurolatorGround9AM` | `PurolatorGroundEvening` | `PurolatorGroundU.S.` | `PurolatorQuickShip` (spec writes the length as `maximum`)
+  - `outboundShipment.shipmentInformation.unitOfMeasurement` -- string, default Imperial; accepted: `Metric` | `Imperial`. The unit of measurement used for package weight and lengths. Imperial uses pounds and inches, while metric uses kilograms and centimeters. If not provided, defaults to imperial.
+  - `outboundShipment.shipmentInformation.totalWeight`* -- number (double), min 0, max 100000. Total weight of the package in your selected unit of measure (kg or lbs). Total weight is the sum of all piece weights in the shipment. Weight must be greater than 0.
+  - `outboundShipment.shipmentInformation.totalPackages`* -- integer, min 1, max 100
+  - `outboundShipment.shipmentInformation.showAlternativeServicesIndicator` -- boolean, default true. Whether or not to show estimates for alternative services. If not provided, defaults to true
+  - `outboundShipment.shipmentInformation.packageInformation` -- array
+  - `outboundShipment.shipmentInformation.packageInformation[].packageWeight`* -- number (double), min 0, max 100000. Weight of the piece in your selected unit of measure (kg or lbs). Piece weight maximum varies by selected service. Weight must be greater than 0.
+  - `outboundShipment.shipmentInformation.packageInformation[].packageLength` -- number (double), min 0, max 10000. Length of the piece in your selected unit of measure (in or cm). Width and height must be provided if this field is provided. Length must be greater than 0.
+  - `outboundShipment.shipmentInformation.packageInformation[].packageWidth` -- number (double), min 0, max 10000. Width of the piece in your selected unit of measure (in or cm). Length and height must be provided if this field is provided. Width must be greater than 0.
+  - `outboundShipment.shipmentInformation.packageInformation[].packageHeight` -- number (double), min 0, max 10000. Height of the piece in your selected unit of measure (in or cm). Width and length must be provided if this field is provided. Height must be greater than 0.
+  - `outboundShipment.billingInformation.billingAccountNumber`* -- string, max 10 chars (spec writes the length as `maximum`)
+  - `outboundShipment.billingInformation.displayPublishedRates` -- boolean, default false. Whether to non-discounted (published) rates. If not present or false, defaults to display account rates
+  - `trackingReferenceInformation.reference1` -- string, max 35 chars (spec writes the length as `maximum`)
+  - `trackingReferenceInformation.reference2` -- string, max 35 chars (spec writes the length as `maximum`)
+  - `trackingReferenceInformation.reference3` -- string, max 35 chars (spec writes the length as `maximum`)
+
+  **Conditional rules stated in the spec** (fields not sent here):
+  - `outboundShipment.usOriginInformation` -- US origin address information. Required when the shipment originates from the United States. Only US country code is accepted.
+
+  Full value lists: `docs/REST-enumerations-and-accepted-values.md`.
+  <!-- developer-notes:end -->
 url: "{{baseUrl}}/rate/v1/shipment"
 method: POST
 headers:
@@ -11,7 +58,7 @@ body:
   type: json
   content: |-
     {
-        "lineOfBusiness": "COURIER",
+        "lineOfBusiness": "Courier",
         "shipmentDate": "{{Current_Date}}",
         "outboundShipment": {
             "senderInformation": {
@@ -35,7 +82,7 @@ body:
             },
             "shipmentInformation": {
                 "serviceId": "PurolatorExpress",
-                "unitOfMeasurement": "IMPERIAL",
+                "unitOfMeasurement": "Imperial",
                 "totalWeight": 176,
                 "totalPackages": 2,
                 "showAlternativeServicesIndicator": true,

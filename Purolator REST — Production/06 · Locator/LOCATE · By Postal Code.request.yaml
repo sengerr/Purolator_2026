@@ -5,6 +5,35 @@ description: |-
   Source: Purolator-REST-API-STG collection, "Locator - happy by postal code". REST only (no SOAP twin, 2026-10-06).
   Optional query parameters in the source (add as needed): streetAddress, city, provinceCode, radialDistanceInKm, holdForPickup, dangerousGoods, kiosk, streetAccess, wheelChairAccess, locationType, openTime, closeTime, currentlyOpen, gmtOffSet, daysOfOperation.
   Header corrected 2026-10-06 after a live Certification check: the client x-api-key works on the locator; the locatorXApiKey / x-origin-verify values from the Locator OAS example are denied (403).
+
+  <!-- developer-notes:begin (tooling/align_rest_to_spec.py; regenerated, do not edit) -->
+  ### Developer notes
+  `GET /locator/v1/address` -- Locator spec. Retrieve locator address information
+
+  **Headers:** Authorization Bearer `{{REST_Token}}` · `x-api-key` (required) · `x-origin-verify` (required) · `access-control-allow-origin` (required)
+  The spec marks `x-origin-verify` and `access-control-allow-origin` as required; Certification answered 200 without them (2026-10-06). Send `{{xOriginVerify}}` only if Purolator issued you one.
+
+  **Query parameters:**
+  - `language` -- required (used here), string
+  - `requestReference` -- required (used here), string
+  - `streetAddress` -- optional, string
+  - `city` -- optional, string
+  - `postalCode` -- optional (used here), string
+  - `provinceCode` -- optional, string
+  - `radialDistanceInKm` -- optional, number
+  - `holdForPickup` -- optional, boolean
+  - `dangerousGoods` -- optional, boolean
+  - `kiosk` -- optional, boolean
+  - `streetAccess` -- optional, boolean
+  - `wheelChairAccess` -- optional, boolean
+  - `maxNumberOfLocations` -- optional (used here), integer
+  - `locationType` -- optional, string
+  - `openTime` -- optional, string
+  - `closeTime` -- optional, string
+  - `currentlyOpen` -- optional, boolean
+  - `gmtOffSet` -- optional, string
+  - `daysOfOperation` -- optional, string
+  <!-- developer-notes:end -->
 url: "{{baseUrl}}/locator/v1/address?language=en&requestReference={{RequestReference}}&postalCode=M9A0A5&maxNumberOfLocations=2"
 method: GET
 headers:

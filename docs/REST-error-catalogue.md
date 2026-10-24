@@ -58,7 +58,7 @@ Capture runs scanned: `cert-rest`, `cert-products`, `cert-documents`,
 | 9001-11 | 1 | `/pickup/v1/schedule` | `Contact name is a mandatory field` | Ours — negative case |
 | 9001-16 | 1 | `/pickup/v1/schedule` | Phone number required, format `14031234567` | Ours — negative case |
 | 9001-28 | 1 | `/pickup/v1/schedule` | `Address for Pickup is required` | Ours — negative case |
-| 9001-319 | 1 | `/ship/v1/artifacts` | `Invalid Manifest Date. Date must be between <d> and <d>` | API — rolling 10-day window (PRB-04) |
+| 9001-319 | 1 | `/ship/v1/documents/summary-manifest` | `Invalid Manifest Date. Date must be between <d> and <d>` | API — rolling 10-day window (PRB-04) |
 | 9001-63 | 1 | `/pickup/v1/void` | Confirmation number must be 8-9 characters | Ours — negative case |
 | 9001-64 | 1 | `/pickup/v1/void` | `Pickup not found` | Ours — negative case |
 

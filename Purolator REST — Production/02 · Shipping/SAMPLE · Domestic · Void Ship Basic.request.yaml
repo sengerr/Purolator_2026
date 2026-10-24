@@ -1,6 +1,30 @@
 $kind: http-request
 description: |-
   REST twin of the SOAP request of the same name (added 2026-10-06). Void is PUT /ship/v1/shipment with {lineOfBusiness, shipmentPIN} -- a PUT, not a POST (Purolator REST STG collection and support cheat sheet). Voids the shipment in {{PIN_VOID_4}}.
+
+  <!-- developer-notes:begin (tooling/align_rest_to_spec.py; regenerated, do not edit) -->
+  ### Developer notes
+  `PUT /ship/v1/shipment` -- Create / Void Shipment spec (VoidShipmentRequest). Void a shipment
+
+  Void a previously created courier shipment by PIN. Same resource path as Create Shipment; this operation is PUT. Freight is not supported.
+
+  **Headers:** Authorization Bearer `{{REST_Token}}` · `x-api-key` (required) · `Language` (optional) `EN` | `FR` · `RequestReference` (optional) max 36
+
+  **Required fields** (top level, and inside every object this body sends): `lineOfBusiness`, `shipmentPIN`
+
+  **Fields in this body** (type, limits, accepted values; * = required):
+  - `lineOfBusiness`* -- string; accepted: `Courier` | `Freight`. Line of business. Case-insensitive. Only Courier is supported.
+  - `shipmentPIN`* -- string
+
+  **Other accepted values you can send here:**
+  - `language` -- `EN` | `FR`
+
+  **Conditional rules stated in the spec** (fields not sent here):
+  - `requestReference` -- A unique identifier for the request. Can be used to match request with the response. If not provided, a random UUID is generated.
+  - `language` -- Response language. Case-insensitive. If not provided, defaults to EN (English).
+
+  Full value lists: `docs/REST-enumerations-and-accepted-values.md`.
+  <!-- developer-notes:end -->
 url: "{{baseUrl}}/ship/v1/shipment"
 method: PUT
 headers:

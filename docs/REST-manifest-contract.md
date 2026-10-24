@@ -9,6 +9,11 @@ Closes certification plan item CN-05 (Test Manifest Report). Measured
 > answered 403 in the 2026-09-28 sample run. The MANIFEST requests now use the
 > summary-manifest route. The 2026-09-17 measurement below is kept as history; re-measure
 > both routes before relying on either.
+>
+> **Update 2026-10-24.** The published OpenAPI spec (`sources/openapi/get_summary_manifest_api.yaml`)
+> confirms `POST /ship/v1/documents/summary-manifest` with `manifestDate` an array of
+> `YYYY-MM-DD` dates in the inclusive window today-10 .. today. `/ship/v1/artifacts` is not
+> in any published spec; read it below as the old name of the same route.
 
 ## There is no `/ship/v1/documents/summary-manifest` route
 
@@ -30,7 +35,7 @@ about a 403 here.
 | Route | Purpose | Body |
 |---|---|---|
 | `/ship/v1/manifest` | close the manifest (consolidate) | `{language, requestReference, lineOfBusiness, accountNumber}` |
-| `/ship/v1/artifacts` | retrieve the summary manifest document | `{lineOfBusiness, manifestDate: [date]}` |
+| `/ship/v1/documents/summary-manifest` (was `/ship/v1/artifacts`) | retrieve the summary manifest document | `{lineOfBusiness, manifestDate: [date]}` |
 
 `manifestDate` is an **array**. The close returns no document:
 
@@ -113,7 +118,7 @@ things to rule out: a same-day manifest date (`9001-316`), and treating the
 
 ## Suite changes this implies
 
-1. The three `/ship/v1/artifacts` requests need a computed `manifestDate`
+1. The three summary-manifest requests need a computed `manifestDate`
    inside the rolling 10-day window, defaulting to the previous business day.
 2. The runner's document capture must branch on `url` vs `data` — a `url`
    needs a second fetch, and the fetch is what proves the document exists.
