@@ -10,8 +10,8 @@ These are Postman collections for the Purolator **REST** API and the Purolator *
 |---|---|---|
 | Purolator REST — Development | 420 | Certification, full REST run on 2026-10-06 (13 spec-aligned requests not yet verified) |
 | Purolator REST — Production | 420 | Same requests as Development; only the host differs |
-| Purolator SOAP (EWS) — Development | 406 | Development, full SOAP run on 2026-10-06 |
-| Purolator SOAP (EWS) — Production | 406 | Same requests as Development; only the host differs |
+| Purolator SOAP (EWS) — Development | 428 | Development, full SOAP run on 2026-10-29 (Shipping Web Service 2.3 field removal) |
+| Purolator SOAP (EWS) — Production | 428 | Same requests as Development; only the host differs |
 
 In each protocol, the request content is identical between Development and Production.
 
