@@ -6,10 +6,10 @@ Four files in this folder, Postman collection format v2.1.0, exported from the Y
 |---|---|---|
 | `Purolator_REST_Development.postman_collection.json` | 420 | `https://shipapi-sandbox.purolator.com` |
 | `Purolator_REST_Production.postman_collection.json` | 420 | `https://shipapi.purolator.com` |
-| `Purolator_SOAP_EWS_Development.postman_collection.json` | 406 | `https://devwebservices.purolator.com` |
-| `Purolator_SOAP_EWS_Production.postman_collection.json` | 406 | `https://webservices.purolator.com` |
+| `Purolator_SOAP_EWS_Development.postman_collection.json` | 428 | `https://devwebservices.purolator.com` |
+| `Purolator_SOAP_EWS_Production.postman_collection.json` | 428 | `https://webservices.purolator.com` |
 
-Every request was sent live and succeeded on 2026-10-06. Start with the **Development** files; Production calls create real, billable shipments.
+Every request was sent live and succeeded: REST on 2026-10-06, SOAP on 2026-10-29. Start with the **Development** files; Production calls create real, billable shipments.
 
 ---
 
