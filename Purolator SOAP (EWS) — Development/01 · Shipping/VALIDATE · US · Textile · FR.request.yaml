@@ -168,11 +168,7 @@ body:
                          <v2:UnitValue>12</v2:UnitValue>
                          <v2:Quantity>34</v2:Quantity>
                          <!--Optional:-->
-                         <v2:NAFTADocumentIndicator>false</v2:NAFTADocumentIndicator>
-                         <!--Optional:-->
                          <v2:FDADocumentIndicator>false</v2:FDADocumentIndicator>
-                         <!--Optional:-->
-                         <v2:FCCDocumentIndicator>false</v2:FCCDocumentIndicator>
                          <!--Optional:-->
                          <v2:SenderIsProducerIndicator>true</v2:SenderIsProducerIndicator>
     		      <v2:TextileIndicator>true</v2:TextileIndicator>
