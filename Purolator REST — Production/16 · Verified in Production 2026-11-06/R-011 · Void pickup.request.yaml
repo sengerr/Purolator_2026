@@ -1,0 +1,25 @@
+$kind: http-request
+description: |-
+  Verified in Production 2026-11-06 — Purolator_Certification_Testing row R-011 (Void pickup).
+  Expected outcome: HTTP 200 · pickup cancelled
+  Placeholders in the body: PickUpConfirmationNumber.
+  Production calls create real shipments and pickups — void anything you create.
+url: "{{baseUrl}}/pickup/v1/void"
+method: PUT
+headers:
+  x-api-key: "{{REST_XApiKey}}"
+  RequestReference: "{{RequestReference}}"
+  Language: "{{language}}"
+  Content-Type: application/json
+body:
+  type: json
+  content: |-
+    {
+      "lineOfBusiness": "Courier",
+      "pickupConfirmationNumber": "{{PickUpConfirmationNumber}}"
+    }
+auth:
+  type: bearer
+  credentials:
+    token: "{{REST_Token}}"
+order: 400

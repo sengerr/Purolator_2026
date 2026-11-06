@@ -61413,6 +61413,1512 @@
           "response": []
         }
       ]
+    },
+    {
+      "name": "16 · Verified in Production 2026-11-06",
+      "description": "",
+      "item": [
+        {
+          "name": "R-008 · Schedule pickup",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "x-api-key",
+                "value": "{{REST_XApiKey}}",
+                "type": "text"
+              },
+              {
+                "key": "RequestReference",
+                "value": "{{RequestReference}}",
+                "type": "text"
+              },
+              {
+                "key": "Language",
+                "value": "{{language}}",
+                "type": "text"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json",
+                "type": "text"
+              }
+            ],
+            "url": "{{baseUrl}}/pickup/v1/schedule",
+            "description": "Verified in Production 2026-11-06 — Purolator_Certification_Testing row R-008 (Schedule pickup).\nExpected outcome: HTTP 200 · pickup scheduled · confirmation number returned\nPlaceholders in the body: AccountNumber, Pickup_Date.\nProduction calls create real shipments and pickups — void anything you create.",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"lineOfBusiness\": \"Courier\",\n  \"registeredAccountNumber\": \"{{AccountNumber}}\",\n  \"pickupInstructions\": {\n    \"date\": \"{{Pickup_Date}}\",\n    \"anyTimeAfter\": \"13:00\",\n    \"untilTime\": \"17:00\",\n    \"measurementUnit\": \"Imperial\",\n    \"pickupLocation\": \"FrontDesk\",\n    \"additionalInstructions\": \"Sample pickup\"\n  },\n  \"pickupAddress\": {\n    \"address\": [\n      \"5995 Avebury Rd\"\n    ],\n    \"city\": \"Mississauga\",\n    \"province\": \"ON\",\n    \"country\": \"CA\",\n    \"postalCode\": \"L5R3T8\"\n  },\n  \"shipmentSummary\": [\n    {\n      \"destinationCode\": \"DOM\",\n      \"modeOfTransport\": \"Ground\",\n      \"totalPieces\": 1,\n      \"totalWeight\": 5\n    }\n  ],\n  \"contactInfo\": {\n    \"name\": \"Shipping\",\n    \"company\": \"Sample Co\",\n    \"phoneNumber\": \"4161234567\"\n  }\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{REST_Token}}",
+                  "type": "string"
+                }
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "R-009 · Modify pickup",
+          "request": {
+            "method": "PUT",
+            "header": [
+              {
+                "key": "x-api-key",
+                "value": "{{REST_XApiKey}}",
+                "type": "text"
+              },
+              {
+                "key": "RequestReference",
+                "value": "{{RequestReference}}",
+                "type": "text"
+              },
+              {
+                "key": "Language",
+                "value": "{{language}}",
+                "type": "text"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json",
+                "type": "text"
+              }
+            ],
+            "url": "{{baseUrl}}/pickup/v1/modify",
+            "description": "Verified in Production 2026-11-06 — Purolator_Certification_Testing row R-009 (Modify pickup).\nExpected outcome: HTTP 200 · pickup updated\nPlaceholders in the body: AccountNumber, PickUpConfirmationNumber.\nProduction calls create real shipments and pickups — void anything you create.",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"lineOfBusiness\": \"Courier\",\n  \"registeredAccountNumber\": \"{{AccountNumber}}\",\n  \"pickupConfirmationNumber\": \"{{PickUpConfirmationNumber}}\",\n  \"pickupInstructions\": {\n    \"untilTime\": \"18:00\",\n    \"measurementUnit\": \"imperial\",\n    \"pickupLocation\": \"BackDoor\",\n    \"additionalInstructions\": \"Updated sample pickup\"\n  },\n  \"shipmentSummary\": [\n    {\n      \"destinationCode\": \"DOM\",\n      \"totalPieces\": 2,\n      \"totalWeight\": 14\n    }\n  ]\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{REST_Token}}",
+                  "type": "string"
+                }
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "R-010 · Pickup history",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "x-api-key",
+                "value": "{{REST_XApiKey}}",
+                "type": "text"
+              },
+              {
+                "key": "RequestReference",
+                "value": "{{RequestReference}}",
+                "type": "text"
+              },
+              {
+                "key": "Language",
+                "value": "{{language}}",
+                "type": "text"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json",
+                "type": "text"
+              }
+            ],
+            "url": "{{baseUrl}}/pickup/v1/getHistory",
+            "description": "Verified in Production 2026-11-06 — Purolator_Certification_Testing row R-010 (Pickup history).\nExpected outcome: HTTP 200 · pickup history returned\nPlaceholders in the body: AccountNumber, PickUpConfirmationNumber.\nProduction calls create real shipments and pickups — void anything you create.",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"lineOfBusiness\": \"Courier\",\n  \"registeredAccountNumber\": \"{{AccountNumber}}\",\n  \"pickupConfirmationNumber\": [\n    \"{{PickUpConfirmationNumber}}\"\n  ],\n  \"status\": \"Scheduled\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{REST_Token}}",
+                  "type": "string"
+                }
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "R-011 · Void pickup",
+          "request": {
+            "method": "PUT",
+            "header": [
+              {
+                "key": "x-api-key",
+                "value": "{{REST_XApiKey}}",
+                "type": "text"
+              },
+              {
+                "key": "RequestReference",
+                "value": "{{RequestReference}}",
+                "type": "text"
+              },
+              {
+                "key": "Language",
+                "value": "{{language}}",
+                "type": "text"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json",
+                "type": "text"
+              }
+            ],
+            "url": "{{baseUrl}}/pickup/v1/void",
+            "description": "Verified in Production 2026-11-06 — Purolator_Certification_Testing row R-011 (Void pickup).\nExpected outcome: HTTP 200 · pickup cancelled\nPlaceholders in the body: PickUpConfirmationNumber.\nProduction calls create real shipments and pickups — void anything you create.",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"lineOfBusiness\": \"Courier\",\n  \"pickupConfirmationNumber\": \"{{PickUpConfirmationNumber}}\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{REST_Token}}",
+                  "type": "string"
+                }
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "R-019 · Purolator Express Evening",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "x-api-key",
+                "value": "{{REST_XApiKey}}",
+                "type": "text"
+              },
+              {
+                "key": "RequestReference",
+                "value": "{{RequestReference}}",
+                "type": "text"
+              },
+              {
+                "key": "Language",
+                "value": "{{language}}",
+                "type": "text"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json",
+                "type": "text"
+              }
+            ],
+            "url": "{{baseUrl}}/ship/v1/shipment",
+            "description": "Verified in Production 2026-11-06 — Purolator_Certification_Testing row R-019 (Purolator Express Evening).\nExpected outcome: HTTP 200 · validShipment: true · shipmentPIN returned · packagePINs returned · documentStatus: Completed · banner: \"Quote is subject to change based on actual shipment characte…\"\nPlaceholders in the body: Current_Date, Freight_account.\nProduction calls create real shipments and pickups — void anything you create.",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"lineOfBusiness\": \"COURIER\",\n  \"shipmentDate\": \"{{Current_Date}}\",\n  \"validateOnly\": false,\n  \"returnsManagement\": false,\n  \"returnRates\": false,\n  \"outboundShipment\": {\n    \"pickupType\": \"DROPOFF\",\n    \"senderInformation\": {\n      \"attentionTo\": \"Tech A\",\n      \"companyName\": \"Purolator\",\n      \"streetAddress\": [\n        \"17718 114 Ave\"\n      ],\n      \"city\": \"Edmonton\",\n      \"provinceStateCode\": \"AB\",\n      \"country\": \"CA\",\n      \"postalZipCode\": \"T5S2N4\",\n      \"phoneNumber\": \"17804091270\"\n    },\n    \"receiverInformation\": {\n      \"attentionTo\": \"Tech B\",\n      \"companyName\": \"Purolator\",\n      \"streetAddress\": [\n        \"3700 Jericho Road\"\n      ],\n      \"city\": \"Richmond\",\n      \"provinceStateCode\": \"BC\",\n      \"country\": \"CA\",\n      \"postalZipCode\": \"V7B1M5\",\n      \"phoneNumber\": \"18004595599\"\n    },\n    \"shipmentInformation\": {\n      \"serviceId\": \"PurolatorExpressEvening\",\n      \"unitOfMeasurement\": \"IMPERIAL\",\n      \"descriptionOfGoods\": \"Consolidation check\",\n      \"totalWeight\": 50,\n      \"totalPackages\": 4,\n      \"dangerousGoodsDeclarationDocumentIndicator\": false,\n      \"packageInformation\": [\n        {\n          \"packageWeight\": 12.5,\n          \"packageLength\": 10,\n          \"packageWidth\": 10,\n          \"packageHeight\": 10\n        },\n        {\n          \"packageWeight\": 12.5,\n          \"packageLength\": 10,\n          \"packageWidth\": 10,\n          \"packageHeight\": 10\n        },\n        {\n          \"packageWeight\": 12.5,\n          \"packageLength\": 10,\n          \"packageWidth\": 10,\n          \"packageHeight\": 10\n        },\n        {\n          \"packageWeight\": 12.5,\n          \"packageLength\": 10,\n          \"packageWidth\": 10,\n          \"packageHeight\": 10\n        }\n      ]\n    },\n    \"paymentInformation\": {\n      \"paymentType\": \"Sender\",\n      \"registeredAccountNumber\": \"{{Freight_account}}\",\n      \"billingAccountNumber\": \"{{Freight_account}}\"\n    },\n    \"customerReferenceInformation\": {\n      \"costCenter\": \"Consolidation\",\n      \"shipmentReference1\": \"PO123456\"\n    }\n  },\n  \"shipmentDocuments\": {\n    \"label\": {\n      \"outputType\": \"ZPL\",\n      \"printerFormat\": \"thermal\",\n      \"responseType\": \"BASE64\"\n    }\n  }\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{REST_Token}}",
+                  "type": "string"
+                }
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "R-024 · Purolator Express Envelope Evening",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "x-api-key",
+                "value": "{{REST_XApiKey}}",
+                "type": "text"
+              },
+              {
+                "key": "RequestReference",
+                "value": "{{RequestReference}}",
+                "type": "text"
+              },
+              {
+                "key": "Language",
+                "value": "{{language}}",
+                "type": "text"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json",
+                "type": "text"
+              }
+            ],
+            "url": "{{baseUrl}}/ship/v1/shipment",
+            "description": "Verified in Production 2026-11-06 — Purolator_Certification_Testing row R-024 (Purolator Express Envelope Evening).\nExpected outcome: HTTP 200 · validShipment: true · shipmentPIN returned · packagePINs returned · documentStatus: Completed · banner: \"Quote is subject to change based on actual shipment characte…\"\nPlaceholders in the body: AccountNumber, Current_Date.\nProduction calls create real shipments and pickups — void anything you create.",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"lineOfBusiness\": \"COURIER\",\n  \"shipmentDate\": \"{{Current_Date}}\",\n  \"validateOnly\": false,\n  \"returnsManagement\": false,\n  \"returnRates\": false,\n  \"outboundShipment\": {\n    \"pickupType\": \"DROPOFF\",\n    \"senderInformation\": {\n      \"attentionTo\": \"Tech A\",\n      \"streetAddress\": [\n        \"17718 114 Ave\"\n      ],\n      \"city\": \"Edmonton\",\n      \"provinceStateCode\": \"AB\",\n      \"country\": \"CA\",\n      \"postalZipCode\": \"T5S2N4\",\n      \"phoneNumber\": \"17804091270\"\n    },\n    \"receiverInformation\": {\n      \"attentionTo\": \"Tech B\",\n      \"companyName\": \"Purolator\",\n      \"streetAddress\": [\n        \"3700 Jericho Road\"\n      ],\n      \"city\": \"Richmond\",\n      \"provinceStateCode\": \"BC\",\n      \"country\": \"CA\",\n      \"postalZipCode\": \"V7B1M5\",\n      \"phoneNumber\": \"18004595599\"\n    },\n    \"shipmentInformation\": {\n      \"serviceId\": \"PurolatorExpressEnvelopeEvening\",\n      \"unitOfMeasurement\": \"IMPERIAL\",\n      \"descriptionOfGoods\": \"Product matrix test\",\n      \"totalWeight\": 1,\n      \"totalPackages\": 1,\n      \"dangerousGoodsDeclarationDocumentIndicator\": false,\n      \"packageInformation\": [\n        {\n          \"packageWeight\": 1,\n          \"packageLength\": 0,\n          \"packageWidth\": 0,\n          \"packageHeight\": 0\n        }\n      ]\n    },\n    \"paymentInformation\": {\n      \"paymentType\": \"Sender\",\n      \"registeredAccountNumber\": \"{{AccountNumber}}\",\n      \"billingAccountNumber\": \"{{AccountNumber}}\"\n    },\n    \"customerReferenceInformation\": {\n      \"costCenter\": \"Product Matrix\",\n      \"shipmentReference1\": \"PurolatorExpressEnvelope\"\n    }\n  },\n  \"shipmentDocuments\": {\n    \"label\": {\n      \"outputType\": \"ZPL\",\n      \"printerFormat\": \"thermal\",\n      \"responseType\": \"BASE64\"\n    }\n  }\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{REST_Token}}",
+                  "type": "string"
+                }
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "R-029 · Purolator Express Pack Evening",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "x-api-key",
+                "value": "{{REST_XApiKey}}",
+                "type": "text"
+              },
+              {
+                "key": "RequestReference",
+                "value": "{{RequestReference}}",
+                "type": "text"
+              },
+              {
+                "key": "Language",
+                "value": "{{language}}",
+                "type": "text"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json",
+                "type": "text"
+              }
+            ],
+            "url": "{{baseUrl}}/ship/v1/shipment",
+            "description": "Verified in Production 2026-11-06 — Purolator_Certification_Testing row R-029 (Purolator Express Pack Evening).\nExpected outcome: HTTP 200 · validShipment: true · shipmentPIN returned · packagePINs returned · documentStatus: Completed · banner: \"Quote is subject to change based on actual shipment characte…\"\nPlaceholders in the body: AccountNumber, Current_Date.\nProduction calls create real shipments and pickups — void anything you create.",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"lineOfBusiness\": \"COURIER\",\n  \"shipmentDate\": \"{{Current_Date}}\",\n  \"validateOnly\": false,\n  \"returnsManagement\": false,\n  \"returnRates\": false,\n  \"outboundShipment\": {\n    \"pickupType\": \"DROPOFF\",\n    \"senderInformation\": {\n      \"attentionTo\": \"Tech A\",\n      \"streetAddress\": [\n        \"17718 114 Ave\"\n      ],\n      \"city\": \"Edmonton\",\n      \"provinceStateCode\": \"AB\",\n      \"country\": \"CA\",\n      \"postalZipCode\": \"T5S2N4\",\n      \"phoneNumber\": \"17804091270\"\n    },\n    \"receiverInformation\": {\n      \"attentionTo\": \"Tech B\",\n      \"companyName\": \"Purolator\",\n      \"streetAddress\": [\n        \"3700 Jericho Road\"\n      ],\n      \"city\": \"Richmond\",\n      \"provinceStateCode\": \"BC\",\n      \"country\": \"CA\",\n      \"postalZipCode\": \"V7B1M5\",\n      \"phoneNumber\": \"18004595599\"\n    },\n    \"shipmentInformation\": {\n      \"serviceId\": \"PurolatorExpressPackEvening\",\n      \"unitOfMeasurement\": \"IMPERIAL\",\n      \"descriptionOfGoods\": \"Product matrix test\",\n      \"totalWeight\": 2,\n      \"totalPackages\": 1,\n      \"dangerousGoodsDeclarationDocumentIndicator\": false,\n      \"packageInformation\": [\n        {\n          \"packageWeight\": 2,\n          \"packageLength\": 0,\n          \"packageWidth\": 0,\n          \"packageHeight\": 0\n        }\n      ]\n    },\n    \"paymentInformation\": {\n      \"paymentType\": \"Sender\",\n      \"registeredAccountNumber\": \"{{AccountNumber}}\",\n      \"billingAccountNumber\": \"{{AccountNumber}}\"\n    },\n    \"customerReferenceInformation\": {\n      \"costCenter\": \"Product Matrix\",\n      \"shipmentReference1\": \"PurolatorExpressPack\"\n    }\n  },\n  \"shipmentDocuments\": {\n    \"label\": {\n      \"outputType\": \"ZPL\",\n      \"printerFormat\": \"thermal\",\n      \"responseType\": \"BASE64\"\n    }\n  }\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{REST_Token}}",
+                  "type": "string"
+                }
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "R-034 · Purolator Express Box Evening",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "x-api-key",
+                "value": "{{REST_XApiKey}}",
+                "type": "text"
+              },
+              {
+                "key": "RequestReference",
+                "value": "{{RequestReference}}",
+                "type": "text"
+              },
+              {
+                "key": "Language",
+                "value": "{{language}}",
+                "type": "text"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json",
+                "type": "text"
+              }
+            ],
+            "url": "{{baseUrl}}/ship/v1/shipment",
+            "description": "Verified in Production 2026-11-06 — Purolator_Certification_Testing row R-034 (Purolator Express Box Evening).\nExpected outcome: HTTP 200 · validShipment: true · shipmentPIN returned · packagePINs returned · documentStatus: Completed · banner: \"Quote is subject to change based on actual shipment characte…\"\nPlaceholders in the body: AccountNumber, Current_Date.\nProduction calls create real shipments and pickups — void anything you create.",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"lineOfBusiness\": \"COURIER\",\n  \"shipmentDate\": \"{{Current_Date}}\",\n  \"validateOnly\": false,\n  \"returnsManagement\": false,\n  \"returnRates\": false,\n  \"outboundShipment\": {\n    \"pickupType\": \"DROPOFF\",\n    \"senderInformation\": {\n      \"attentionTo\": \"Tech A\",\n      \"streetAddress\": [\n        \"17718 114 Ave\"\n      ],\n      \"city\": \"Edmonton\",\n      \"provinceStateCode\": \"AB\",\n      \"country\": \"CA\",\n      \"postalZipCode\": \"T5S2N4\",\n      \"phoneNumber\": \"17804091270\"\n    },\n    \"receiverInformation\": {\n      \"attentionTo\": \"Tech B\",\n      \"companyName\": \"Purolator\",\n      \"streetAddress\": [\n        \"3700 Jericho Road\"\n      ],\n      \"city\": \"Richmond\",\n      \"provinceStateCode\": \"BC\",\n      \"country\": \"CA\",\n      \"postalZipCode\": \"V7B1M5\",\n      \"phoneNumber\": \"18004595599\"\n    },\n    \"shipmentInformation\": {\n      \"serviceId\": \"PurolatorExpressBoxEvening\",\n      \"unitOfMeasurement\": \"IMPERIAL\",\n      \"descriptionOfGoods\": \"Product matrix test\",\n      \"totalWeight\": 2,\n      \"totalPackages\": 1,\n      \"dangerousGoodsDeclarationDocumentIndicator\": false,\n      \"packageInformation\": [\n        {\n          \"packageWeight\": 2,\n          \"packageLength\": 0,\n          \"packageWidth\": 0,\n          \"packageHeight\": 0\n        }\n      ]\n    },\n    \"paymentInformation\": {\n      \"paymentType\": \"Sender\",\n      \"registeredAccountNumber\": \"{{AccountNumber}}\",\n      \"billingAccountNumber\": \"{{AccountNumber}}\"\n    },\n    \"customerReferenceInformation\": {\n      \"costCenter\": \"Product Matrix\",\n      \"shipmentReference1\": \"PurolatorExpressBox\"\n    }\n  },\n  \"shipmentDocuments\": {\n    \"label\": {\n      \"outputType\": \"ZPL\",\n      \"printerFormat\": \"thermal\",\n      \"responseType\": \"BASE64\"\n    }\n  }\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{REST_Token}}",
+                  "type": "string"
+                }
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "R-038 · Purolator Ground Evening",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "x-api-key",
+                "value": "{{REST_XApiKey}}",
+                "type": "text"
+              },
+              {
+                "key": "RequestReference",
+                "value": "{{RequestReference}}",
+                "type": "text"
+              },
+              {
+                "key": "Language",
+                "value": "{{language}}",
+                "type": "text"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json",
+                "type": "text"
+              }
+            ],
+            "url": "{{baseUrl}}/ship/v1/shipment",
+            "description": "Verified in Production 2026-11-06 — Purolator_Certification_Testing row R-038 (Purolator Ground Evening).\nExpected outcome: HTTP 200 · validShipment: true · shipmentPIN returned · packagePINs returned · documentStatus: Completed · banner: \"Quote is subject to change based on actual shipment characte…\"\nPlaceholders in the body: Current_Date, Freight_account.\nProduction calls create real shipments and pickups — void anything you create.",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"lineOfBusiness\": \"COURIER\",\n  \"shipmentDate\": \"{{Current_Date}}\",\n  \"validateOnly\": false,\n  \"returnsManagement\": false,\n  \"returnRates\": false,\n  \"outboundShipment\": {\n    \"pickupType\": \"DROPOFF\",\n    \"senderInformation\": {\n      \"attentionTo\": \"Tech A\",\n      \"companyName\": \"Purolator\",\n      \"streetAddress\": [\n        \"17718 114 Ave\"\n      ],\n      \"city\": \"Edmonton\",\n      \"provinceStateCode\": \"AB\",\n      \"country\": \"CA\",\n      \"postalZipCode\": \"T5S2N4\",\n      \"phoneNumber\": \"17804091270\"\n    },\n    \"receiverInformation\": {\n      \"attentionTo\": \"Tech B\",\n      \"companyName\": \"Purolator\",\n      \"streetAddress\": [\n        \"3700 Jericho Road\"\n      ],\n      \"city\": \"Richmond\",\n      \"provinceStateCode\": \"BC\",\n      \"country\": \"CA\",\n      \"postalZipCode\": \"V7B1M5\",\n      \"phoneNumber\": \"18004595599\"\n    },\n    \"shipmentInformation\": {\n      \"serviceId\": \"PurolatorGroundEvening\",\n      \"unitOfMeasurement\": \"IMPERIAL\",\n      \"descriptionOfGoods\": \"Consolidation check\",\n      \"totalWeight\": 50,\n      \"totalPackages\": 4,\n      \"dangerousGoodsDeclarationDocumentIndicator\": false,\n      \"packageInformation\": [\n        {\n          \"packageWeight\": 12.5,\n          \"packageLength\": 10,\n          \"packageWidth\": 10,\n          \"packageHeight\": 10\n        },\n        {\n          \"packageWeight\": 12.5,\n          \"packageLength\": 10,\n          \"packageWidth\": 10,\n          \"packageHeight\": 10\n        },\n        {\n          \"packageWeight\": 12.5,\n          \"packageLength\": 10,\n          \"packageWidth\": 10,\n          \"packageHeight\": 10\n        },\n        {\n          \"packageWeight\": 12.5,\n          \"packageLength\": 10,\n          \"packageWidth\": 10,\n          \"packageHeight\": 10\n        }\n      ]\n    },\n    \"paymentInformation\": {\n      \"paymentType\": \"Sender\",\n      \"registeredAccountNumber\": \"{{Freight_account}}\",\n      \"billingAccountNumber\": \"{{Freight_account}}\"\n    },\n    \"customerReferenceInformation\": {\n      \"costCenter\": \"Consolidation\",\n      \"shipmentReference1\": \"PO123456\"\n    }\n  },\n  \"shipmentDocuments\": {\n    \"label\": {\n      \"outputType\": \"ZPL\",\n      \"printerFormat\": \"thermal\",\n      \"responseType\": \"BASE64\"\n    }\n  }\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{REST_Token}}",
+                  "type": "string"
+                }
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "R-131 · Post Dated Cheque",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "x-api-key",
+                "value": "{{REST_XApiKey}}",
+                "type": "text"
+              },
+              {
+                "key": "RequestReference",
+                "value": "{{RequestReference}}",
+                "type": "text"
+              },
+              {
+                "key": "Language",
+                "value": "{{language}}",
+                "type": "text"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json",
+                "type": "text"
+              }
+            ],
+            "url": "{{baseUrl}}/ship/v1/shipment",
+            "description": "Verified in Production 2026-11-06 — Purolator_Certification_Testing row R-131 (Post Dated Cheque).\nExpected outcome: HTTP 200 · validShipment: true · shipmentPIN returned · packagePINs returned · documentStatus: Completed · banner: \"Quote is subject to change based on actual shipment characte…\"\nPlaceholders in the body: AccountNumber, Current_Date.\nProduction calls create real shipments and pickups — void anything you create.",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"lineOfBusiness\": \"COURIER\",\n  \"shipmentDate\": \"{{Current_Date}}\",\n  \"validateOnly\": false,\n  \"returnsManagement\": false,\n  \"returnRates\": false,\n  \"outboundShipment\": {\n    \"pickupType\": \"DROPOFF\",\n    \"senderInformation\": {\n      \"attentionTo\": \"Tech A\",\n      \"companyName\": \"Purolator\",\n      \"streetAddress\": [\n        \"17718 114 Ave\"\n      ],\n      \"city\": \"Edmonton\",\n      \"provinceStateCode\": \"AB\",\n      \"country\": \"CA\",\n      \"postalZipCode\": \"T5S2N4\",\n      \"phoneNumber\": \"17804091270\"\n    },\n    \"receiverInformation\": {\n      \"attentionTo\": \"Tech B\",\n      \"companyName\": \"Purolator\",\n      \"streetAddress\": [\n        \"30 Aero Drive NE\"\n      ],\n      \"city\": \"Calgary\",\n      \"provinceStateCode\": \"AB\",\n      \"country\": \"CA\",\n      \"postalZipCode\": \"T2E8Z9\",\n      \"phoneNumber\": \"18004595599\"\n    },\n    \"shipmentInformation\": {\n      \"serviceId\": \"PurolatorGround\",\n      \"unitOfMeasurement\": \"IMPERIAL\",\n      \"totalWeight\": 150,\n      \"totalPackages\": 1,\n      \"dangerousGoodsDeclarationDocumentIndicator\": false,\n      \"shipmentOptionsInformation\": [\n        {\n          \"optionId\": \"DangerousGoods\",\n          \"optionIdValue\": \"false\"\n        },\n        {\n          \"optionId\": \"DangerousGoodsClass\",\n          \"optionIdValue\": \"FullyRegulated\"\n        },\n        {\n          \"optionId\": \"DangerousGoodsMode\",\n          \"optionIdValue\": \"Ground\"\n        },\n        {\n          \"optionId\": \"DeclaredValue\",\n          \"optionIdValue\": \"100.00\"\n        },\n        {\n          \"optionId\": \"ChainOfSignature\",\n          \"optionIdValue\": \"false\"\n        },\n        {\n          \"optionId\": \"SaturdayPickup\",\n          \"optionIdValue\": \"false\"\n        },\n        {\n          \"optionId\": \"SaturdayDelivery\",\n          \"optionIdValue\": \"false\"\n        },\n        {\n          \"optionId\": \"ExpressCheque\",\n          \"optionIdValue\": \"false\"\n        },\n        {\n          \"optionId\": \"ExpressChequeMethodOfPayment\",\n          \"optionIdValue\": \"Post dated Cheque\"\n        },\n        {\n          \"optionId\": \"ExpressChequeAmount\",\n          \"optionIdValue\": \"100.00\"\n        },\n        {\n          \"optionId\": \"HoldForPickup\",\n          \"optionIdValue\": \"false\"\n        },\n        {\n          \"optionId\": \"OriginSignatureNotRequired\",\n          \"optionIdValue\": \"false\"\n        },\n        {\n          \"optionId\": \"ResidentialSignatureDomestic\",\n          \"optionIdValue\": \"false\"\n        },\n        {\n          \"optionId\": \"ResidentialSignatureIntl\",\n          \"optionIdValue\": \"false\"\n        },\n        {\n          \"optionId\": \"AdultSignatureRequired\",\n          \"optionIdValue\": \"false\"\n        },\n        {\n          \"optionId\": \"HealthCare\",\n          \"optionIdValue\": \"false\"\n        }\n      ],\n      \"packageInformation\": [\n        {\n          \"packageWeight\": 75,\n          \"packageLength\": 12,\n          \"packageWidth\": 12,\n          \"packageHeight\": 1\n        },\n        {\n          \"packageWeight\": 75,\n          \"packageLength\": 12,\n          \"packageWidth\": 12,\n          \"packageHeight\": 1\n        }\n      ]\n    },\n    \"paymentInformation\": {\n      \"paymentType\": \"Sender\",\n      \"registeredAccountNumber\": \"{{AccountNumber}}\",\n      \"billingAccountNumber\": \"{{AccountNumber}}\"\n    },\n    \"customerReferenceInformation\": {\n      \"notes\": \"East\"\n    }\n  },\n  \"shipmentDocuments\": {\n    \"label\": {\n      \"outputType\": \"ZPL\",\n      \"printerFormat\": \"Thermal\",\n      \"responseType\": \"BASE64\"\n    }\n  }\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{REST_Token}}",
+                  "type": "string"
+                }
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "R-132 · Certified Cheque",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "x-api-key",
+                "value": "{{REST_XApiKey}}",
+                "type": "text"
+              },
+              {
+                "key": "RequestReference",
+                "value": "{{RequestReference}}",
+                "type": "text"
+              },
+              {
+                "key": "Language",
+                "value": "{{language}}",
+                "type": "text"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json",
+                "type": "text"
+              }
+            ],
+            "url": "{{baseUrl}}/ship/v1/shipment",
+            "description": "Verified in Production 2026-11-06 — Purolator_Certification_Testing row R-132 (Certified Cheque).\nExpected outcome: HTTP 200 · validShipment: true · shipmentPIN returned · packagePINs returned · documentStatus: Completed · banner: \"Quote is subject to change based on actual shipment characte…\"\nPlaceholders in the body: AccountNumber, Current_Date.\nProduction calls create real shipments and pickups — void anything you create.",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"lineOfBusiness\": \"COURIER\",\n  \"shipmentDate\": \"{{Current_Date}}\",\n  \"validateOnly\": false,\n  \"returnsManagement\": false,\n  \"returnRates\": false,\n  \"outboundShipment\": {\n    \"pickupType\": \"DROPOFF\",\n    \"senderInformation\": {\n      \"attentionTo\": \"Tech A\",\n      \"companyName\": \"Purolator\",\n      \"streetAddress\": [\n        \"17718 114 Ave\"\n      ],\n      \"city\": \"Edmonton\",\n      \"provinceStateCode\": \"AB\",\n      \"country\": \"CA\",\n      \"postalZipCode\": \"T5S2N4\",\n      \"phoneNumber\": \"17804091270\"\n    },\n    \"receiverInformation\": {\n      \"attentionTo\": \"Tech B\",\n      \"companyName\": \"Purolator\",\n      \"streetAddress\": [\n        \"30 Aero Drive NE\"\n      ],\n      \"city\": \"Calgary\",\n      \"provinceStateCode\": \"AB\",\n      \"country\": \"CA\",\n      \"postalZipCode\": \"T2E8Z9\",\n      \"phoneNumber\": \"18004595599\"\n    },\n    \"shipmentInformation\": {\n      \"serviceId\": \"PurolatorGround\",\n      \"unitOfMeasurement\": \"IMPERIAL\",\n      \"totalWeight\": 150,\n      \"totalPackages\": 1,\n      \"dangerousGoodsDeclarationDocumentIndicator\": false,\n      \"shipmentOptionsInformation\": [\n        {\n          \"optionId\": \"DangerousGoods\",\n          \"optionIdValue\": \"false\"\n        },\n        {\n          \"optionId\": \"DangerousGoodsClass\",\n          \"optionIdValue\": \"FullyRegulated\"\n        },\n        {\n          \"optionId\": \"DangerousGoodsMode\",\n          \"optionIdValue\": \"Ground\"\n        },\n        {\n          \"optionId\": \"DeclaredValue\",\n          \"optionIdValue\": \"100.00\"\n        },\n        {\n          \"optionId\": \"ChainOfSignature\",\n          \"optionIdValue\": \"false\"\n        },\n        {\n          \"optionId\": \"SaturdayPickup\",\n          \"optionIdValue\": \"false\"\n        },\n        {\n          \"optionId\": \"SaturdayDelivery\",\n          \"optionIdValue\": \"false\"\n        },\n        {\n          \"optionId\": \"ExpressCheque\",\n          \"optionIdValue\": \"false\"\n        },\n        {\n          \"optionId\": \"ExpressChequeMethodOfPayment\",\n          \"optionIdValue\": \"Certified Cheque\"\n        },\n        {\n          \"optionId\": \"ExpressChequeAmount\",\n          \"optionIdValue\": \"100.00\"\n        },\n        {\n          \"optionId\": \"HoldForPickup\",\n          \"optionIdValue\": \"false\"\n        },\n        {\n          \"optionId\": \"OriginSignatureNotRequired\",\n          \"optionIdValue\": \"false\"\n        },\n        {\n          \"optionId\": \"ResidentialSignatureDomestic\",\n          \"optionIdValue\": \"false\"\n        },\n        {\n          \"optionId\": \"ResidentialSignatureIntl\",\n          \"optionIdValue\": \"false\"\n        },\n        {\n          \"optionId\": \"AdultSignatureRequired\",\n          \"optionIdValue\": \"false\"\n        },\n        {\n          \"optionId\": \"HealthCare\",\n          \"optionIdValue\": \"false\"\n        }\n      ],\n      \"packageInformation\": [\n        {\n          \"packageWeight\": 75,\n          \"packageLength\": 12,\n          \"packageWidth\": 12,\n          \"packageHeight\": 1\n        },\n        {\n          \"packageWeight\": 75,\n          \"packageLength\": 12,\n          \"packageWidth\": 12,\n          \"packageHeight\": 1\n        }\n      ]\n    },\n    \"paymentInformation\": {\n      \"paymentType\": \"Sender\",\n      \"registeredAccountNumber\": \"{{AccountNumber}}\",\n      \"billingAccountNumber\": \"{{AccountNumber}}\"\n    },\n    \"customerReferenceInformation\": {\n      \"notes\": \"East\"\n    }\n  },\n  \"shipmentDocuments\": {\n    \"label\": {\n      \"outputType\": \"ZPL\",\n      \"printerFormat\": \"Thermal\",\n      \"responseType\": \"BASE64\"\n    }\n  }\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{REST_Token}}",
+                  "type": "string"
+                }
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "R-133 · Money Order",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "x-api-key",
+                "value": "{{REST_XApiKey}}",
+                "type": "text"
+              },
+              {
+                "key": "RequestReference",
+                "value": "{{RequestReference}}",
+                "type": "text"
+              },
+              {
+                "key": "Language",
+                "value": "{{language}}",
+                "type": "text"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json",
+                "type": "text"
+              }
+            ],
+            "url": "{{baseUrl}}/ship/v1/shipment",
+            "description": "Verified in Production 2026-11-06 — Purolator_Certification_Testing row R-133 (Money Order).\nExpected outcome: HTTP 200 · validShipment: true · shipmentPIN returned · packagePINs returned · documentStatus: Completed · banner: \"Quote is subject to change based on actual shipment characte…\"\nPlaceholders in the body: AccountNumber, Current_Date.\nProduction calls create real shipments and pickups — void anything you create.",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"lineOfBusiness\": \"COURIER\",\n  \"shipmentDate\": \"{{Current_Date}}\",\n  \"validateOnly\": false,\n  \"returnsManagement\": false,\n  \"returnRates\": false,\n  \"outboundShipment\": {\n    \"pickupType\": \"DROPOFF\",\n    \"senderInformation\": {\n      \"attentionTo\": \"Tech A\",\n      \"companyName\": \"Purolator\",\n      \"streetAddress\": [\n        \"17718 114 Ave\"\n      ],\n      \"city\": \"Edmonton\",\n      \"provinceStateCode\": \"AB\",\n      \"country\": \"CA\",\n      \"postalZipCode\": \"T5S2N4\",\n      \"phoneNumber\": \"17804091270\"\n    },\n    \"receiverInformation\": {\n      \"attentionTo\": \"Tech B\",\n      \"companyName\": \"Purolator\",\n      \"streetAddress\": [\n        \"30 Aero Drive NE\"\n      ],\n      \"city\": \"Calgary\",\n      \"provinceStateCode\": \"AB\",\n      \"country\": \"CA\",\n      \"postalZipCode\": \"T2E8Z9\",\n      \"phoneNumber\": \"18004595599\"\n    },\n    \"shipmentInformation\": {\n      \"serviceId\": \"PurolatorGround\",\n      \"unitOfMeasurement\": \"IMPERIAL\",\n      \"totalWeight\": 150,\n      \"totalPackages\": 1,\n      \"dangerousGoodsDeclarationDocumentIndicator\": false,\n      \"shipmentOptionsInformation\": [\n        {\n          \"optionId\": \"DangerousGoods\",\n          \"optionIdValue\": \"false\"\n        },\n        {\n          \"optionId\": \"DangerousGoodsClass\",\n          \"optionIdValue\": \"FullyRegulated\"\n        },\n        {\n          \"optionId\": \"DangerousGoodsMode\",\n          \"optionIdValue\": \"Ground\"\n        },\n        {\n          \"optionId\": \"DeclaredValue\",\n          \"optionIdValue\": \"100.00\"\n        },\n        {\n          \"optionId\": \"ChainOfSignature\",\n          \"optionIdValue\": \"false\"\n        },\n        {\n          \"optionId\": \"SaturdayPickup\",\n          \"optionIdValue\": \"false\"\n        },\n        {\n          \"optionId\": \"SaturdayDelivery\",\n          \"optionIdValue\": \"false\"\n        },\n        {\n          \"optionId\": \"ExpressCheque\",\n          \"optionIdValue\": \"false\"\n        },\n        {\n          \"optionId\": \"ExpressChequeMethodOfPayment\",\n          \"optionIdValue\": \"Money Order\"\n        },\n        {\n          \"optionId\": \"ExpressChequeAmount\",\n          \"optionIdValue\": \"100.00\"\n        },\n        {\n          \"optionId\": \"HoldForPickup\",\n          \"optionIdValue\": \"false\"\n        },\n        {\n          \"optionId\": \"OriginSignatureNotRequired\",\n          \"optionIdValue\": \"false\"\n        },\n        {\n          \"optionId\": \"ResidentialSignatureDomestic\",\n          \"optionIdValue\": \"false\"\n        },\n        {\n          \"optionId\": \"ResidentialSignatureIntl\",\n          \"optionIdValue\": \"false\"\n        },\n        {\n          \"optionId\": \"AdultSignatureRequired\",\n          \"optionIdValue\": \"false\"\n        },\n        {\n          \"optionId\": \"HealthCare\",\n          \"optionIdValue\": \"false\"\n        }\n      ],\n      \"packageInformation\": [\n        {\n          \"packageWeight\": 75,\n          \"packageLength\": 12,\n          \"packageWidth\": 12,\n          \"packageHeight\": 1\n        },\n        {\n          \"packageWeight\": 75,\n          \"packageLength\": 12,\n          \"packageWidth\": 12,\n          \"packageHeight\": 1\n        }\n      ]\n    },\n    \"paymentInformation\": {\n      \"paymentType\": \"Sender\",\n      \"registeredAccountNumber\": \"{{AccountNumber}}\",\n      \"billingAccountNumber\": \"{{AccountNumber}}\"\n    },\n    \"customerReferenceInformation\": {\n      \"notes\": \"East\"\n    }\n  },\n  \"shipmentDocuments\": {\n    \"label\": {\n      \"outputType\": \"ZPL\",\n      \"printerFormat\": \"Thermal\",\n      \"responseType\": \"BASE64\"\n    }\n  }\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{REST_Token}}",
+                  "type": "string"
+                }
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "R-134 · Bank Draft",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "x-api-key",
+                "value": "{{REST_XApiKey}}",
+                "type": "text"
+              },
+              {
+                "key": "RequestReference",
+                "value": "{{RequestReference}}",
+                "type": "text"
+              },
+              {
+                "key": "Language",
+                "value": "{{language}}",
+                "type": "text"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json",
+                "type": "text"
+              }
+            ],
+            "url": "{{baseUrl}}/ship/v1/shipment",
+            "description": "Verified in Production 2026-11-06 — Purolator_Certification_Testing row R-134 (Bank Draft).\nExpected outcome: HTTP 200 · validShipment: true · shipmentPIN returned · packagePINs returned · documentStatus: Completed · banner: \"Quote is subject to change based on actual shipment characte…\"\nPlaceholders in the body: AccountNumber, Current_Date.\nProduction calls create real shipments and pickups — void anything you create.",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"lineOfBusiness\": \"COURIER\",\n  \"shipmentDate\": \"{{Current_Date}}\",\n  \"validateOnly\": false,\n  \"returnsManagement\": false,\n  \"returnRates\": false,\n  \"outboundShipment\": {\n    \"pickupType\": \"DROPOFF\",\n    \"senderInformation\": {\n      \"attentionTo\": \"Tech A\",\n      \"companyName\": \"Purolator\",\n      \"streetAddress\": [\n        \"17718 114 Ave\"\n      ],\n      \"city\": \"Edmonton\",\n      \"provinceStateCode\": \"AB\",\n      \"country\": \"CA\",\n      \"postalZipCode\": \"T5S2N4\",\n      \"phoneNumber\": \"17804091270\"\n    },\n    \"receiverInformation\": {\n      \"attentionTo\": \"Tech B\",\n      \"companyName\": \"Purolator\",\n      \"streetAddress\": [\n        \"30 Aero Drive NE\"\n      ],\n      \"city\": \"Calgary\",\n      \"provinceStateCode\": \"AB\",\n      \"country\": \"CA\",\n      \"postalZipCode\": \"T2E8Z9\",\n      \"phoneNumber\": \"18004595599\"\n    },\n    \"shipmentInformation\": {\n      \"serviceId\": \"PurolatorGround\",\n      \"unitOfMeasurement\": \"IMPERIAL\",\n      \"totalWeight\": 150,\n      \"totalPackages\": 1,\n      \"dangerousGoodsDeclarationDocumentIndicator\": false,\n      \"shipmentOptionsInformation\": [\n        {\n          \"optionId\": \"DangerousGoods\",\n          \"optionIdValue\": \"false\"\n        },\n        {\n          \"optionId\": \"DangerousGoodsClass\",\n          \"optionIdValue\": \"FullyRegulated\"\n        },\n        {\n          \"optionId\": \"DangerousGoodsMode\",\n          \"optionIdValue\": \"Ground\"\n        },\n        {\n          \"optionId\": \"DeclaredValue\",\n          \"optionIdValue\": \"100.00\"\n        },\n        {\n          \"optionId\": \"ChainOfSignature\",\n          \"optionIdValue\": \"false\"\n        },\n        {\n          \"optionId\": \"SaturdayPickup\",\n          \"optionIdValue\": \"false\"\n        },\n        {\n          \"optionId\": \"SaturdayDelivery\",\n          \"optionIdValue\": \"false\"\n        },\n        {\n          \"optionId\": \"ExpressCheque\",\n          \"optionIdValue\": \"false\"\n        },\n        {\n          \"optionId\": \"ExpressChequeMethodOfPayment\",\n          \"optionIdValue\": \"Bank Draft\"\n        },\n        {\n          \"optionId\": \"ExpressChequeAmount\",\n          \"optionIdValue\": \"100.00\"\n        },\n        {\n          \"optionId\": \"HoldForPickup\",\n          \"optionIdValue\": \"false\"\n        },\n        {\n          \"optionId\": \"OriginSignatureNotRequired\",\n          \"optionIdValue\": \"false\"\n        },\n        {\n          \"optionId\": \"ResidentialSignatureDomestic\",\n          \"optionIdValue\": \"false\"\n        },\n        {\n          \"optionId\": \"ResidentialSignatureIntl\",\n          \"optionIdValue\": \"false\"\n        },\n        {\n          \"optionId\": \"AdultSignatureRequired\",\n          \"optionIdValue\": \"false\"\n        },\n        {\n          \"optionId\": \"HealthCare\",\n          \"optionIdValue\": \"false\"\n        }\n      ],\n      \"packageInformation\": [\n        {\n          \"packageWeight\": 75,\n          \"packageLength\": 12,\n          \"packageWidth\": 12,\n          \"packageHeight\": 1\n        },\n        {\n          \"packageWeight\": 75,\n          \"packageLength\": 12,\n          \"packageWidth\": 12,\n          \"packageHeight\": 1\n        }\n      ]\n    },\n    \"paymentInformation\": {\n      \"paymentType\": \"Sender\",\n      \"registeredAccountNumber\": \"{{AccountNumber}}\",\n      \"billingAccountNumber\": \"{{AccountNumber}}\"\n    },\n    \"customerReferenceInformation\": {\n      \"notes\": \"East\"\n    }\n  },\n  \"shipmentDocuments\": {\n    \"label\": {\n      \"outputType\": \"ZPL\",\n      \"printerFormat\": \"Thermal\",\n      \"responseType\": \"BASE64\"\n    }\n  }\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{REST_Token}}",
+                  "type": "string"
+                }
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "R-137 · Flat Package",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "x-api-key",
+                "value": "{{REST_XApiKey}}",
+                "type": "text"
+              },
+              {
+                "key": "RequestReference",
+                "value": "{{RequestReference}}",
+                "type": "text"
+              },
+              {
+                "key": "Language",
+                "value": "{{language}}",
+                "type": "text"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json",
+                "type": "text"
+              }
+            ],
+            "url": "{{baseUrl}}/ship/v1/shipment",
+            "description": "Verified in Production 2026-11-06 — Purolator_Certification_Testing row R-137 (Flat Package).\nExpected outcome: HTTP 200 · validShipment: true · shipmentPIN returned · packagePINs returned · documentStatus: Completed · banner: \"Quote is subject to change based on actual shipment characte…\"\nPlaceholders in the body: AccountNumber, Current_Date.\nProduction calls create real shipments and pickups — void anything you create.",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"lineOfBusiness\": \"Courier\",\n  \"shipmentDate\": \"{{Current_Date}}\",\n  \"validateOnly\": false,\n  \"returnsManagement\": false,\n  \"returnRates\": false,\n  \"shipmentDocuments\": {\n    \"label\": {\n      \"outputType\": \"PDF\",\n      \"printerFormat\": \"Regular\",\n      \"responseType\": \"URL\"\n    }\n  },\n  \"outboundShipment\": {\n    \"pickupType\": \"DROPOFF\",\n    \"paymentInformation\": {\n      \"paymentType\": \"SENDER\",\n      \"registeredAccountNumber\": \"{{AccountNumber}}\",\n      \"billingAccountNumber\": \"{{AccountNumber}}\"\n    },\n    \"senderInformation\": {\n      \"attentionTo\": \"Tech A\",\n      \"companyName\": \"Purolator\",\n      \"streetAddress\": [\n        \"17718 114 Ave\"\n      ],\n      \"city\": \"Edmonton\",\n      \"provinceStateCode\": \"AB\",\n      \"country\": \"CA\",\n      \"postalZipCode\": \"T5S2N4\",\n      \"phoneNumber\": \"17804091270\"\n    },\n    \"receiverInformation\": {\n      \"attentionTo\": \"Tech B\",\n      \"companyName\": \"Purolator\",\n      \"streetAddress\": [\n        \"30 Aero Drive NE\"\n      ],\n      \"city\": \"Calgary\",\n      \"provinceStateCode\": \"AB\",\n      \"country\": \"CA\",\n      \"postalZipCode\": \"T2E8Z9\",\n      \"phoneNumber\": \"18004595599\"\n    },\n    \"shipmentInformation\": {\n      \"serviceId\": \"PurolatorGround\",\n      \"unitOfMeasurement\": \"IMPERIAL\",\n      \"descriptionOfGoods\": \"Test Goods\",\n      \"totalWeight\": 10.0,\n      \"totalPackages\": 1,\n      \"dangerousGoodsDeclarationDocumentIndicator\": false,\n      \"shipmentOptionsInformation\": [],\n      \"packageInformation\": [\n        {\n          \"packageWeight\": 10.0,\n          \"packageLength\": 20,\n          \"packageWidth\": 16,\n          \"packageHeight\": 12,\n          \"packageReference1\": \"PKG-REF-1\",\n          \"packageOptionsInformation\": [\n            {\n              \"optionId\": \"SpecialHandling\",\n              \"optionIdValue\": \"true\"\n            },\n            {\n              \"optionId\": \"SpecialHandlingType\",\n              \"optionIdValue\": \"FlatPackage\"\n            }\n          ]\n        }\n      ]\n    },\n    \"customerReferenceInformation\": {\n      \"costCenter\": \"QA-ADDTL\",\n      \"notes\": \"Additional Postman tests\",\n      \"shipmentReference1\": \"ADDTL-REF-1\"\n    }\n  }\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{REST_Token}}",
+                  "type": "string"
+                }
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "R-138 · Large Package",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "x-api-key",
+                "value": "{{REST_XApiKey}}",
+                "type": "text"
+              },
+              {
+                "key": "RequestReference",
+                "value": "{{RequestReference}}",
+                "type": "text"
+              },
+              {
+                "key": "Language",
+                "value": "{{language}}",
+                "type": "text"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json",
+                "type": "text"
+              }
+            ],
+            "url": "{{baseUrl}}/ship/v1/shipment",
+            "description": "Verified in Production 2026-11-06 — Purolator_Certification_Testing row R-138 (Large Package).\nExpected outcome: HTTP 200 · validShipment: true · shipmentPIN returned · packagePINs returned · documentStatus: Completed · banner: \"Quote is subject to change based on actual shipment characte…\"\nPlaceholders in the body: AccountNumber, Current_Date.\nProduction calls create real shipments and pickups — void anything you create.",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"lineOfBusiness\": \"Courier\",\n  \"shipmentDate\": \"{{Current_Date}}\",\n  \"validateOnly\": false,\n  \"returnsManagement\": false,\n  \"returnRates\": false,\n  \"shipmentDocuments\": {\n    \"label\": {\n      \"outputType\": \"PDF\",\n      \"printerFormat\": \"Regular\",\n      \"responseType\": \"URL\"\n    }\n  },\n  \"outboundShipment\": {\n    \"pickupType\": \"DROPOFF\",\n    \"paymentInformation\": {\n      \"paymentType\": \"SENDER\",\n      \"registeredAccountNumber\": \"{{AccountNumber}}\",\n      \"billingAccountNumber\": \"{{AccountNumber}}\"\n    },\n    \"senderInformation\": {\n      \"attentionTo\": \"Tech A\",\n      \"companyName\": \"Purolator\",\n      \"streetAddress\": [\n        \"17718 114 Ave\"\n      ],\n      \"city\": \"Edmonton\",\n      \"provinceStateCode\": \"AB\",\n      \"country\": \"CA\",\n      \"postalZipCode\": \"T5S2N4\",\n      \"phoneNumber\": \"17804091270\"\n    },\n    \"receiverInformation\": {\n      \"attentionTo\": \"Tech B\",\n      \"companyName\": \"Purolator\",\n      \"streetAddress\": [\n        \"30 Aero Drive NE\"\n      ],\n      \"city\": \"Calgary\",\n      \"provinceStateCode\": \"AB\",\n      \"country\": \"CA\",\n      \"postalZipCode\": \"T2E8Z9\",\n      \"phoneNumber\": \"18004595599\"\n    },\n    \"shipmentInformation\": {\n      \"serviceId\": \"PurolatorGround\",\n      \"unitOfMeasurement\": \"IMPERIAL\",\n      \"descriptionOfGoods\": \"Test Goods\",\n      \"totalWeight\": 10.0,\n      \"totalPackages\": 1,\n      \"dangerousGoodsDeclarationDocumentIndicator\": false,\n      \"shipmentOptionsInformation\": [],\n      \"packageInformation\": [\n        {\n          \"packageWeight\": 10.0,\n          \"packageLength\": 20,\n          \"packageWidth\": 16,\n          \"packageHeight\": 12,\n          \"packageReference1\": \"PKG-REF-1\",\n          \"packageOptionsInformation\": [\n            {\n              \"optionId\": \"SpecialHandling\",\n              \"optionIdValue\": \"true\"\n            },\n            {\n              \"optionId\": \"SpecialHandlingType\",\n              \"optionIdValue\": \"LargePackage\"\n            }\n          ]\n        }\n      ]\n    },\n    \"customerReferenceInformation\": {\n      \"costCenter\": \"QA-ADDTL\",\n      \"notes\": \"Additional Postman tests\",\n      \"shipmentReference1\": \"ADDTL-REF-1\"\n    }\n  }\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{REST_Token}}",
+                  "type": "string"
+                }
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "R-139 · Oversized",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "x-api-key",
+                "value": "{{REST_XApiKey}}",
+                "type": "text"
+              },
+              {
+                "key": "RequestReference",
+                "value": "{{RequestReference}}",
+                "type": "text"
+              },
+              {
+                "key": "Language",
+                "value": "{{language}}",
+                "type": "text"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json",
+                "type": "text"
+              }
+            ],
+            "url": "{{baseUrl}}/ship/v1/shipment",
+            "description": "Verified in Production 2026-11-06 — Purolator_Certification_Testing row R-139 (Oversized).\nExpected outcome: HTTP 200 · validShipment: true · shipmentPIN returned · packagePINs returned · documentStatus: Completed · banner: \"Quote is subject to change based on actual shipment characte…\"\nPlaceholders in the body: AccountNumber, Current_Date.\nProduction calls create real shipments and pickups — void anything you create.",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"lineOfBusiness\": \"Courier\",\n  \"shipmentDate\": \"{{Current_Date}}\",\n  \"validateOnly\": false,\n  \"returnsManagement\": false,\n  \"returnRates\": false,\n  \"shipmentDocuments\": {\n    \"label\": {\n      \"outputType\": \"PDF\",\n      \"printerFormat\": \"Regular\",\n      \"responseType\": \"URL\"\n    }\n  },\n  \"outboundShipment\": {\n    \"pickupType\": \"DROPOFF\",\n    \"paymentInformation\": {\n      \"paymentType\": \"SENDER\",\n      \"registeredAccountNumber\": \"{{AccountNumber}}\",\n      \"billingAccountNumber\": \"{{AccountNumber}}\"\n    },\n    \"senderInformation\": {\n      \"attentionTo\": \"Tech A\",\n      \"companyName\": \"Purolator\",\n      \"streetAddress\": [\n        \"17718 114 Ave\"\n      ],\n      \"city\": \"Edmonton\",\n      \"provinceStateCode\": \"AB\",\n      \"country\": \"CA\",\n      \"postalZipCode\": \"T5S2N4\",\n      \"phoneNumber\": \"17804091270\"\n    },\n    \"receiverInformation\": {\n      \"attentionTo\": \"Tech B\",\n      \"companyName\": \"Purolator\",\n      \"streetAddress\": [\n        \"30 Aero Drive NE\"\n      ],\n      \"city\": \"Calgary\",\n      \"provinceStateCode\": \"AB\",\n      \"country\": \"CA\",\n      \"postalZipCode\": \"T2E8Z9\",\n      \"phoneNumber\": \"18004595599\"\n    },\n    \"shipmentInformation\": {\n      \"serviceId\": \"PurolatorGround\",\n      \"unitOfMeasurement\": \"IMPERIAL\",\n      \"descriptionOfGoods\": \"Test Goods\",\n      \"totalWeight\": 10.0,\n      \"totalPackages\": 1,\n      \"dangerousGoodsDeclarationDocumentIndicator\": false,\n      \"shipmentOptionsInformation\": [],\n      \"packageInformation\": [\n        {\n          \"packageWeight\": 10.0,\n          \"packageLength\": 20,\n          \"packageWidth\": 16,\n          \"packageHeight\": 12,\n          \"packageReference1\": \"PKG-REF-1\",\n          \"packageOptionsInformation\": [\n            {\n              \"optionId\": \"SpecialHandling\",\n              \"optionIdValue\": \"true\"\n            },\n            {\n              \"optionId\": \"SpecialHandlingType\",\n              \"optionIdValue\": \"Oversized\"\n            }\n          ]\n        }\n      ]\n    },\n    \"customerReferenceInformation\": {\n      \"costCenter\": \"QA-ADDTL\",\n      \"notes\": \"Additional Postman tests\",\n      \"shipmentReference1\": \"ADDTL-REF-1\"\n    }\n  }\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{REST_Token}}",
+                  "type": "string"
+                }
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "R-140 · Residential Area Heavyweight",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "x-api-key",
+                "value": "{{REST_XApiKey}}",
+                "type": "text"
+              },
+              {
+                "key": "RequestReference",
+                "value": "{{RequestReference}}",
+                "type": "text"
+              },
+              {
+                "key": "Language",
+                "value": "{{language}}",
+                "type": "text"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json",
+                "type": "text"
+              }
+            ],
+            "url": "{{baseUrl}}/ship/v1/shipment",
+            "description": "Verified in Production 2026-11-06 — Purolator_Certification_Testing row R-140 (Residential Area Heavyweight).\nExpected outcome: HTTP 200 · validShipment: true · shipmentPIN returned · packagePINs returned · documentStatus: Completed · banner: \"Quote is subject to change based on actual shipment characte…\"\nPlaceholders in the body: AccountNumber, Current_Date.\nProduction calls create real shipments and pickups — void anything you create.",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"lineOfBusiness\": \"Courier\",\n  \"shipmentDate\": \"{{Current_Date}}\",\n  \"validateOnly\": false,\n  \"returnsManagement\": false,\n  \"returnRates\": false,\n  \"shipmentDocuments\": {\n    \"label\": {\n      \"outputType\": \"PDF\",\n      \"printerFormat\": \"Regular\",\n      \"responseType\": \"URL\"\n    }\n  },\n  \"outboundShipment\": {\n    \"pickupType\": \"DROPOFF\",\n    \"paymentInformation\": {\n      \"paymentType\": \"SENDER\",\n      \"registeredAccountNumber\": \"{{AccountNumber}}\",\n      \"billingAccountNumber\": \"{{AccountNumber}}\"\n    },\n    \"senderInformation\": {\n      \"attentionTo\": \"Tech A\",\n      \"companyName\": \"Purolator\",\n      \"streetAddress\": [\n        \"17718 114 Ave\"\n      ],\n      \"city\": \"Edmonton\",\n      \"provinceStateCode\": \"AB\",\n      \"country\": \"CA\",\n      \"postalZipCode\": \"T5S2N4\",\n      \"phoneNumber\": \"17804091270\"\n    },\n    \"receiverInformation\": {\n      \"attentionTo\": \"Tech B\",\n      \"companyName\": \"Purolator\",\n      \"streetAddress\": [\n        \"30 Aero Drive NE\"\n      ],\n      \"city\": \"Calgary\",\n      \"provinceStateCode\": \"AB\",\n      \"country\": \"CA\",\n      \"postalZipCode\": \"T2E8Z9\",\n      \"phoneNumber\": \"18004595599\"\n    },\n    \"shipmentInformation\": {\n      \"serviceId\": \"PurolatorGround\",\n      \"unitOfMeasurement\": \"IMPERIAL\",\n      \"descriptionOfGoods\": \"Test Goods\",\n      \"totalWeight\": 10.0,\n      \"totalPackages\": 1,\n      \"dangerousGoodsDeclarationDocumentIndicator\": false,\n      \"shipmentOptionsInformation\": [],\n      \"packageInformation\": [\n        {\n          \"packageWeight\": 10.0,\n          \"packageLength\": 20,\n          \"packageWidth\": 16,\n          \"packageHeight\": 12,\n          \"packageReference1\": \"PKG-REF-1\",\n          \"packageOptionsInformation\": [\n            {\n              \"optionId\": \"SpecialHandling\",\n              \"optionIdValue\": \"true\"\n            },\n            {\n              \"optionId\": \"SpecialHandlingType\",\n              \"optionIdValue\": \"ResidentialAreaHeavyweight\"\n            }\n          ]\n        }\n      ]\n    },\n    \"customerReferenceInformation\": {\n      \"costCenter\": \"QA-ADDTL\",\n      \"notes\": \"Additional Postman tests\",\n      \"shipmentReference1\": \"ADDTL-REF-1\"\n    }\n  }\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{REST_Token}}",
+                  "type": "string"
+                }
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "R-148 · DPL",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "x-api-key",
+                "value": "{{REST_XApiKey}}",
+                "type": "text"
+              },
+              {
+                "key": "RequestReference",
+                "value": "{{RequestReference}}",
+                "type": "text"
+              },
+              {
+                "key": "Language",
+                "value": "{{language}}",
+                "type": "text"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json",
+                "type": "text"
+              }
+            ],
+            "url": "{{baseUrl}}/ship/v1/shipment",
+            "description": "Verified in Production 2026-11-06 — Purolator_Certification_Testing row R-148 (DPL).\nExpected outcome: HTTP 200 · validShipment: true · shipmentPIN returned · packagePINs returned · documentStatus: Completed · banner: \"Quote is subject to change based on actual shipment characte…\"\nPlaceholders in the body: Current_Date, Freight_account.\nProduction calls create real shipments and pickups — void anything you create.",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"lineOfBusiness\": \"COURIER\",\n  \"shipmentDate\": \"{{Current_Date}}\",\n  \"validateOnly\": false,\n  \"returnsManagement\": false,\n  \"returnRates\": false,\n  \"outboundShipment\": {\n    \"pickupType\": \"DROPOFF\",\n    \"senderInformation\": {\n      \"attentionTo\": \"Tech A\",\n      \"companyName\": \"Purolator\",\n      \"streetAddress\": [\n        \"17718 114 Ave\"\n      ],\n      \"city\": \"Edmonton\",\n      \"provinceStateCode\": \"AB\",\n      \"country\": \"CA\",\n      \"postalZipCode\": \"T5S2N4\",\n      \"phoneNumber\": \"17804091270\"\n    },\n    \"receiverInformation\": {\n      \"attentionTo\": \"Tech B\",\n      \"companyName\": \"Purolator\",\n      \"streetAddress\": [\n        \"3700 Jericho Road\"\n      ],\n      \"city\": \"Richmond\",\n      \"provinceStateCode\": \"BC\",\n      \"country\": \"CA\",\n      \"postalZipCode\": \"V7B1M5\",\n      \"phoneNumber\": \"18004595599\"\n    },\n    \"shipmentInformation\": {\n      \"serviceId\": \"PurolatorExpress\",\n      \"unitOfMeasurement\": \"IMPERIAL\",\n      \"descriptionOfGoods\": \"Consolidation check\",\n      \"totalWeight\": 50,\n      \"totalPackages\": 4,\n      \"dangerousGoodsDeclarationDocumentIndicator\": false,\n      \"packageInformation\": [\n        {\n          \"packageWeight\": 12.5,\n          \"packageLength\": 10,\n          \"packageWidth\": 10,\n          \"packageHeight\": 10\n        },\n        {\n          \"packageWeight\": 12.5,\n          \"packageLength\": 10,\n          \"packageWidth\": 10,\n          \"packageHeight\": 10\n        },\n        {\n          \"packageWeight\": 12.5,\n          \"packageLength\": 10,\n          \"packageWidth\": 10,\n          \"packageHeight\": 10\n        },\n        {\n          \"packageWeight\": 12.5,\n          \"packageLength\": 10,\n          \"packageWidth\": 10,\n          \"packageHeight\": 10\n        }\n      ]\n    },\n    \"paymentInformation\": {\n      \"paymentType\": \"Sender\",\n      \"registeredAccountNumber\": \"{{Freight_account}}\",\n      \"billingAccountNumber\": \"{{Freight_account}}\"\n    },\n    \"customerReferenceInformation\": {\n      \"costCenter\": \"Consolidation\",\n      \"shipmentReference1\": \"PO123456\"\n    }\n  },\n  \"shipmentDocuments\": {\n    \"label\": {\n      \"outputType\": \"DPL\",\n      \"printerFormat\": \"thermal\",\n      \"responseType\": \"BASE64\"\n    }\n  }\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{REST_Token}}",
+                  "type": "string"
+                }
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "R-149 · PNG",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "x-api-key",
+                "value": "{{REST_XApiKey}}",
+                "type": "text"
+              },
+              {
+                "key": "RequestReference",
+                "value": "{{RequestReference}}",
+                "type": "text"
+              },
+              {
+                "key": "Language",
+                "value": "{{language}}",
+                "type": "text"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json",
+                "type": "text"
+              }
+            ],
+            "url": "{{baseUrl}}/ship/v1/shipment",
+            "description": "Verified in Production 2026-11-06 — Purolator_Certification_Testing row R-149 (PNG).\nExpected outcome: HTTP 200 · validShipment: true · shipmentPIN returned · packagePINs returned · documentStatus: Completed · banner: \"Quote is subject to change based on actual shipment characte…\"\nPlaceholders in the body: Current_Date, Freight_account.\nProduction calls create real shipments and pickups — void anything you create.",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"lineOfBusiness\": \"COURIER\",\n  \"shipmentDate\": \"{{Current_Date}}\",\n  \"validateOnly\": false,\n  \"returnsManagement\": false,\n  \"returnRates\": false,\n  \"outboundShipment\": {\n    \"pickupType\": \"DROPOFF\",\n    \"senderInformation\": {\n      \"attentionTo\": \"Tech A\",\n      \"companyName\": \"Purolator\",\n      \"streetAddress\": [\n        \"17718 114 Ave\"\n      ],\n      \"city\": \"Edmonton\",\n      \"provinceStateCode\": \"AB\",\n      \"country\": \"CA\",\n      \"postalZipCode\": \"T5S2N4\",\n      \"phoneNumber\": \"17804091270\"\n    },\n    \"receiverInformation\": {\n      \"attentionTo\": \"Tech B\",\n      \"companyName\": \"Purolator\",\n      \"streetAddress\": [\n        \"3700 Jericho Road\"\n      ],\n      \"city\": \"Richmond\",\n      \"provinceStateCode\": \"BC\",\n      \"country\": \"CA\",\n      \"postalZipCode\": \"V7B1M5\",\n      \"phoneNumber\": \"18004595599\"\n    },\n    \"shipmentInformation\": {\n      \"serviceId\": \"PurolatorExpress\",\n      \"unitOfMeasurement\": \"IMPERIAL\",\n      \"descriptionOfGoods\": \"Consolidation check\",\n      \"totalWeight\": 50,\n      \"totalPackages\": 4,\n      \"dangerousGoodsDeclarationDocumentIndicator\": false,\n      \"packageInformation\": [\n        {\n          \"packageWeight\": 12.5,\n          \"packageLength\": 10,\n          \"packageWidth\": 10,\n          \"packageHeight\": 10\n        },\n        {\n          \"packageWeight\": 12.5,\n          \"packageLength\": 10,\n          \"packageWidth\": 10,\n          \"packageHeight\": 10\n        },\n        {\n          \"packageWeight\": 12.5,\n          \"packageLength\": 10,\n          \"packageWidth\": 10,\n          \"packageHeight\": 10\n        },\n        {\n          \"packageWeight\": 12.5,\n          \"packageLength\": 10,\n          \"packageWidth\": 10,\n          \"packageHeight\": 10\n        }\n      ]\n    },\n    \"paymentInformation\": {\n      \"paymentType\": \"Sender\",\n      \"registeredAccountNumber\": \"{{Freight_account}}\",\n      \"billingAccountNumber\": \"{{Freight_account}}\"\n    },\n    \"customerReferenceInformation\": {\n      \"costCenter\": \"Consolidation\",\n      \"shipmentReference1\": \"PO123456\"\n    }\n  },\n  \"shipmentDocuments\": {\n    \"label\": {\n      \"outputType\": \"PNG\",\n      \"printerFormat\": \"thermal\",\n      \"responseType\": \"BASE64\"\n    }\n  }\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{REST_Token}}",
+                  "type": "string"
+                }
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "R-150 · CODE128",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "x-api-key",
+                "value": "{{REST_XApiKey}}",
+                "type": "text"
+              },
+              {
+                "key": "RequestReference",
+                "value": "{{RequestReference}}",
+                "type": "text"
+              },
+              {
+                "key": "Language",
+                "value": "{{language}}",
+                "type": "text"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json",
+                "type": "text"
+              }
+            ],
+            "url": "{{baseUrl}}/ship/v1/shipment",
+            "description": "Verified in Production 2026-11-06 — Purolator_Certification_Testing row R-150 (CODE128).\nExpected outcome: HTTP 200 · validShipment: true · shipmentPIN returned · packagePINs returned · documentStatus: Completed · banner: \"Quote is subject to change based on actual shipment characte…\"\nPlaceholders in the body: Current_Date, Freight_account.\nProduction calls create real shipments and pickups — void anything you create.",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"lineOfBusiness\": \"COURIER\",\n  \"shipmentDate\": \"{{Current_Date}}\",\n  \"validateOnly\": false,\n  \"returnsManagement\": false,\n  \"returnRates\": false,\n  \"outboundShipment\": {\n    \"pickupType\": \"DROPOFF\",\n    \"senderInformation\": {\n      \"attentionTo\": \"Tech A\",\n      \"companyName\": \"Purolator\",\n      \"streetAddress\": [\n        \"17718 114 Ave\"\n      ],\n      \"city\": \"Edmonton\",\n      \"provinceStateCode\": \"AB\",\n      \"country\": \"CA\",\n      \"postalZipCode\": \"T5S2N4\",\n      \"phoneNumber\": \"17804091270\"\n    },\n    \"receiverInformation\": {\n      \"attentionTo\": \"Tech B\",\n      \"companyName\": \"Purolator\",\n      \"streetAddress\": [\n        \"3700 Jericho Road\"\n      ],\n      \"city\": \"Richmond\",\n      \"provinceStateCode\": \"BC\",\n      \"country\": \"CA\",\n      \"postalZipCode\": \"V7B1M5\",\n      \"phoneNumber\": \"18004595599\"\n    },\n    \"shipmentInformation\": {\n      \"serviceId\": \"PurolatorExpress\",\n      \"unitOfMeasurement\": \"IMPERIAL\",\n      \"descriptionOfGoods\": \"Consolidation check\",\n      \"totalWeight\": 50,\n      \"totalPackages\": 4,\n      \"dangerousGoodsDeclarationDocumentIndicator\": false,\n      \"packageInformation\": [\n        {\n          \"packageWeight\": 12.5,\n          \"packageLength\": 10,\n          \"packageWidth\": 10,\n          \"packageHeight\": 10\n        },\n        {\n          \"packageWeight\": 12.5,\n          \"packageLength\": 10,\n          \"packageWidth\": 10,\n          \"packageHeight\": 10\n        },\n        {\n          \"packageWeight\": 12.5,\n          \"packageLength\": 10,\n          \"packageWidth\": 10,\n          \"packageHeight\": 10\n        },\n        {\n          \"packageWeight\": 12.5,\n          \"packageLength\": 10,\n          \"packageWidth\": 10,\n          \"packageHeight\": 10\n        }\n      ]\n    },\n    \"paymentInformation\": {\n      \"paymentType\": \"Sender\",\n      \"registeredAccountNumber\": \"{{Freight_account}}\",\n      \"billingAccountNumber\": \"{{Freight_account}}\"\n    },\n    \"customerReferenceInformation\": {\n      \"costCenter\": \"Consolidation\",\n      \"shipmentReference1\": \"PO123456\"\n    }\n  },\n  \"shipmentDocuments\": {\n    \"label\": {\n      \"outputType\": \"CODE128\",\n      \"printerFormat\": \"thermal\",\n      \"responseType\": \"BASE64\"\n    }\n  }\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{REST_Token}}",
+                  "type": "string"
+                }
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "R-174 · Published (list) rates on estimate",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "x-api-key",
+                "value": "{{REST_XApiKey}}",
+                "type": "text"
+              },
+              {
+                "key": "RequestReference",
+                "value": "{{RequestReference}}",
+                "type": "text"
+              },
+              {
+                "key": "Language",
+                "value": "{{language}}",
+                "type": "text"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json",
+                "type": "text"
+              }
+            ],
+            "url": "{{baseUrl}}/rate/v1/shipment",
+            "description": "Verified in Production 2026-11-06 — Purolator_Certification_Testing row R-174 (Published (list) rates on estimate).\nExpected outcome: HTTP 200 · validShipment: true · shipmentPIN returned · packagePINs returned · documentStatus: Completed · banner: \"Quote is subject to change based on actual shipment characte…\"\nPlaceholders in the body: AccountNumber, Current_Date.\nProduction calls create real shipments and pickups — void anything you create.",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"lineOfBusiness\": \"COURIER\",\n  \"shipmentDate\": \"{{Current_Date}}\",\n  \"outboundShipment\": {\n    \"senderInformation\": {\n      \"companyName\": \"Purolator\",\n      \"streetAddress\": [\n        \"17718 114 Ave\"\n      ],\n      \"city\": \"Edmonton\",\n      \"provinceStateCode\": \"AB\",\n      \"country\": \"CA\",\n      \"postalZipCode\": \"T5S2N4\"\n    },\n    \"receiverInformation\": {\n      \"companyName\": \"Purolator\",\n      \"streetAddress\": [\n        \"30 Aero Drive NE\"\n      ],\n      \"city\": \"Calgary\",\n      \"provinceStateCode\": \"AB\",\n      \"country\": \"CA\",\n      \"postalZipCode\": \"T2E8Z9\"\n    },\n    \"shipmentInformation\": {\n      \"serviceId\": \"PurolatorGround\",\n      \"unitOfMeasurement\": \"IMPERIAL\",\n      \"totalWeight\": 150,\n      \"totalPackages\": 1,\n      \"showAlternativeServicesIndicator\": false,\n      \"packageInformation\": [\n        {\n          \"packageWeight\": 75,\n          \"packageLength\": 12,\n          \"packageWidth\": 12,\n          \"packageHeight\": 1\n        },\n        {\n          \"packageWeight\": 75,\n          \"packageLength\": 12,\n          \"packageWidth\": 12,\n          \"packageHeight\": 1\n        }\n      ]\n    },\n    \"billingInformation\": {\n      \"displayPublishedRates\": false,\n      \"billingAccountNumber\": \"{{AccountNumber}}\"\n    }\n  }\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{REST_Token}}",
+                  "type": "string"
+                }
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "R-176 · Blind shipping (from-on-label)",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "x-api-key",
+                "value": "{{REST_XApiKey}}",
+                "type": "text"
+              },
+              {
+                "key": "RequestReference",
+                "value": "{{RequestReference}}",
+                "type": "text"
+              },
+              {
+                "key": "Language",
+                "value": "{{language}}",
+                "type": "text"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json",
+                "type": "text"
+              }
+            ],
+            "url": "{{baseUrl}}/ship/v1/shipment",
+            "description": "Verified in Production 2026-11-06 — Purolator_Certification_Testing row R-176 (Blind shipping (from-on-label)).\nExpected outcome: HTTP 200 · validShipment: true · shipmentPIN returned · packagePINs returned · documentStatus: Completed · banner: \"Quote is subject to change based on actual shipment characte…\"\nPlaceholders in the body: AccountNumber, Current_Date.\nProduction calls create real shipments and pickups — void anything you create.",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"lineOfBusiness\": \"COURIER\",\n  \"shipmentDate\": \"{{Current_Date}}\",\n  \"validateOnly\": false,\n  \"returnsManagement\": false,\n  \"returnRates\": false,\n  \"outboundShipment\": {\n    \"fromOnLabelInformation\": {\n      \"fromOnLabelIndicator\": true,\n      \"companyName\": \"Sample Brand\",\n      \"attentionTo\": \"Shipping\",\n      \"streetAddress\": [\n        \"1 Sample St\"\n      ],\n      \"city\": \"Toronto\",\n      \"provinceStateCode\": \"ON\",\n      \"country\": \"CA\",\n      \"postalZipCode\": \"M5V3L9\",\n      \"phoneNumber\": \"18004595599\"\n    },\n    \"pickupType\": \"DROPOFF\",\n    \"senderInformation\": {\n      \"attentionTo\": \"Tech A\",\n      \"streetAddress\": [\n        \"17718 114 Ave\"\n      ],\n      \"city\": \"Edmonton\",\n      \"provinceStateCode\": \"AB\",\n      \"country\": \"CA\",\n      \"postalZipCode\": \"T5S2N4\",\n      \"phoneNumber\": \"17804091270\"\n    },\n    \"receiverInformation\": {\n      \"attentionTo\": \"Tech B\",\n      \"companyName\": \"Purolator\",\n      \"streetAddress\": [\n        \"30 Aero Drive NE\"\n      ],\n      \"city\": \"Calgary\",\n      \"provinceStateCode\": \"AB\",\n      \"country\": \"CA\",\n      \"postalZipCode\": \"T2E8Z9\",\n      \"phoneNumber\": \"18004595599\"\n    },\n    \"shipmentInformation\": {\n      \"serviceId\": \"PurolatorGround\",\n      \"unitOfMeasurement\": \"IMPERIAL\",\n      \"descriptionOfGoods\": \"Product matrix test\",\n      \"totalWeight\": 2,\n      \"totalPackages\": 1,\n      \"dangerousGoodsDeclarationDocumentIndicator\": false,\n      \"packageInformation\": [\n        {\n          \"packageWeight\": 2,\n          \"packageLength\": 0,\n          \"packageWidth\": 0,\n          \"packageHeight\": 0\n        }\n      ]\n    },\n    \"paymentInformation\": {\n      \"paymentType\": \"Sender\",\n      \"registeredAccountNumber\": \"{{AccountNumber}}\",\n      \"billingAccountNumber\": \"{{AccountNumber}}\"\n    },\n    \"customerReferenceInformation\": {\n      \"costCenter\": \"Product Matrix\",\n      \"shipmentReference1\": \"PurolatorGround\"\n    }\n  },\n  \"shipmentDocuments\": {\n    \"label\": {\n      \"outputType\": \"ZPL\",\n      \"printerFormat\": \"thermal\",\n      \"responseType\": \"BASE64\"\n    }\n  }\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{REST_Token}}",
+                  "type": "string"
+                }
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "R-178 · U.S.-origin shipment to Canada",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "x-api-key",
+                "value": "{{REST_XApiKey}}",
+                "type": "text"
+              },
+              {
+                "key": "RequestReference",
+                "value": "{{RequestReference}}",
+                "type": "text"
+              },
+              {
+                "key": "Language",
+                "value": "{{language}}",
+                "type": "text"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json",
+                "type": "text"
+              }
+            ],
+            "url": "{{baseUrl}}/ship/v1/shipment",
+            "description": "Verified in Production 2026-11-06 — Purolator_Certification_Testing row R-178 (U.S.-origin shipment to Canada).\nExpected outcome: HTTP 200 · validShipment: true · shipmentPIN returned · packagePINs returned · documentStatus: Completed · banner: \"Quote is subject to change based on actual shipment characte…\"\nPlaceholders in the body: Current_Date, Freight_account.\nProduction calls create real shipments and pickups — void anything you create.",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"lineOfBusiness\": \"COURIER\",\n  \"shipmentDate\": \"{{Current_Date}}\",\n  \"validateOnly\": false,\n  \"returnsManagement\": false,\n  \"returnRates\": false,\n  \"outboundShipment\": {\n    \"usOriginInformation\": {\n      \"companyName\": \"Sample US Origin\",\n      \"attentionTo\": \"Shipping\",\n      \"streetAddress\": [\n        \"100 Main St\"\n      ],\n      \"city\": \"Buffalo\",\n      \"provinceStateCode\": \"NY\",\n      \"country\": \"US\",\n      \"postalZipCode\": \"14202\",\n      \"phoneNumber\": \"18004595599\"\n    },\n    \"pickupType\": \"DROPOFF\",\n    \"senderInformation\": {\n      \"attentionTo\": \"Tech A\",\n      \"companyName\": \"Purolator\",\n      \"streetAddress\": [\n        \"17718 114 Ave\"\n      ],\n      \"city\": \"Edmonton\",\n      \"provinceStateCode\": \"AB\",\n      \"country\": \"CA\",\n      \"postalZipCode\": \"T5S2N4\",\n      \"phoneNumber\": \"17804091270\"\n    },\n    \"receiverInformation\": {\n      \"attentionTo\": \"Tech B\",\n      \"companyName\": \"Purolator\",\n      \"streetAddress\": [\n        \"3700 Jericho Road\"\n      ],\n      \"city\": \"Richmond\",\n      \"provinceStateCode\": \"BC\",\n      \"country\": \"CA\",\n      \"postalZipCode\": \"V7B1M5\",\n      \"phoneNumber\": \"18004595599\"\n    },\n    \"shipmentInformation\": {\n      \"serviceId\": \"PurolatorExpress\",\n      \"unitOfMeasurement\": \"IMPERIAL\",\n      \"descriptionOfGoods\": \"Consolidation check\",\n      \"totalWeight\": 50,\n      \"totalPackages\": 4,\n      \"dangerousGoodsDeclarationDocumentIndicator\": false,\n      \"packageInformation\": [\n        {\n          \"packageWeight\": 12.5,\n          \"packageLength\": 10,\n          \"packageWidth\": 10,\n          \"packageHeight\": 10\n        },\n        {\n          \"packageWeight\": 12.5,\n          \"packageLength\": 10,\n          \"packageWidth\": 10,\n          \"packageHeight\": 10\n        },\n        {\n          \"packageWeight\": 12.5,\n          \"packageLength\": 10,\n          \"packageWidth\": 10,\n          \"packageHeight\": 10\n        },\n        {\n          \"packageWeight\": 12.5,\n          \"packageLength\": 10,\n          \"packageWidth\": 10,\n          \"packageHeight\": 10\n        }\n      ]\n    },\n    \"paymentInformation\": {\n      \"paymentType\": \"Sender\",\n      \"registeredAccountNumber\": \"{{Freight_account}}\",\n      \"billingAccountNumber\": \"{{Freight_account}}\"\n    },\n    \"customerReferenceInformation\": {\n      \"costCenter\": \"Consolidation\",\n      \"shipmentReference1\": \"PO123456\"\n    }\n  },\n  \"shipmentDocuments\": {\n    \"label\": {\n      \"outputType\": \"ZPL\",\n      \"printerFormat\": \"thermal\",\n      \"responseType\": \"BASE64\"\n    }\n  }\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{REST_Token}}",
+                  "type": "string"
+                }
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "R-179 · Express Cheque address",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "x-api-key",
+                "value": "{{REST_XApiKey}}",
+                "type": "text"
+              },
+              {
+                "key": "RequestReference",
+                "value": "{{RequestReference}}",
+                "type": "text"
+              },
+              {
+                "key": "Language",
+                "value": "{{language}}",
+                "type": "text"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json",
+                "type": "text"
+              }
+            ],
+            "url": "{{baseUrl}}/ship/v1/shipment",
+            "description": "Verified in Production 2026-11-06 — Purolator_Certification_Testing row R-179 (Express Cheque address).\nExpected outcome: HTTP 200 · validShipment: true · shipmentPIN returned · packagePINs returned · documentStatus: Completed · banner: \"Quote is subject to change based on actual shipment characte…\"\nPlaceholders in the body: AccountNumber, Current_Date.\nProduction calls create real shipments and pickups — void anything you create.",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"lineOfBusiness\": \"COURIER\",\n  \"shipmentDate\": \"{{Current_Date}}\",\n  \"validateOnly\": false,\n  \"returnsManagement\": false,\n  \"returnRates\": false,\n  \"outboundShipment\": {\n    \"expressChequeInformation\": {\n      \"companyName\": \"Sample Payee\",\n      \"attentionTo\": \"Shipping\",\n      \"streetAddress\": [\n        \"17718 114 Ave\"\n      ],\n      \"city\": \"Edmonton\",\n      \"provinceStateCode\": \"AB\",\n      \"country\": \"CA\",\n      \"postalZipCode\": \"T5S2N4\",\n      \"phoneNumber\": \"18004595599\"\n    },\n    \"pickupType\": \"DROPOFF\",\n    \"senderInformation\": {\n      \"attentionTo\": \"Tech A\",\n      \"companyName\": \"Purolator\",\n      \"streetAddress\": [\n        \"17718 114 Ave\"\n      ],\n      \"city\": \"Edmonton\",\n      \"provinceStateCode\": \"AB\",\n      \"country\": \"CA\",\n      \"postalZipCode\": \"T5S2N4\",\n      \"phoneNumber\": \"17804091270\"\n    },\n    \"receiverInformation\": {\n      \"attentionTo\": \"Tech B\",\n      \"companyName\": \"Purolator\",\n      \"streetAddress\": [\n        \"30 Aero Drive NE\"\n      ],\n      \"city\": \"Calgary\",\n      \"provinceStateCode\": \"AB\",\n      \"country\": \"CA\",\n      \"postalZipCode\": \"T2E8Z9\",\n      \"phoneNumber\": \"18004595599\"\n    },\n    \"shipmentInformation\": {\n      \"serviceId\": \"PurolatorGround\",\n      \"unitOfMeasurement\": \"IMPERIAL\",\n      \"totalWeight\": 150,\n      \"totalPackages\": 1,\n      \"dangerousGoodsDeclarationDocumentIndicator\": false,\n      \"shipmentOptionsInformation\": [\n        {\n          \"optionId\": \"DangerousGoods\",\n          \"optionIdValue\": \"false\"\n        },\n        {\n          \"optionId\": \"DangerousGoodsClass\",\n          \"optionIdValue\": \"FullyRegulated\"\n        },\n        {\n          \"optionId\": \"DangerousGoodsMode\",\n          \"optionIdValue\": \"Ground\"\n        },\n        {\n          \"optionId\": \"DeclaredValue\",\n          \"optionIdValue\": \"100.00\"\n        },\n        {\n          \"optionId\": \"ChainOfSignature\",\n          \"optionIdValue\": \"false\"\n        },\n        {\n          \"optionId\": \"SaturdayPickup\",\n          \"optionIdValue\": \"false\"\n        },\n        {\n          \"optionId\": \"SaturdayDelivery\",\n          \"optionIdValue\": \"false\"\n        },\n        {\n          \"optionId\": \"ExpressCheque\",\n          \"optionIdValue\": \"false\"\n        },\n        {\n          \"optionId\": \"ExpressChequeMethodOfPayment\",\n          \"optionIdValue\": \"Cheque\"\n        },\n        {\n          \"optionId\": \"ExpressChequeAmount\",\n          \"optionIdValue\": \"100.00\"\n        },\n        {\n          \"optionId\": \"HoldForPickup\",\n          \"optionIdValue\": \"false\"\n        },\n        {\n          \"optionId\": \"OriginSignatureNotRequired\",\n          \"optionIdValue\": \"false\"\n        },\n        {\n          \"optionId\": \"ResidentialSignatureDomestic\",\n          \"optionIdValue\": \"false\"\n        },\n        {\n          \"optionId\": \"ResidentialSignatureIntl\",\n          \"optionIdValue\": \"false\"\n        },\n        {\n          \"optionId\": \"AdultSignatureRequired\",\n          \"optionIdValue\": \"false\"\n        },\n        {\n          \"optionId\": \"HealthCare\",\n          \"optionIdValue\": \"false\"\n        }\n      ],\n      \"packageInformation\": [\n        {\n          \"packageWeight\": 75,\n          \"packageLength\": 12,\n          \"packageWidth\": 12,\n          \"packageHeight\": 1\n        },\n        {\n          \"packageWeight\": 75,\n          \"packageLength\": 12,\n          \"packageWidth\": 12,\n          \"packageHeight\": 1\n        }\n      ]\n    },\n    \"paymentInformation\": {\n      \"paymentType\": \"Sender\",\n      \"registeredAccountNumber\": \"{{AccountNumber}}\",\n      \"billingAccountNumber\": \"{{AccountNumber}}\"\n    },\n    \"customerReferenceInformation\": {\n      \"notes\": \"East\"\n    }\n  },\n  \"shipmentDocuments\": {\n    \"label\": {\n      \"outputType\": \"ZPL\",\n      \"printerFormat\": \"Thermal\",\n      \"responseType\": \"BASE64\"\n    }\n  }\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{REST_Token}}",
+                  "type": "string"
+                }
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "R-184 · Shipment Notification Receiver",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "x-api-key",
+                "value": "{{REST_XApiKey}}",
+                "type": "text"
+              },
+              {
+                "key": "RequestReference",
+                "value": "{{RequestReference}}",
+                "type": "text"
+              },
+              {
+                "key": "Language",
+                "value": "{{language}}",
+                "type": "text"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json",
+                "type": "text"
+              }
+            ],
+            "url": "{{baseUrl}}/ship/v1/shipment",
+            "description": "Verified in Production 2026-11-06 — Purolator_Certification_Testing row R-184 (Shipment Notification Receiver).\nExpected outcome: HTTP 200 · validShipment: true · shipmentPIN returned · packagePINs returned · documentStatus: Completed · banner: \"Quote is subject to change based on actual shipment characte…\"\nPlaceholders in the body: AccountNumber, Current_Date.\nProduction calls create real shipments and pickups — void anything you create.",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"lineOfBusiness\": \"COURIER\",\n  \"shipmentDate\": \"{{Current_Date}}\",\n  \"validateOnly\": false,\n  \"returnsManagement\": false,\n  \"returnRates\": false,\n  \"outboundShipment\": {\n    \"pickupType\": \"DROPOFF\",\n    \"senderInformation\": {\n      \"attentionTo\": \"Tech A\",\n      \"streetAddress\": [\n        \"17718 114 Ave\"\n      ],\n      \"city\": \"Edmonton\",\n      \"provinceStateCode\": \"AB\",\n      \"country\": \"CA\",\n      \"postalZipCode\": \"T5S2N4\",\n      \"phoneNumber\": \"17804091270\"\n    },\n    \"receiverInformation\": {\n      \"attentionTo\": \"Tech B\",\n      \"companyName\": \"Purolator\",\n      \"streetAddress\": [\n        \"3700 Jericho Road\"\n      ],\n      \"city\": \"Richmond\",\n      \"provinceStateCode\": \"BC\",\n      \"country\": \"CA\",\n      \"postalZipCode\": \"V7B1M5\",\n      \"phoneNumber\": \"18004595599\"\n    },\n    \"shipmentInformation\": {\n      \"serviceId\": \"PurolatorExpress\",\n      \"unitOfMeasurement\": \"IMPERIAL\",\n      \"totalWeight\": 1,\n      \"totalPackages\": 1,\n      \"dangerousGoodsDeclarationDocumentIndicator\": false,\n      \"packageInformation\": [\n        {\n          \"packageWeight\": 1,\n          \"packageLength\": 18.01,\n          \"packageWidth\": 5,\n          \"packageHeight\": 2\n        }\n      ]\n    },\n    \"paymentInformation\": {\n      \"paymentType\": \"Sender\",\n      \"registeredAccountNumber\": \"{{AccountNumber}}\"\n    },\n    \"customerReferenceInformation\": {\n      \"notes\": \"SH05   S15 = AA\",\n      \"shipmentReference1\": \"TC # 005\"\n    },\n    \"notifications\": {\n      \"requestorEmail\": \"myconf@abc.com\",\n      \"subscriptions\": [\n        {\n          \"email\": \"myconf@abc.com\",\n          \"notificationType\": {\n            \"notificationId\": \"ShipmentNotification-Receiver\",\n            \"notificationMessage\": \"Your shipment is on its way\"\n          },\n          \"name\": \"Tech A\"\n        }\n      ]\n    }\n  },\n  \"shipmentDocuments\": {\n    \"label\": {\n      \"outputType\": \"ZPL\",\n      \"printerFormat\": \"thermal\",\n      \"responseType\": \"BASE64\"\n    }\n  }\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{REST_Token}}",
+                  "type": "string"
+                }
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "R-185 · Notify When Delivery Occurs",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "x-api-key",
+                "value": "{{REST_XApiKey}}",
+                "type": "text"
+              },
+              {
+                "key": "RequestReference",
+                "value": "{{RequestReference}}",
+                "type": "text"
+              },
+              {
+                "key": "Language",
+                "value": "{{language}}",
+                "type": "text"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json",
+                "type": "text"
+              }
+            ],
+            "url": "{{baseUrl}}/ship/v1/shipment",
+            "description": "Verified in Production 2026-11-06 — Purolator_Certification_Testing row R-185 (Notify When Delivery Occurs).\nExpected outcome: HTTP 200 · validShipment: true · shipmentPIN returned · packagePINs returned · documentStatus: Completed · banner: \"Quote is subject to change based on actual shipment characte…\"\nPlaceholders in the body: AccountNumber, Current_Date.\nProduction calls create real shipments and pickups — void anything you create.",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"lineOfBusiness\": \"COURIER\",\n  \"shipmentDate\": \"{{Current_Date}}\",\n  \"validateOnly\": false,\n  \"returnsManagement\": false,\n  \"returnRates\": false,\n  \"outboundShipment\": {\n    \"pickupType\": \"DROPOFF\",\n    \"senderInformation\": {\n      \"attentionTo\": \"Tech A\",\n      \"streetAddress\": [\n        \"17718 114 Ave\"\n      ],\n      \"city\": \"Edmonton\",\n      \"provinceStateCode\": \"AB\",\n      \"country\": \"CA\",\n      \"postalZipCode\": \"T5S2N4\",\n      \"phoneNumber\": \"17804091270\"\n    },\n    \"receiverInformation\": {\n      \"attentionTo\": \"Tech B\",\n      \"companyName\": \"Purolator\",\n      \"streetAddress\": [\n        \"3700 Jericho Road\"\n      ],\n      \"city\": \"Richmond\",\n      \"provinceStateCode\": \"BC\",\n      \"country\": \"CA\",\n      \"postalZipCode\": \"V7B1M5\",\n      \"phoneNumber\": \"18004595599\"\n    },\n    \"shipmentInformation\": {\n      \"serviceId\": \"PurolatorExpress\",\n      \"unitOfMeasurement\": \"IMPERIAL\",\n      \"totalWeight\": 1,\n      \"totalPackages\": 1,\n      \"dangerousGoodsDeclarationDocumentIndicator\": false,\n      \"packageInformation\": [\n        {\n          \"packageWeight\": 1,\n          \"packageLength\": 18.01,\n          \"packageWidth\": 5,\n          \"packageHeight\": 2\n        }\n      ]\n    },\n    \"paymentInformation\": {\n      \"paymentType\": \"Sender\",\n      \"registeredAccountNumber\": \"{{AccountNumber}}\"\n    },\n    \"customerReferenceInformation\": {\n      \"notes\": \"SH05   S15 = AA\",\n      \"shipmentReference1\": \"TC # 005\"\n    },\n    \"notifications\": {\n      \"requestorName\": \"Shipping\",\n      \"requestorEmail\": \"myconf@abc.com\",\n      \"subscriptions\": [\n        {\n          \"email\": \"myconf@abc.com\",\n          \"notificationType\": {\n            \"notificationId\": \"NotifyWhenDeliveryOccurs\"\n          },\n          \"name\": \"Tech A\"\n        }\n      ]\n    }\n  },\n  \"shipmentDocuments\": {\n    \"label\": {\n      \"outputType\": \"ZPL\",\n      \"printerFormat\": \"thermal\",\n      \"responseType\": \"BASE64\"\n    }\n  }\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{REST_Token}}",
+                  "type": "string"
+                }
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "R-186 · Notify When Exception Occurs",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "x-api-key",
+                "value": "{{REST_XApiKey}}",
+                "type": "text"
+              },
+              {
+                "key": "RequestReference",
+                "value": "{{RequestReference}}",
+                "type": "text"
+              },
+              {
+                "key": "Language",
+                "value": "{{language}}",
+                "type": "text"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json",
+                "type": "text"
+              }
+            ],
+            "url": "{{baseUrl}}/ship/v1/shipment",
+            "description": "Verified in Production 2026-11-06 — Purolator_Certification_Testing row R-186 (Notify When Exception Occurs).\nExpected outcome: HTTP 200 · validShipment: true · shipmentPIN returned · packagePINs returned · documentStatus: Completed · banner: \"Quote is subject to change based on actual shipment characte…\"\nPlaceholders in the body: AccountNumber, Current_Date.\nProduction calls create real shipments and pickups — void anything you create.",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"lineOfBusiness\": \"COURIER\",\n  \"shipmentDate\": \"{{Current_Date}}\",\n  \"validateOnly\": false,\n  \"returnsManagement\": false,\n  \"returnRates\": false,\n  \"outboundShipment\": {\n    \"pickupType\": \"DROPOFF\",\n    \"senderInformation\": {\n      \"attentionTo\": \"Tech A\",\n      \"streetAddress\": [\n        \"17718 114 Ave\"\n      ],\n      \"city\": \"Edmonton\",\n      \"provinceStateCode\": \"AB\",\n      \"country\": \"CA\",\n      \"postalZipCode\": \"T5S2N4\",\n      \"phoneNumber\": \"17804091270\"\n    },\n    \"receiverInformation\": {\n      \"attentionTo\": \"Tech B\",\n      \"companyName\": \"Purolator\",\n      \"streetAddress\": [\n        \"3700 Jericho Road\"\n      ],\n      \"city\": \"Richmond\",\n      \"provinceStateCode\": \"BC\",\n      \"country\": \"CA\",\n      \"postalZipCode\": \"V7B1M5\",\n      \"phoneNumber\": \"18004595599\"\n    },\n    \"shipmentInformation\": {\n      \"serviceId\": \"PurolatorExpress\",\n      \"unitOfMeasurement\": \"IMPERIAL\",\n      \"totalWeight\": 1,\n      \"totalPackages\": 1,\n      \"dangerousGoodsDeclarationDocumentIndicator\": false,\n      \"packageInformation\": [\n        {\n          \"packageWeight\": 1,\n          \"packageLength\": 18.01,\n          \"packageWidth\": 5,\n          \"packageHeight\": 2\n        }\n      ]\n    },\n    \"paymentInformation\": {\n      \"paymentType\": \"Sender\",\n      \"registeredAccountNumber\": \"{{AccountNumber}}\"\n    },\n    \"customerReferenceInformation\": {\n      \"notes\": \"SH05   S15 = AA\",\n      \"shipmentReference1\": \"TC # 005\"\n    },\n    \"notifications\": {\n      \"requestorName\": \"Shipping\",\n      \"requestorEmail\": \"myconf@abc.com\",\n      \"subscriptions\": [\n        {\n          \"email\": \"myconf@abc.com\",\n          \"notificationType\": {\n            \"notificationId\": \"NotifyWhenExceptionOccurs\"\n          },\n          \"name\": \"Tech A\"\n        }\n      ]\n    }\n  },\n  \"shipmentDocuments\": {\n    \"label\": {\n      \"outputType\": \"ZPL\",\n      \"printerFormat\": \"thermal\",\n      \"responseType\": \"BASE64\"\n    }\n  }\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{REST_Token}}",
+                  "type": "string"
+                }
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "R-199 · USMCA document",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "x-api-key",
+                "value": "{{REST_XApiKey}}",
+                "type": "text"
+              },
+              {
+                "key": "RequestReference",
+                "value": "{{RequestReference}}",
+                "type": "text"
+              },
+              {
+                "key": "Language",
+                "value": "{{language}}",
+                "type": "text"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json",
+                "type": "text"
+              }
+            ],
+            "url": "{{baseUrl}}/ship/v1/shipment",
+            "description": "Verified in Production 2026-11-06 — Purolator_Certification_Testing row R-199 (USMCA document).\nExpected outcome: HTTP 200 · validShipment: true · shipmentPIN returned · packagePINs returned · documentStatus: Completed · banner: \"Quote is subject to change based on actual shipment characte…\"\nPlaceholders in the body: Current_Date, Freight_account.\nProduction calls create real shipments and pickups — void anything you create.",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"lineOfBusiness\": \"COURIER\",\n  \"shipmentDate\": \"{{Current_Date}}\",\n  \"validateOnly\": false,\n  \"returnsManagement\": false,\n  \"returnRates\": false,\n  \"outboundShipment\": {\n    \"pickupType\": \"DROPOFF\",\n    \"senderInformation\": {\n      \"attentionTo\": \"Tech A\",\n      \"companyName\": \"Purolator\",\n      \"streetAddress\": [\n        \"17718 114 Ave\"\n      ],\n      \"city\": \"Edmonton\",\n      \"provinceStateCode\": \"AB\",\n      \"country\": \"CA\",\n      \"postalZipCode\": \"T5S2N4\",\n      \"phoneNumber\": \"17804091270\"\n    },\n    \"receiverInformation\": {\n      \"attentionTo\": \"Retail Agent\",\n      \"streetAddress\": [\n        \"2310 East Gladwick Street\"\n      ],\n      \"city\": \"Compton\",\n      \"provinceStateCode\": \"CA\",\n      \"country\": \"US\",\n      \"postalZipCode\": \"90220\",\n      \"phoneNumber\": \"18004595599\"\n    },\n    \"shipmentInformation\": {\n      \"serviceId\": \"PurolatorExpressBoxU.S.\",\n      \"unitOfMeasurement\": \"IMPERIAL\",\n      \"descriptionOfGoods\": \"Consolidation check\",\n      \"totalWeight\": 5,\n      \"totalPackages\": 1,\n      \"dangerousGoodsDeclarationDocumentIndicator\": false,\n      \"packageInformation\": [\n        {\n          \"packageWeight\": 5,\n          \"packageLength\": 11,\n          \"packageWidth\": 8,\n          \"packageHeight\": 1\n        }\n      ]\n    },\n    \"crossBorderInformation\": {\n      \"nonDocumentsInformation\": {\n        \"importExportType\": \"Permanent\",\n        \"customsInvoiceDocumentIndicator\": true\n      },\n      \"contentDetails\": [\n        {\n          \"description\": \"Wireless Router\",\n          \"harmonizedCode\": \"8517620090\",\n          \"countryOfManufacture\": \"CN\",\n          \"unitValue\": 120,\n          \"productCode\": \"WR-AX6000\",\n          \"quantity\": 1,\n          \"usmcaDocumentIndicator\": true,\n          \"fdaDocumentIndicator\": false,\n          \"senderIsProducerIndicator\": true,\n          \"textileIndicator\": false\n        }\n      ]\n    },\n    \"paymentInformation\": {\n      \"paymentType\": \"Sender\",\n      \"registeredAccountNumber\": \"{{Freight_account}}\",\n      \"billingAccountNumber\": \"{{Freight_account}}\"\n    },\n    \"customerReferenceInformation\": {\n      \"costCenter\": \"Consolidation\",\n      \"shipmentReference1\": \"PO123456\"\n    }\n  },\n  \"shipmentDocuments\": {\n    \"label\": {\n      \"outputType\": \"ZPL\",\n      \"printerFormat\": \"thermal\",\n      \"responseType\": \"BASE64\"\n    }\n  }\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{REST_Token}}",
+                  "type": "string"
+                }
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "R-200 · FDA document",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "x-api-key",
+                "value": "{{REST_XApiKey}}",
+                "type": "text"
+              },
+              {
+                "key": "RequestReference",
+                "value": "{{RequestReference}}",
+                "type": "text"
+              },
+              {
+                "key": "Language",
+                "value": "{{language}}",
+                "type": "text"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json",
+                "type": "text"
+              }
+            ],
+            "url": "{{baseUrl}}/ship/v1/shipment",
+            "description": "Verified in Production 2026-11-06 — Purolator_Certification_Testing row R-200 (FDA document).\nExpected outcome: HTTP 200 · validShipment: true · shipmentPIN returned · packagePINs returned · documentStatus: Completed · banner: \"Quote is subject to change based on actual shipment characte…\"\nPlaceholders in the body: Current_Date, Freight_account.\nProduction calls create real shipments and pickups — void anything you create.",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"lineOfBusiness\": \"COURIER\",\n  \"shipmentDate\": \"{{Current_Date}}\",\n  \"validateOnly\": false,\n  \"returnsManagement\": false,\n  \"returnRates\": false,\n  \"outboundShipment\": {\n    \"pickupType\": \"DROPOFF\",\n    \"senderInformation\": {\n      \"attentionTo\": \"Tech A\",\n      \"companyName\": \"Purolator\",\n      \"streetAddress\": [\n        \"17718 114 Ave\"\n      ],\n      \"city\": \"Edmonton\",\n      \"provinceStateCode\": \"AB\",\n      \"country\": \"CA\",\n      \"postalZipCode\": \"T5S2N4\",\n      \"phoneNumber\": \"17804091270\"\n    },\n    \"receiverInformation\": {\n      \"attentionTo\": \"Retail Agent\",\n      \"streetAddress\": [\n        \"2310 East Gladwick Street\"\n      ],\n      \"city\": \"Compton\",\n      \"provinceStateCode\": \"CA\",\n      \"country\": \"US\",\n      \"postalZipCode\": \"90220\",\n      \"phoneNumber\": \"18004595599\"\n    },\n    \"shipmentInformation\": {\n      \"serviceId\": \"PurolatorExpressBoxU.S.\",\n      \"unitOfMeasurement\": \"IMPERIAL\",\n      \"descriptionOfGoods\": \"Consolidation check\",\n      \"totalWeight\": 5,\n      \"totalPackages\": 1,\n      \"dangerousGoodsDeclarationDocumentIndicator\": false,\n      \"packageInformation\": [\n        {\n          \"packageWeight\": 5,\n          \"packageLength\": 11,\n          \"packageWidth\": 8,\n          \"packageHeight\": 1\n        }\n      ]\n    },\n    \"crossBorderInformation\": {\n      \"nonDocumentsInformation\": {\n        \"importExportType\": \"Permanent\",\n        \"customsInvoiceDocumentIndicator\": true\n      },\n      \"contentDetails\": [\n        {\n          \"description\": \"Wireless Router\",\n          \"harmonizedCode\": \"8517620090\",\n          \"countryOfManufacture\": \"CN\",\n          \"unitValue\": 120,\n          \"productCode\": \"WR-AX6000\",\n          \"quantity\": 1,\n          \"usmcaDocumentIndicator\": false,\n          \"fdaDocumentIndicator\": true,\n          \"senderIsProducerIndicator\": true,\n          \"textileIndicator\": false\n        }\n      ]\n    },\n    \"paymentInformation\": {\n      \"paymentType\": \"Sender\",\n      \"registeredAccountNumber\": \"{{Freight_account}}\",\n      \"billingAccountNumber\": \"{{Freight_account}}\"\n    },\n    \"customerReferenceInformation\": {\n      \"costCenter\": \"Consolidation\",\n      \"shipmentReference1\": \"PO123456\"\n    }\n  },\n  \"shipmentDocuments\": {\n    \"label\": {\n      \"outputType\": \"ZPL\",\n      \"printerFormat\": \"thermal\",\n      \"responseType\": \"BASE64\"\n    }\n  }\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{REST_Token}}",
+                  "type": "string"
+                }
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "R-201 · Buyer address",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "x-api-key",
+                "value": "{{REST_XApiKey}}",
+                "type": "text"
+              },
+              {
+                "key": "RequestReference",
+                "value": "{{RequestReference}}",
+                "type": "text"
+              },
+              {
+                "key": "Language",
+                "value": "{{language}}",
+                "type": "text"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json",
+                "type": "text"
+              }
+            ],
+            "url": "{{baseUrl}}/ship/v1/shipment",
+            "description": "Verified in Production 2026-11-06 — Purolator_Certification_Testing row R-201 (Buyer address).\nExpected outcome: HTTP 200 · validShipment: true · shipmentPIN returned · packagePINs returned · documentStatus: Completed · banner: \"Quote is subject to change based on actual shipment characte…\"\nPlaceholders in the body: Current_Date, Freight_account.\nProduction calls create real shipments and pickups — void anything you create.",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"lineOfBusiness\": \"COURIER\",\n  \"shipmentDate\": \"{{Current_Date}}\",\n  \"validateOnly\": false,\n  \"returnsManagement\": false,\n  \"returnRates\": false,\n  \"outboundShipment\": {\n    \"buyerInformation\": {\n      \"companyName\": \"Sample Buyer\",\n      \"attentionTo\": \"Shipping\",\n      \"streetAddress\": [\n        \"200 Buyer Ave\"\n      ],\n      \"city\": \"Buffalo\",\n      \"provinceStateCode\": \"NY\",\n      \"country\": \"US\",\n      \"postalZipCode\": \"14202\",\n      \"phoneNumber\": \"18004595599\"\n    },\n    \"pickupType\": \"DROPOFF\",\n    \"senderInformation\": {\n      \"attentionTo\": \"Tech A\",\n      \"companyName\": \"Purolator\",\n      \"streetAddress\": [\n        \"17718 114 Ave\"\n      ],\n      \"city\": \"Edmonton\",\n      \"provinceStateCode\": \"AB\",\n      \"country\": \"CA\",\n      \"postalZipCode\": \"T5S2N4\",\n      \"phoneNumber\": \"17804091270\"\n    },\n    \"receiverInformation\": {\n      \"attentionTo\": \"Retail Agent\",\n      \"streetAddress\": [\n        \"2310 East Gladwick Street\"\n      ],\n      \"city\": \"Compton\",\n      \"provinceStateCode\": \"CA\",\n      \"country\": \"US\",\n      \"postalZipCode\": \"90220\",\n      \"phoneNumber\": \"18004595599\"\n    },\n    \"shipmentInformation\": {\n      \"serviceId\": \"PurolatorExpressBoxU.S.\",\n      \"unitOfMeasurement\": \"IMPERIAL\",\n      \"descriptionOfGoods\": \"Consolidation check\",\n      \"totalWeight\": 5,\n      \"totalPackages\": 1,\n      \"dangerousGoodsDeclarationDocumentIndicator\": false,\n      \"packageInformation\": [\n        {\n          \"packageWeight\": 5,\n          \"packageLength\": 11,\n          \"packageWidth\": 8,\n          \"packageHeight\": 1\n        }\n      ]\n    },\n    \"crossBorderInformation\": {\n      \"nonDocumentsInformation\": {\n        \"importExportType\": \"Permanent\",\n        \"customsInvoiceDocumentIndicator\": true\n      },\n      \"contentDetails\": [\n        {\n          \"description\": \"Wireless Router\",\n          \"harmonizedCode\": \"8517620090\",\n          \"countryOfManufacture\": \"CN\",\n          \"unitValue\": 120,\n          \"productCode\": \"WR-AX6000\",\n          \"quantity\": 1,\n          \"usmcaDocumentIndicator\": false,\n          \"fdaDocumentIndicator\": false,\n          \"senderIsProducerIndicator\": true,\n          \"textileIndicator\": false\n        }\n      ]\n    },\n    \"paymentInformation\": {\n      \"paymentType\": \"Sender\",\n      \"registeredAccountNumber\": \"{{Freight_account}}\",\n      \"billingAccountNumber\": \"{{Freight_account}}\"\n    },\n    \"customerReferenceInformation\": {\n      \"costCenter\": \"Consolidation\",\n      \"shipmentReference1\": \"PO123456\"\n    }\n  },\n  \"shipmentDocuments\": {\n    \"label\": {\n      \"outputType\": \"ZPL\",\n      \"printerFormat\": \"thermal\",\n      \"responseType\": \"BASE64\"\n    }\n  }\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{REST_Token}}",
+                  "type": "string"
+                }
+              ]
+            }
+          },
+          "response": []
+        }
+      ]
     }
   ],
   "variable": [

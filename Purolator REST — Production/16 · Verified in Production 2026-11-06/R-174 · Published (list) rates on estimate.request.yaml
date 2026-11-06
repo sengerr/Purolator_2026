@@ -1,0 +1,72 @@
+$kind: http-request
+description: |-
+  Verified in Production 2026-11-06 — Purolator_Certification_Testing row R-174 (Published (list) rates on estimate).
+  Expected outcome: HTTP 200 · validShipment: true · shipmentPIN returned · packagePINs returned · documentStatus: Completed · banner: "Quote is subject to change based on actual shipment characte…"
+  Placeholders in the body: AccountNumber, Current_Date.
+  Production calls create real shipments and pickups — void anything you create.
+url: "{{baseUrl}}/rate/v1/shipment"
+method: POST
+headers:
+  x-api-key: "{{REST_XApiKey}}"
+  RequestReference: "{{RequestReference}}"
+  Language: "{{language}}"
+  Content-Type: application/json
+body:
+  type: json
+  content: |-
+    {
+      "lineOfBusiness": "COURIER",
+      "shipmentDate": "{{Current_Date}}",
+      "outboundShipment": {
+        "senderInformation": {
+          "companyName": "Purolator",
+          "streetAddress": [
+            "17718 114 Ave"
+          ],
+          "city": "Edmonton",
+          "provinceStateCode": "AB",
+          "country": "CA",
+          "postalZipCode": "T5S2N4"
+        },
+        "receiverInformation": {
+          "companyName": "Purolator",
+          "streetAddress": [
+            "30 Aero Drive NE"
+          ],
+          "city": "Calgary",
+          "provinceStateCode": "AB",
+          "country": "CA",
+          "postalZipCode": "T2E8Z9"
+        },
+        "shipmentInformation": {
+          "serviceId": "PurolatorGround",
+          "unitOfMeasurement": "IMPERIAL",
+          "totalWeight": 150,
+          "totalPackages": 1,
+          "showAlternativeServicesIndicator": false,
+          "packageInformation": [
+            {
+              "packageWeight": 75,
+              "packageLength": 12,
+              "packageWidth": 12,
+              "packageHeight": 1
+            },
+            {
+              "packageWeight": 75,
+              "packageLength": 12,
+              "packageWidth": 12,
+              "packageHeight": 1
+            }
+          ]
+        },
+        "billingInformation": {
+          "displayPublishedRates": false,
+          "billingAccountNumber": "{{AccountNumber}}"
+        }
+      }
+    }
+auth:
+  type: bearer
+  credentials:
+    token: "{{REST_Token}}"
+order: 2100

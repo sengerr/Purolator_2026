@@ -146,7 +146,7 @@ misleading — it is not about the shipment. Same body, same service, same lane:
 | account | result |
 |---|---|
 | `AccountNumber` | `9001-153` |
-| `Different_AccountNumber` (9999999) | 200, shipment created |
+| `Different_AccountNumber` (a second account) | 200, shipment created |
 
 Confirmed service-independent across `PurolatorExpress`, `PurolatorExpress9AM`,
 `PurolatorGround` and `PurolatorExpressPack`, and the same body without the

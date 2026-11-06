@@ -8,10 +8,10 @@ These are Postman collections for the Purolator **REST** API and the Purolator *
 
 | Collection | Requests | Verified in |
 |---|---|---|
-| Purolator REST — Development | 420 | Certification, full REST run on 2026-10-06 (13 spec-aligned requests not yet verified) |
-| Purolator REST — Production | 420 | Same requests as Development; only the host differs |
-| Purolator SOAP (EWS) — Development | 428 | Development, full SOAP run on 2026-10-29 (Shipping Web Service 2.3 field removal) |
-| Purolator SOAP (EWS) — Production | 428 | Same requests as Development; only the host differs |
+| Purolator REST — Development | 450 | Certification, full REST run on 2026-10-06 (13 spec-aligned requests not yet verified); folder *16 · Verified in Production 2026-11-06* (30 requests) in Production |
+| Purolator REST — Production | 450 | Same requests as Development; only the host differs |
+| Purolator SOAP (EWS) — Development | 465 | Development, full SOAP run on 2026-10-29 (Shipping Web Service 2.3 field removal); folder *15 · Verified in Production 2026-11-06* (37 requests) in Production |
+| Purolator SOAP (EWS) — Production | 465 | Same requests as Development; only the host differs |
 
 In each protocol, the request content is identical between Development and Production.
 
@@ -50,6 +50,22 @@ The following variables are filled by the collections' own scripts: `Current_Dat
 **REST:** run *00 · Auth → AUTH · OKTA Token* first. Every other REST request uses the bearer token it stores.
 
 ---
+
+## What changed on 2026-11-06
+
+New folders **16 · Verified in Production 2026-11-06** (REST, 30 requests) and **15 · Verified in Production 2026-11-06** (SOAP, 37 requests), in both the Development and Production collections. Each request was sent once in Production and succeeded; every shipment and pickup it created was voided straight away.
+
+They cover what the earlier runs did not: SOAP and REST pickups (schedule, validate, modify, history, void), ValidateCityPostalCodeZip, the Point of Interest locator, Express Evening services, the remaining Express Cheque payment methods, special-handling types, extra label formats (DPL, PNG, CODE128), U.S.-origin and blind (from-on-label) shipments, notification types, USMCA / FDA document indicators, buyer address, published rates, and the SOAP freight accessorials and handling units.
+
+Each request's description gives its expected outcome and the placeholders it uses. New placeholders, besides the ones already in the environments: `Pickup_Date`, `PickUpConfirmationNumber` (from the schedule response), `From_Date` / `To_Date`, and `Date`.
+
+Things the run settled:
+
+- SOAP pickup requests need `Version 1.2` in `RequestContext` (`1.0` returns `3001136`).
+- REST Express Cheque payment methods are words: `Post dated Cheque`, `Certified Cheque`, `Money Order`, `Bank Draft` (`9001-146`).
+- REST `ShipmentNotification-Receiver` needs `notificationMessage` (`9001-273`); `NotifyWhen…` types need `notifications.requestorName` (`9001-322`).
+
+The full checklist — every product, service and option, with the items Production refused and why — is in [Purolator_Certification_Testing](https://github.com/sengerr/Purolator_Certification_Testing).
 
 ## What changed on 2026-10-24
 

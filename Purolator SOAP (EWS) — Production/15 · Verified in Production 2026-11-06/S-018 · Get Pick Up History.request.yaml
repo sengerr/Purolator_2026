@@ -1,0 +1,43 @@
+$kind: http-request
+description: |-
+  Verified in Production 2026-11-06 — Purolator_Certification_Testing row S-018 (Get Pick Up History).
+  Expected outcome: HTTP 200 · GetPickUpHistoryResponse · ResponseInformation/Errors empty · matching pickups listed
+  Placeholders in the body: AccountNumber, From_Date, RequestReference, To_Date.
+  Production calls create real shipments and pickups — void anything you create.
+url: "{{soapBase}}/EWS/V1/PickUp/PickUpService.asmx"
+method: POST
+headers:
+  Content-Type: text/xml; charset=utf-8
+  SOAPAction: http://purolator.com/pws/service/v1/GetPickUpHistory
+body:
+  type: xml
+  content: |-
+    <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns="http://purolator.com/pws/datatypes/v1">
+       <soapenv:Header>
+          <RequestContext>
+             <Version>1.2</Version>
+             <Language>en</Language>
+             <GroupID>1</GroupID>
+             <RequestReference>{{RequestReference}}</RequestReference>
+          </RequestContext>
+       </soapenv:Header>
+       <soapenv:Body>
+          <GetPickUpHistoryRequest>
+             <PickUpHistorySearchCriteria>
+                <FromDate>{{From_Date}}</FromDate>
+                <ToDate>{{To_Date}}</ToDate>
+                <AccountNumber>{{AccountNumber}}</AccountNumber>
+                <Status>Scheduled</Status>
+                <MaxNumOfRecords>10</MaxNumOfRecords>
+                <SortColumn>1</SortColumn>
+                <SortDirection>A</SortDirection>
+             </PickUpHistorySearchCriteria>
+          </GetPickUpHistoryRequest>
+       </soapenv:Body>
+    </soapenv:Envelope>
+auth:
+  type: basic
+  credentials:
+    username: "{{SOAP_Key}}"
+    password: "{{SOAP_Password}}"
+order: 600

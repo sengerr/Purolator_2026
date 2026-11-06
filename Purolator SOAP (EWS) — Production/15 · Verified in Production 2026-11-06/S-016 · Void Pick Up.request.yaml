@@ -1,0 +1,35 @@
+$kind: http-request
+description: |-
+  Verified in Production 2026-11-06 — Purolator_Certification_Testing row S-016 (Void Pick Up).
+  Expected outcome: HTTP 200 · VoidPickUpResponse · ResponseInformation/Errors empty (pickup cancelled)
+  Placeholders in the body: PickUpConfirmationNumber, RequestReference.
+  Production calls create real shipments and pickups — void anything you create.
+url: "{{soapBase}}/EWS/V1/PickUp/PickUpService.asmx"
+method: POST
+headers:
+  Content-Type: text/xml; charset=utf-8
+  SOAPAction: http://purolator.com/pws/service/v1/VoidPickUp
+body:
+  type: xml
+  content: |-
+    <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns="http://purolator.com/pws/datatypes/v1">
+       <soapenv:Header>
+          <RequestContext>
+             <Version>1.2</Version>
+             <Language>en</Language>
+             <GroupID>1</GroupID>
+             <RequestReference>{{RequestReference}}</RequestReference>
+          </RequestContext>
+       </soapenv:Header>
+       <soapenv:Body>
+          <VoidPickUpRequest>
+             <PickUpConfirmationNumber>{{PickUpConfirmationNumber}}</PickUpConfirmationNumber>
+          </VoidPickUpRequest>
+       </soapenv:Body>
+    </soapenv:Envelope>
+auth:
+  type: basic
+  credentials:
+    username: "{{SOAP_Key}}"
+    password: "{{SOAP_Password}}"
+order: 400
