@@ -2,7 +2,7 @@ $kind: http-request
 description: |-
   Verified in Production 2026-11-06 — Purolator_Certification_Testing row R-008 (Schedule pickup).
   Expected outcome: HTTP 200 · pickup scheduled · confirmation number returned
-  Placeholders in the body: AccountNumber, Pickup_Date.
+  Placeholders in the body: AccountNumber, pickupDate.
   Production calls create real shipments and pickups — void anything you create.
 url: "{{baseUrl}}/pickup/v1/schedule"
 method: POST
@@ -18,7 +18,7 @@ body:
       "lineOfBusiness": "Courier",
       "registeredAccountNumber": "{{AccountNumber}}",
       "pickupInstructions": {
-        "date": "{{Pickup_Date}}",
+        "date": "{{pickupDate}}",
         "anyTimeAfter": "13:00",
         "untilTime": "17:00",
         "measurementUnit": "Imperial",
@@ -52,4 +52,13 @@ auth:
   type: bearer
   credentials:
     token: "{{REST_Token}}"
+scripts:
+  - type: afterResponse
+    code: |-
+      // Save the pickup confirmation number for the modify, history and void requests.
+      const PICKUP_VAR = 'PickUpConfirmationNumber';
+      const m = pm.response.text().match(/"pickupConfirmationNumber"\s*:\s*"?([A-Za-z0-9]+)/);
+      const n = m ? m[1] : null;
+      if (n) { pm.environment.set(PICKUP_VAR, String(n)); console.log('[pickup] ' + n); }
+    language: text/javascript
 order: 100

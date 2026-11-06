@@ -2,7 +2,7 @@ $kind: http-request
 description: |-
   Verified in Production 2026-11-06 — Purolator_Certification_Testing row R-148 (DPL).
   Expected outcome: HTTP 200 · validShipment: true · shipmentPIN returned · packagePINs returned · documentStatus: Completed · banner: "Quote is subject to change based on actual shipment characte…"
-  Placeholders in the body: Current_Date, Freight_account.
+  Placeholders in the body: AccountNumber, Current_Date.
   Production calls create real shipments and pickups — void anything you create.
 url: "{{baseUrl}}/ship/v1/shipment"
 method: POST
@@ -82,8 +82,8 @@ body:
         },
         "paymentInformation": {
           "paymentType": "Sender",
-          "registeredAccountNumber": "{{Freight_account}}",
-          "billingAccountNumber": "{{Freight_account}}"
+          "registeredAccountNumber": "{{AccountNumber}}",
+          "billingAccountNumber": "{{AccountNumber}}"
         },
         "customerReferenceInformation": {
           "costCenter": "Consolidation",

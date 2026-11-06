@@ -2,7 +2,7 @@ $kind: http-request
 description: |-
   Verified in Production 2026-11-06 — Purolator_Certification_Testing row S-017 (Validate Pick Up).
   Expected outcome: HTTP 200 · ValidatePickUpResponse · ResponseInformation/Errors empty (pickup details accepted)
-  Placeholders in the body: AccountNumber, Pickup_Date, RequestReference.
+  Placeholders in the body: AccountNumber, RequestReference, pickupDate.
   Production calls create real shipments and pickups — void anything you create.
 url: "{{soapBase}}/EWS/V1/PickUp/PickUpService.asmx"
 method: POST
@@ -25,7 +25,7 @@ body:
           <ValidatePickUpRequest>
              <BillingAccountNumber>{{AccountNumber}}</BillingAccountNumber>
              <PickupInstruction>
-                <Date>{{Pickup_Date}}</Date>
+                <Date>{{pickupDate}}</Date>
                 <AnyTimeAfter>1300</AnyTimeAfter>
                 <UntilTime>1700</UntilTime>
                 <TotalWeight>

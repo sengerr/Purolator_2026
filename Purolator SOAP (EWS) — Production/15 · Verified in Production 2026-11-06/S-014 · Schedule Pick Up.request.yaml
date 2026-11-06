@@ -2,7 +2,7 @@ $kind: http-request
 description: |-
   Verified in Production 2026-11-06 — Purolator_Certification_Testing row S-014 (Schedule Pick Up).
   Expected outcome: HTTP 200 · SchedulePickUpResponse · ResponseInformation/Errors empty · PickUpConfirmationNumber returned
-  Placeholders in the body: AccountNumber, Pickup_Date, RequestReference.
+  Placeholders in the body: AccountNumber, RequestReference, pickupDate.
   Production calls create real shipments and pickups — void anything you create.
 url: "{{soapBase}}/EWS/V1/PickUp/PickUpService.asmx"
 method: POST
@@ -25,7 +25,7 @@ body:
           <SchedulePickUpRequest>
              <BillingAccountNumber>{{AccountNumber}}</BillingAccountNumber>
              <PickupInstruction>
-                <Date>{{Pickup_Date}}</Date>
+                <Date>{{pickupDate}}</Date>
                 <AnyTimeAfter>1300</AnyTimeAfter>
                 <UntilTime>1700</UntilTime>
                 <TotalWeight>
@@ -80,4 +80,13 @@ auth:
   credentials:
     username: "{{SOAP_Key}}"
     password: "{{SOAP_Password}}"
+scripts:
+  - type: afterResponse
+    code: |-
+      // Save the pickup confirmation number for the modify, history and void requests.
+      const PICKUP_VAR = 'PickUpConfirmationNumber';
+      const m = pm.response.text().match(/<(?:\w+:)?PickUpConfirmationNumber>([^<]+)</);
+      const n = m ? m[1] : null;
+      if (n) { pm.environment.set(PICKUP_VAR, String(n)); console.log('[pickup] ' + n); }
+    language: text/javascript
 order: 200

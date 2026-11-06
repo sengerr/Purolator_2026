@@ -2,7 +2,7 @@ $kind: http-request
 description: |-
   Verified in Production 2026-11-06 — Purolator_Certification_Testing row S-018 (Get Pick Up History).
   Expected outcome: HTTP 200 · GetPickUpHistoryResponse · ResponseInformation/Errors empty · matching pickups listed
-  Placeholders in the body: AccountNumber, From_Date, RequestReference, To_Date.
+  Placeholders in the body: AccountNumber, RequestReference, pickupHistoryFromDate, pickupHistoryToDate.
   Production calls create real shipments and pickups — void anything you create.
 url: "{{soapBase}}/EWS/V1/PickUp/PickUpService.asmx"
 method: POST
@@ -24,8 +24,8 @@ body:
        <soapenv:Body>
           <GetPickUpHistoryRequest>
              <PickUpHistorySearchCriteria>
-                <FromDate>{{From_Date}}</FromDate>
-                <ToDate>{{To_Date}}</ToDate>
+                <FromDate>{{pickupHistoryFromDate}}</FromDate>
+                <ToDate>{{pickupHistoryToDate}}</ToDate>
                 <AccountNumber>{{AccountNumber}}</AccountNumber>
                 <Status>Scheduled</Status>
                 <MaxNumOfRecords>10</MaxNumOfRecords>

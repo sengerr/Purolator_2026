@@ -57,7 +57,7 @@ New folders **16 · Verified in Production 2026-11-06** (REST, 30 requests) and 
 
 They cover what the earlier runs did not: SOAP and REST pickups (schedule, validate, modify, history, void), ValidateCityPostalCodeZip, the Point of Interest locator, Express Evening services, the remaining Express Cheque payment methods, special-handling types, extra label formats (DPL, PNG, CODE128), U.S.-origin and blind (from-on-label) shipments, notification types, USMCA / FDA document indicators, buyer address, published rates, and the SOAP freight accessorials and handling units.
 
-Each request's description gives its expected outcome and the placeholders it uses. New placeholders, besides the ones already in the environments: `Pickup_Date`, `PickUpConfirmationNumber` (from the schedule response), `From_Date` / `To_Date`, and `Date`.
+Each request's description gives its expected outcome and the placeholders it uses. They use the collection's existing variables (`pickupDate`, `pickupHistoryFromDate` / `pickupHistoryToDate`, `manifestDate`) plus one new one, `PickUpConfirmationNumber`, which the schedule-pickup requests save automatically for modify, history and void.
 
 Things the run settled:
 
