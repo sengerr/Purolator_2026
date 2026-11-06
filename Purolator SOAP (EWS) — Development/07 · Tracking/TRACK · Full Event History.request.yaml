@@ -27,7 +27,7 @@ body:
 
                    <v2:search>
                       <v2:trackingId>520058068583</v2:trackingId>
-                      <v2:account>9999999</v2:account>
+                      <v2:account>{{AccountNumber}}</v2:account>
                       <v2:pod>true</v2:pod>
                       <v2:shipmentView>true</v2:shipmentView>
                       <v2:lastEvent>true</v2:lastEvent>
