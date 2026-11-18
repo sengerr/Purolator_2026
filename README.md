@@ -155,7 +155,7 @@ Standard test addresses:
 
 ## Importable JSON
 
-`postman/` — the four collections exported as Postman v2.1 `.postman_collection.json` files (File → Import in Postman), plus `HOW-TO-LOAD.md` covering import, environment setup and the first run. Same content as the YAML trees; regenerated whenever the collections change.
+`exports/` — the four collections exported as Postman v2.1 `.postman_collection.json` files (File → Import in Postman), plus `HOW-TO-LOAD.md` covering import, environment setup and the first run. Same content as the YAML trees; regenerated whenever the collections change.
 
 ## Reference
 
@@ -180,7 +180,7 @@ Production calls create real shipments. Use Development until your integration i
 ## File formats
 
 - `Purolator REST|SOAP (EWS) — Development|Production/` — Postman **v3 collection format** (Native Git YAML).
-- `postman/*.postman_collection.json` — Postman **v2.1 JSON** of the same collections, for Newman and older Postman.
+- `exports/*.postman_collection.json` — Postman **v2.1 JSON** of the same collections, for Newman and older Postman. Kept outside `postman/` so Postman's Local Mode does not load them and show its "Upgrade to v3" banner.
 - No environments are committed in this repo: credentials and account numbers live only in your own local Postman environment.
 - `openapi/purolator-rest.openapi.yaml` / `.json` — all of Purolator's REST services merged into one OpenAPI 3.0.3 document, with Development, Certification and Production servers. Components that differ between services carry a service prefix (e.g. `Estimate_Tax`); two defects in Purolator's published specs are repaired here and listed in `info.description`.
 - `openapi/services/*.yaml` / `.json` — Purolator's nine published per-service specs, unchanged (YAML as published, JSON converted from it). SOAP is described by the WSDLs; OpenAPI covers REST only.
