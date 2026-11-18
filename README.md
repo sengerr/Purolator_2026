@@ -175,3 +175,12 @@ Standard test addresses:
 | `soap-ship-dangerous-goods.js` | SOAP: the same flow with Shipping v2 `CreateShipment` / `ValidateShipment` and Shipping Documents v1 `GetDocuments` |
 
 Production calls create real shipments. Use Development until your integration is certified.
+
+
+## File formats
+
+- `Purolator REST|SOAP (EWS) — Development|Production/` — Postman **v3 collection format** (Native Git YAML).
+- `postman/*.postman_collection.json` — Postman **v2.1 JSON** of the same collections, for Newman and older Postman.
+- No environments are committed in this repo: credentials and account numbers live only in your own local Postman environment.
+- `openapi/purolator-rest.openapi.yaml` / `.json` — all of Purolator's REST services merged into one OpenAPI 3.0.3 document, with Development, Certification and Production servers. Components that differ between services carry a service prefix (e.g. `Estimate_Tax`); two defects in Purolator's published specs are repaired here and listed in `info.description`.
+- `openapi/services/*.yaml` / `.json` — Purolator's nine published per-service specs, unchanged (YAML as published, JSON converted from it). SOAP is described by the WSDLs; OpenAPI covers REST only.
